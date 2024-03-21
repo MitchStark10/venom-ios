@@ -8,12 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		80E4C6772BA732B700C17AC9 /* venomApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E4C6762BA732B700C17AC9 /* venomApp.swift */; };
-		80E4C6792BA732B700C17AC9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E4C6782BA732B700C17AC9 /* ContentView.swift */; };
+		80E4C6792BA732B700C17AC9 /* AppEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E4C6782BA732B700C17AC9 /* AppEntryView.swift */; };
 		80E4C67B2BA732B800C17AC9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 80E4C67A2BA732B800C17AC9 /* Assets.xcassets */; };
 		80E4C67F2BA732B800C17AC9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 80E4C67E2BA732B800C17AC9 /* Preview Assets.xcassets */; };
 		80E4C6892BA732B800C17AC9 /* venomTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E4C6882BA732B800C17AC9 /* venomTests.swift */; };
 		80E4C6932BA732B800C17AC9 /* venomUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E4C6922BA732B800C17AC9 /* venomUITests.swift */; };
 		80E4C6952BA732B800C17AC9 /* venomUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E4C6942BA732B800C17AC9 /* venomUITestsLaunchTests.swift */; };
+		80E4C6A32BAA84AF00C17AC9 /* LoginSignUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E4C6A22BAA84AF00C17AC9 /* LoginSignUp.swift */; };
+		80E4C6A62BABD8E300C17AC9 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E4C6A52BABD8E300C17AC9 /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,7 +38,7 @@
 /* Begin PBXFileReference section */
 		80E4C6732BA732B700C17AC9 /* venom.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = venom.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		80E4C6762BA732B700C17AC9 /* venomApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = venomApp.swift; sourceTree = "<group>"; };
-		80E4C6782BA732B700C17AC9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		80E4C6782BA732B700C17AC9 /* AppEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEntryView.swift; sourceTree = "<group>"; };
 		80E4C67A2BA732B800C17AC9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		80E4C67C2BA732B800C17AC9 /* venom.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = venom.entitlements; sourceTree = "<group>"; };
 		80E4C67E2BA732B800C17AC9 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -45,6 +47,8 @@
 		80E4C68E2BA732B800C17AC9 /* venomUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = venomUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		80E4C6922BA732B800C17AC9 /* venomUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = venomUITests.swift; sourceTree = "<group>"; };
 		80E4C6942BA732B800C17AC9 /* venomUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = venomUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		80E4C6A22BAA84AF00C17AC9 /* LoginSignUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginSignUp.swift; sourceTree = "<group>"; };
+		80E4C6A52BABD8E300C17AC9 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,8 +99,10 @@
 		80E4C6752BA732B700C17AC9 /* venom */ = {
 			isa = PBXGroup;
 			children = (
+				80E4C6A42BABD8CF00C17AC9 /* lib */,
+				80E4C6A12BAA849400C17AC9 /* Login */,
 				80E4C6762BA732B700C17AC9 /* venomApp.swift */,
-				80E4C6782BA732B700C17AC9 /* ContentView.swift */,
+				80E4C6782BA732B700C17AC9 /* AppEntryView.swift */,
 				80E4C67A2BA732B800C17AC9 /* Assets.xcassets */,
 				80E4C67C2BA732B800C17AC9 /* venom.entitlements */,
 				80E4C67D2BA732B800C17AC9 /* Preview Content */,
@@ -127,6 +133,22 @@
 				80E4C6942BA732B800C17AC9 /* venomUITestsLaunchTests.swift */,
 			);
 			path = venomUITests;
+			sourceTree = "<group>";
+		};
+		80E4C6A12BAA849400C17AC9 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				80E4C6A22BAA84AF00C17AC9 /* LoginSignUp.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		80E4C6A42BABD8CF00C17AC9 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				80E4C6A52BABD8E300C17AC9 /* Constants.swift */,
+			);
+			path = lib;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -259,8 +281,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				80E4C6792BA732B700C17AC9 /* ContentView.swift in Sources */,
+				80E4C6792BA732B700C17AC9 /* AppEntryView.swift in Sources */,
 				80E4C6772BA732B700C17AC9 /* venomApp.swift in Sources */,
+				80E4C6A32BAA84AF00C17AC9 /* LoginSignUp.swift in Sources */,
+				80E4C6A62BABD8E300C17AC9 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

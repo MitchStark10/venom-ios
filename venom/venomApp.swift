@@ -11,7 +11,7 @@ import SwiftUI
 struct venomApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            AppEntryView()
         }
     }
 }
