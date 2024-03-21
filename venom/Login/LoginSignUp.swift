@@ -44,7 +44,7 @@ struct LoginSignUp: View {
             guard let response = response as? HTTPURLResponse else { return }
             
             if (response.statusCode == 200) {
-                // TODO: Return to parent view?
+                // TODO: Return to parent view
                 apiRequestStatus = APIRequestStatus.success
             } else {
                 print("Incorrect status code", response.statusCode)
