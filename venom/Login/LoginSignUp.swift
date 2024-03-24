@@ -23,9 +23,12 @@ struct LoginSignUp: View {
         print("Beginning sign in")
         var urlRequest = URLRequest(url: Constants.loginUrl!)
         urlRequest.httpMethod = "POST"
-        let rawRequestBody = [email, password]
+        let rawRequestBody = ["email": email, "password":  password]
         do {
-            urlRequest.httpBody = try JSONSerialization.data(withJSONObject: rawRequestBody)
+            let jsonData = try JSONSerialization.data(withJSONObject: rawRequestBody)
+            urlRequest.httpBody = jsonData
+            urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            urlRequest.setValue("\(String(describing: jsonData.count))", forHTTPHeaderField: "Content-Length")
         } catch let error {
             print(error.localizedDescription)
             apiRequestStatus = APIRequestStatus.failure
@@ -42,6 +45,10 @@ struct LoginSignUp: View {
             }
             
             guard let response = response as? HTTPURLResponse else { return }
+            if let json = try? JSONSerialization.jsonObject(with: data!, options: []) {
+                let jsonString = "\(json)"
+                print(jsonString)
+            }
             
             if (response.statusCode == 200) {
                 // TODO: Return to parent view
