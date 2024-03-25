@@ -13,11 +13,14 @@ struct AppEntryView: View {
     var body: some View {
         VStack {
             Text("Venom").multilineTextAlignment(.center).frame(width: UIScreen.main.bounds.size.width).font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/).fontWeight(.bold)
-            // TODO: Fetch the lists from the API
             
             if (!hasSignedIn) {
-                LoginSignUp()
+                LoginSignUp(hasSignedIn: $hasSignedIn)
+            } else {
+                Text("TODO: Signed-In View")
             }
+            
+            // TODO: Fetch the lists from the API
         }
         .frame(width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height - 100, alignment: .topLeading)
     }

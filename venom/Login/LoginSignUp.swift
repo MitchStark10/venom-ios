@@ -18,6 +18,7 @@ struct LoginSignUp: View {
     @State private var email: String = ""
     @State private var password: String = ""
     @State private var apiRequestStatus: APIRequestStatus = APIRequestStatus.initial
+    @Binding public var hasSignedIn: Bool
     
     private func signIn() -> Void {
         print("Beginning sign in")
@@ -51,8 +52,8 @@ struct LoginSignUp: View {
             }
             
             if (response.statusCode == 200) {
-                // TODO: Return to parent view
                 apiRequestStatus = APIRequestStatus.success
+                hasSignedIn = true
             } else {
                 print("Incorrect status code", response.statusCode)
                 apiRequestStatus = APIRequestStatus.failure
@@ -96,5 +97,5 @@ struct LoginSignUp: View {
 }
 
 #Preview {
-    LoginSignUp()
+    LoginSignUp(hasSignedIn: .constant(true))
 }
