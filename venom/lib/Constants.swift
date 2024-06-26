@@ -8,6 +8,6 @@
 import Foundation
 
 struct Constants {
-    static let baseApiUrl = "https://venom-backend-wmmm.onrender.com"
+    static let baseApiUrl = "https://venom-backend-pjv4.onrender.com"
     static let loginUrl = URL(string: baseApiUrl + "/users/login")
 }
