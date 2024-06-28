@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AppEntryView: View {
-    @State private var hasSignedIn = false;
+    @State private var hasSignedIn = initializeSignInStatus();
     
     var body: some View {
         VStack {
@@ -17,7 +17,7 @@ struct AppEntryView: View {
             if (!hasSignedIn) {
                 LoginSignUp(hasSignedIn: $hasSignedIn)
             } else {
-                Text("TODO: Signed-In View")
+                Text("TODO: Signed-In View")                
             }
             
             // TODO: Fetch the lists from the API

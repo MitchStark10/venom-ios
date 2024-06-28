@@ -25,7 +25,7 @@ struct LoginSignUp: View {
             } else {
                 apiRequestStatus = APIRequestStatus.failure
             }
-        } catch let error {
+        } catch _ {
             apiRequestStatus = APIRequestStatus.failure
         }
     }

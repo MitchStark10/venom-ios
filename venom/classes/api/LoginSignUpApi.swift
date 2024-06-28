@@ -9,7 +9,6 @@ import Foundation
 
 class LoginSignUpApi {
     public func signIn(email: String, password: String) async throws -> Bool {
-        print("Beginning sign in")
         var urlRequest = URLRequest(url: Constants.loginUrl!)
         urlRequest.httpMethod = "POST"
         let rawRequestBody = ["email": email, "password":  password]
@@ -23,7 +22,14 @@ class LoginSignUpApi {
         let loginResponse = try JSONDecoder().decode(LoginResponse.self, from: data)
         
         if (loginResponse.token != nil) {
-            return true;
+            if let data = loginResponse.token!.data(using: .utf8) {
+                let status = KeychainHelper.shared.save(key: "accessToken", data: data)
+                if status == errSecSuccess {
+                    return true
+                }
+            }
+            
+            return false;
         }
         
         return false;
