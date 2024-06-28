@@ -7,12 +7,7 @@
 import SwiftUI
 
 
-enum APIRequestStatus {
-    case initial
-    case processing
-    case success
-    case failure
-}
+
 
 struct LoginSignUp: View {
     @State private var email: String = ""
@@ -20,47 +15,19 @@ struct LoginSignUp: View {
     @State private var apiRequestStatus: APIRequestStatus = APIRequestStatus.initial
     @Binding public var hasSignedIn: Bool
     
-    private func signIn() -> Void {
-        print("Beginning sign in")
-        var urlRequest = URLRequest(url: Constants.loginUrl!)
-        urlRequest.httpMethod = "POST"
-        let rawRequestBody = ["email": email, "password":  password]
+    private func signIn() async -> Void {
         do {
-            let jsonData = try JSONSerialization.data(withJSONObject: rawRequestBody)
-            urlRequest.httpBody = jsonData
-            urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            urlRequest.setValue("\(String(describing: jsonData.count))", forHTTPHeaderField: "Content-Length")
-        } catch let error {
-            print(error.localizedDescription)
-            apiRequestStatus = APIRequestStatus.failure
-            return
-        }
-        
-        apiRequestStatus = APIRequestStatus.processing
-        let dataTask = URLSession.shared.dataTask(with: urlRequest) { data,response,error in
+            apiRequestStatus = APIRequestStatus.processing
+            let didLoginSucceed = try await LoginSignUpApi().signIn(email: email, password: password)
             
-            if let error = error {
-                print("Request error: ", error)
-                apiRequestStatus = APIRequestStatus.failure
-                return
-            }
-            
-            guard let response = response as? HTTPURLResponse else { return }
-            if let json = try? JSONSerialization.jsonObject(with: data!, options: []) {
-                let jsonString = "\(json)"
-                print(jsonString)
-            }
-            
-            if (response.statusCode == 200) {
+            if (didLoginSucceed) {
                 apiRequestStatus = APIRequestStatus.success
-                hasSignedIn = true
             } else {
-                print("Incorrect status code", response.statusCode)
                 apiRequestStatus = APIRequestStatus.failure
             }
+        } catch let error {
+            apiRequestStatus = APIRequestStatus.failure
         }
-        
-        dataTask.resume()
     }
     
     private func getStatusText () -> String {
@@ -84,9 +51,14 @@ struct LoginSignUp: View {
             SecureField(text: $password, prompt: Text("Required")) {
                 Text("Password")
             }
-            Button(action: signIn) {
-                Text("Sign In")
-            }.disabled(email.isEmpty || password.isEmpty)
+            Button {
+                Task {
+                    await signIn()
+                }
+            } label: {
+                Text("Login")
+            }
+            .disabled(email.isEmpty || password.isEmpty || apiRequestStatus == APIRequestStatus.processing)
             
             if (!getStatusText().isEmpty) {
                 Text(getStatusText())

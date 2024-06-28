@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		805910DD2C2F41BF005780C1 /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805910DC2C2F41BF005780C1 /* UserSettings.swift */; };
+		805910DF2C2F4273005780C1 /* insertToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805910DE2C2F4273005780C1 /* insertToken.swift */; };
+		805910E12C2F4459005780C1 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805910E02C2F4459005780C1 /* LoginResponse.swift */; };
+		805910E42C2F46C6005780C1 /* LoginSignUpApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805910E32C2F46C6005780C1 /* LoginSignUpApi.swift */; };
+		805910E82C2F4782005780C1 /* APIRequestStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805910E72C2F4782005780C1 /* APIRequestStatus.swift */; };
 		80E4C6772BA732B700C17AC9 /* venomApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E4C6762BA732B700C17AC9 /* venomApp.swift */; };
 		80E4C6792BA732B700C17AC9 /* AppEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E4C6782BA732B700C17AC9 /* AppEntryView.swift */; };
 		80E4C67B2BA732B800C17AC9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 80E4C67A2BA732B800C17AC9 /* Assets.xcassets */; };
@@ -36,6 +41,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		805910DC2C2F41BF005780C1 /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
+		805910DE2C2F4273005780C1 /* insertToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = insertToken.swift; sourceTree = "<group>"; };
+		805910E02C2F4459005780C1 /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
+		805910E32C2F46C6005780C1 /* LoginSignUpApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginSignUpApi.swift; sourceTree = "<group>"; };
+		805910E72C2F4782005780C1 /* APIRequestStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequestStatus.swift; sourceTree = "<group>"; };
 		80E4C6732BA732B700C17AC9 /* venom.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = venom.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		80E4C6762BA732B700C17AC9 /* venomApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = venomApp.swift; sourceTree = "<group>"; };
 		80E4C6782BA732B700C17AC9 /* AppEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEntryView.swift; sourceTree = "<group>"; };
@@ -76,6 +86,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		805910DB2C2F4152005780C1 /* classes */ = {
+			isa = PBXGroup;
+			children = (
+				805910E22C2F46B3005780C1 /* api */,
+				805910DC2C2F41BF005780C1 /* UserSettings.swift */,
+				805910E02C2F4459005780C1 /* LoginResponse.swift */,
+				805910E72C2F4782005780C1 /* APIRequestStatus.swift */,
+			);
+			path = classes;
+			sourceTree = "<group>";
+		};
+		805910E22C2F46B3005780C1 /* api */ = {
+			isa = PBXGroup;
+			children = (
+				805910E32C2F46C6005780C1 /* LoginSignUpApi.swift */,
+			);
+			path = api;
+			sourceTree = "<group>";
+		};
 		80E4C66A2BA732B700C17AC9 = {
 			isa = PBXGroup;
 			children = (
@@ -99,6 +128,7 @@
 		80E4C6752BA732B700C17AC9 /* venom */ = {
 			isa = PBXGroup;
 			children = (
+				805910DB2C2F4152005780C1 /* classes */,
 				80E4C6A42BABD8CF00C17AC9 /* lib */,
 				80E4C6A12BAA849400C17AC9 /* Login */,
 				80E4C6762BA732B700C17AC9 /* venomApp.swift */,
@@ -147,6 +177,7 @@
 			isa = PBXGroup;
 			children = (
 				80E4C6A52BABD8E300C17AC9 /* Constants.swift */,
+				805910DE2C2F4273005780C1 /* insertToken.swift */,
 			);
 			path = lib;
 			sourceTree = "<group>";
@@ -215,7 +246,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1530;
-				LastUpgradeCheck = 1530;
+				LastUpgradeCheck = 1540;
 				TargetAttributes = {
 					80E4C6722BA732B700C17AC9 = {
 						CreatedOnToolsVersion = 15.3;
@@ -281,10 +312,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				805910E42C2F46C6005780C1 /* LoginSignUpApi.swift in Sources */,
 				80E4C6792BA732B700C17AC9 /* AppEntryView.swift in Sources */,
 				80E4C6772BA732B700C17AC9 /* venomApp.swift in Sources */,
+				805910DF2C2F4273005780C1 /* insertToken.swift in Sources */,
 				80E4C6A32BAA84AF00C17AC9 /* LoginSignUp.swift in Sources */,
+				805910E82C2F4782005780C1 /* APIRequestStatus.swift in Sources */,
+				805910DD2C2F41BF005780C1 /* UserSettings.swift in Sources */,
 				80E4C6A62BABD8E300C17AC9 /* Constants.swift in Sources */,
+				805910E12C2F4459005780C1 /* LoginResponse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -355,6 +391,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -416,6 +453,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -443,6 +481,7 @@
 				CODE_SIGN_ENTITLEMENTS = venom/venom.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"venom/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -479,6 +518,7 @@
 				CODE_SIGN_ENTITLEMENTS = venom/venom.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"venom/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -514,6 +554,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
 				MACOSX_DEPLOYMENT_TARGET = 14.4;
@@ -536,6 +577,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
 				MACOSX_DEPLOYMENT_TARGET = 14.4;
@@ -557,6 +599,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
 				MACOSX_DEPLOYMENT_TARGET = 14.4;
@@ -578,6 +621,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
 				MACOSX_DEPLOYMENT_TARGET = 14.4;
