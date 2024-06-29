@@ -9,16 +9,26 @@ import SwiftUI
 
 struct AppEntryView: View {
     @State private var hasSignedIn = initializeSignInStatus();
+    @EnvironmentObject var lists: Lists
+    
+    private func getMenuItems() -> [String] {
+        var menuItems = ["Today", "Upcoming", "Completed"];
+        
+        for list in lists.lists {
+            menuItems.append(list.listName)
+        }
+        
+        return menuItems
+    }
     
     var body: some View {
         VStack {
             if (!hasSignedIn) {
                 LoginSignUp(hasSignedIn: $hasSignedIn)
             } else {
-                let coreMenuItems = ["Today", "Upcoming", "Completed"];
                 NavigationStack {
                     ZStack(alignment: .bottomTrailing) {
-                        List(coreMenuItems, id: \.self) { listItem in
+                        List(getMenuItems(), id: \.self) { listItem in
                             NavigationLink(destination: Text("\(listItem) View")) {
                                 Text(listItem)
                             }
@@ -27,13 +37,11 @@ struct AppEntryView: View {
                         
                         NewTaskFAB()
                     }
+                }.onAppear {
+                    lists.fetchLists()
                 }
             }
         }
         .frame(width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height, alignment: .topLeading)
     }
-}
-
-#Preview {
-    AppEntryView()
 }

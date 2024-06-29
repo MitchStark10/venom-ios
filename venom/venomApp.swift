@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct venomApp: App {
+    @State var lists = Lists(lists: [])
+    
     var body: some Scene {
         WindowGroup {
-            AppEntryView()
+            AppEntryView().environmentObject(lists)
         }
     }
 }
