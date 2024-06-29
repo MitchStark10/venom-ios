@@ -9,7 +9,8 @@ import Foundation
 
 class LoginSignUpApi {
     public func signIn(email: String, password: String) async throws -> Bool {
-        let data = sendApiCall(url: Constants.loginUrl, requestMethod: "POST", requestBody: rawRequestBody)
+        let rawRequestBody = ["email": email, "password": password]
+        let data = try await sendApiCall(url: Constants.loginUrl!, requestMethod: "POST", requestBody: rawRequestBody)
         let loginResponse = try JSONDecoder().decode(LoginResponse.self, from: data)
         
         if (loginResponse.token != nil) {

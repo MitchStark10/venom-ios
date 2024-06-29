@@ -12,17 +12,25 @@ struct AppEntryView: View {
     
     var body: some View {
         VStack {
-            Text("Venom").multilineTextAlignment(.center).frame(width: UIScreen.main.bounds.size.width).font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/).fontWeight(.bold)
-            
             if (!hasSignedIn) {
                 LoginSignUp(hasSignedIn: $hasSignedIn)
             } else {
-                Text("TODO: Signed-In View")                
+                let coreMenuItems = ["Today", "Upcoming", "Completed"];
+                NavigationStack {
+                    ZStack(alignment: .bottomTrailing) {
+                        List(coreMenuItems, id: \.self) { listItem in
+                            NavigationLink(destination: Text("\(listItem) View")) {
+                                Text(listItem)
+                            }
+                        }
+                        .navigationTitle("Home")
+                        
+                        NewTaskFAB()
+                    }
+                }
             }
-            
-            // TODO: Fetch the lists from the API
         }
-        .frame(width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height - 100, alignment: .topLeading)
+        .frame(width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height, alignment: .topLeading)
     }
 }
 

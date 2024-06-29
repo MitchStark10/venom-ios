@@ -6,9 +6,6 @@
 //
 import SwiftUI
 
-
-
-
 struct LoginSignUp: View {
     @State private var email: String = ""
     @State private var password: String = ""
@@ -22,6 +19,7 @@ struct LoginSignUp: View {
             
             if (didLoginSucceed) {
                 apiRequestStatus = APIRequestStatus.success
+                hasSignedIn = true;
             } else {
                 apiRequestStatus = APIRequestStatus.failure
             }
