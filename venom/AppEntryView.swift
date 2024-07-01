@@ -38,7 +38,9 @@ struct AppEntryView: View {
                         NewTaskFAB()
                     }
                 }.onAppear {
-                    lists.fetchLists()
+                    Task {
+                        await lists.fetchLists()
+                    }
                 }
             }
         }

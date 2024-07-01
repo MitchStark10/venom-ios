@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct VenomTask {
-    
+struct VenomTask: Decodable {
+    let id: Int;
 }

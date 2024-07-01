@@ -15,7 +15,7 @@ class LoginSignUpApi {
         
         if (loginResponse.token != nil) {
             if let data = loginResponse.token!.data(using: .utf8) {
-                let status = KeychainHelper.shared.save(key: "accessToken", data: data)
+                let status = KeychainHelper.shared.save(key: Constants.accessTokenKeychainKey, data: data)
                 if status == errSecSuccess {
                     return true
                 }
