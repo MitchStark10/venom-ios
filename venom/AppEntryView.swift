@@ -11,11 +11,11 @@ struct AppEntryView: View {
     @State private var hasSignedIn = initializeSignInStatus();
     @EnvironmentObject var lists: Lists
     
-    private func getMenuItems() -> [String] {
-        var menuItems = ["Today", "Upcoming", "Completed"];
+    private func getMenuItems() -> [NavMenuItem] {
+        var menuItems = [NavMenuItem(label: "Today"), NavMenuItem(label: "Upcoming"), NavMenuItem(label: "Completed")];
         
         for list in lists.lists {
-            menuItems.append(list.listName)
+            menuItems.append(NavMenuItem(label: list.listName, list: list))
         }
         
         return menuItems
@@ -29,11 +29,12 @@ struct AppEntryView: View {
                 NavigationStack {
                     ZStack(alignment: .bottomTrailing) {
                         List(getMenuItems(), id: \.self) { listItem in
-                            NavigationLink(destination: Text("\(listItem) View")) {
-                                Text(listItem)
+                            NavigationLink(destination: SubViewRouter(navMenuItem: listItem)) {
+                                Text(listItem.label)
                             }
                         }
                         .navigationTitle("Home")
+                        .navigationBarTitleDisplayMode(.inline)
                         
                         NewTaskFAB()
                     }
