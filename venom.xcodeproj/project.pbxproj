@@ -13,6 +13,8 @@
 		805910E82C2F4782005780C1 /* APIRequestStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805910E72C2F4782005780C1 /* APIRequestStatus.swift */; };
 		805910EA2C2F5013005780C1 /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805910E92C2F5013005780C1 /* KeychainHelper.swift */; };
 		805910EC2C2F5155005780C1 /* initializeSignInStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805910EB2C2F5155005780C1 /* initializeSignInStatus.swift */; };
+		8071FA6C2C3639D500930AD4 /* CreateTaskModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8071FA6B2C3639D500930AD4 /* CreateTaskModal.swift */; };
+		8071FA6E2C363D0300930AD4 /* DropdownMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8071FA6D2C363D0300930AD4 /* DropdownMenu.swift */; };
 		80C368212C2F761C0023DC52 /* sendApiCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C368202C2F761C0023DC52 /* sendApiCall.swift */; };
 		80C368242C2F7B970023DC52 /* NewTaskFAB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C368232C2F7B970023DC52 /* NewTaskFAB.swift */; };
 		80C368282C2F86B80023DC52 /* Lists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C368272C2F86B80023DC52 /* Lists.swift */; };
@@ -57,6 +59,8 @@
 		805910E72C2F4782005780C1 /* APIRequestStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequestStatus.swift; sourceTree = "<group>"; };
 		805910E92C2F5013005780C1 /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
 		805910EB2C2F5155005780C1 /* initializeSignInStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = initializeSignInStatus.swift; sourceTree = "<group>"; };
+		8071FA6B2C3639D500930AD4 /* CreateTaskModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTaskModal.swift; sourceTree = "<group>"; };
+		8071FA6D2C363D0300930AD4 /* DropdownMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropdownMenu.swift; sourceTree = "<group>"; };
 		80C368202C2F761C0023DC52 /* sendApiCall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sendApiCall.swift; sourceTree = "<group>"; };
 		80C368232C2F7B970023DC52 /* NewTaskFAB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTaskFAB.swift; sourceTree = "<group>"; };
 		80C368272C2F86B80023DC52 /* Lists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lists.swift; sourceTree = "<group>"; };
@@ -138,6 +142,8 @@
 				80C368232C2F7B970023DC52 /* NewTaskFAB.swift */,
 				80CCF6982C34C22E00AB4483 /* TaskList.swift */,
 				80CCF6A02C34C60200AB4483 /* SubViewRouter.swift */,
+				8071FA6B2C3639D500930AD4 /* CreateTaskModal.swift */,
+				8071FA6D2C363D0300930AD4 /* DropdownMenu.swift */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -350,6 +356,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8071FA6C2C3639D500930AD4 /* CreateTaskModal.swift in Sources */,
 				80CCF69D2C34C49A00AB4483 /* Tag.swift in Sources */,
 				805910E42C2F46C6005780C1 /* LoginSignUpApi.swift in Sources */,
 				80C368242C2F7B970023DC52 /* NewTaskFAB.swift in Sources */,
@@ -369,6 +376,7 @@
 				80CCF69F2C34C5BE00AB4483 /* NavMenuItem.swift in Sources */,
 				80C3682A2C2F871B0023DC52 /* Task.swift in Sources */,
 				805910E12C2F4459005780C1 /* LoginResponse.swift in Sources */,
+				8071FA6E2C363D0300930AD4 /* DropdownMenu.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

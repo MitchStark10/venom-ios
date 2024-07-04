@@ -7,10 +7,23 @@
 import Foundation
 import SwiftUI
 
-struct VenomList: Decodable {
+struct VenomList: Decodable, Hashable {
     let id, order: Int;
     let listName: String;
     let tasks: [VenomTask];
+    
+    static func == (lhs: VenomList, rhs: VenomList) -> Bool {
+        return lhs.identifier == rhs.identifier
+    }
+    
+    var identifier: String {
+        return String(self.id)
+    }
+    
+    public func hash(into hasher: inout Hasher) {
+        return hasher.combine(identifier)
+    }
+    
 }
 
 class Lists: ObservableObject {

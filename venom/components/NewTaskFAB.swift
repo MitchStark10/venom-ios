@@ -7,9 +7,10 @@
 import SwiftUI
 
 struct NewTaskFAB: View {
+    @Binding var isShowingNewTaskModal: Bool
     var body: some View {
         Button {
-            // Action
+            isShowingNewTaskModal = true;
         } label: {
             Image(systemName: "plus")
                 .font(.title.weight(.semibold))
