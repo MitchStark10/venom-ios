@@ -13,4 +13,8 @@ struct Constants {
     static let loginUrl = URL(string: baseApiUrl + "/users/login")
     static let listsUrl = URL(string: baseApiUrl + "/lists")
     static let tasksUrl = URL(string: baseApiUrl + "/tasks")
+    
+    static func getTaskUrlWithId(id: Int) -> URL {
+        return URL(string: baseApiUrl + "/tasks/\(id)")!
+    }
 }

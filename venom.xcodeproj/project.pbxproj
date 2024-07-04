@@ -19,6 +19,7 @@
 		80C368242C2F7B970023DC52 /* NewTaskFAB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C368232C2F7B970023DC52 /* NewTaskFAB.swift */; };
 		80C368282C2F86B80023DC52 /* Lists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C368272C2F86B80023DC52 /* Lists.swift */; };
 		80C3682A2C2F871B0023DC52 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C368292C2F871B0023DC52 /* Task.swift */; };
+		80C706512C36F28C0092D6B4 /* formatDueDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C706502C36F28C0092D6B4 /* formatDueDate.swift */; };
 		80CCF6992C34C22E00AB4483 /* TaskList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CCF6982C34C22E00AB4483 /* TaskList.swift */; };
 		80CCF69B2C34C46600AB4483 /* TaskTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CCF69A2C34C46600AB4483 /* TaskTag.swift */; };
 		80CCF69D2C34C49A00AB4483 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CCF69C2C34C49A00AB4483 /* Tag.swift */; };
@@ -65,6 +66,7 @@
 		80C368232C2F7B970023DC52 /* NewTaskFAB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTaskFAB.swift; sourceTree = "<group>"; };
 		80C368272C2F86B80023DC52 /* Lists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lists.swift; sourceTree = "<group>"; };
 		80C368292C2F871B0023DC52 /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
+		80C706502C36F28C0092D6B4 /* formatDueDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = formatDueDate.swift; sourceTree = "<group>"; };
 		80CCF6982C34C22E00AB4483 /* TaskList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskList.swift; sourceTree = "<group>"; };
 		80CCF69A2C34C46600AB4483 /* TaskTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskTag.swift; sourceTree = "<group>"; };
 		80CCF69C2C34C49A00AB4483 /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
@@ -222,6 +224,7 @@
 			children = (
 				80E4C6A52BABD8E300C17AC9 /* Constants.swift */,
 				805910EB2C2F5155005780C1 /* initializeSignInStatus.swift */,
+				80C706502C36F28C0092D6B4 /* formatDueDate.swift */,
 			);
 			path = lib;
 			sourceTree = "<group>";
@@ -365,6 +368,7 @@
 				80CCF6A12C34C60200AB4483 /* SubViewRouter.swift in Sources */,
 				80E4C6772BA732B700C17AC9 /* venomApp.swift in Sources */,
 				80C368282C2F86B80023DC52 /* Lists.swift in Sources */,
+				80C706512C36F28C0092D6B4 /* formatDueDate.swift in Sources */,
 				80CCF6992C34C22E00AB4483 /* TaskList.swift in Sources */,
 				80CCF69B2C34C46600AB4483 /* TaskTag.swift in Sources */,
 				80C368212C2F761C0023DC52 /* sendApiCall.swift in Sources */,
@@ -535,10 +539,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = venom/venom.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"venom/Preview Content\"";
+				DEVELOPMENT_TEAM = 77M8WSAQJZ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
@@ -572,10 +578,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = venom/venom.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"venom/Preview Content\"";
+				DEVELOPMENT_TEAM = 77M8WSAQJZ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;

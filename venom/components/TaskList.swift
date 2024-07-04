@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 struct TaskList: View {
+    @EnvironmentObject var lists: Lists;
     var taskItems: [VenomTask]
     var navTitle: String
     
@@ -18,7 +19,14 @@ struct TaskList: View {
                 HStack {
                     Image(systemName: task.isCompleted ? "checkmark.circle.fill" : "circle")
                         .onTapGesture {
-                            print("TBD!")
+                            task.isCompleted = !task.isCompleted;
+                            Task {
+                                let updateTaskResposne = await TaskApi.updateTask(task:task, lists:lists);
+                                
+                                if (!updateTaskResposne) {
+                                    task.isCompleted = !task.isCompleted;
+                                }
+                            }
                         }
                     Text(task.taskName)
                         .strikethrough(task.isCompleted, color: .black)
