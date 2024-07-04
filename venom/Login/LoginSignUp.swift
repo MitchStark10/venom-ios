@@ -43,10 +43,10 @@ struct LoginSignUp: View {
     
     var body: some View {
         Form {
-            TextField(text: $email, prompt: Text("Required")) {
+            TextField(text: $email, prompt: Text("Email")) {
                 Text("Email")
             }
-            SecureField(text: $password, prompt: Text("Required")) {
+            SecureField(text: $password, prompt: Text("Password")) {
                 Text("Password")
             }
             Button {

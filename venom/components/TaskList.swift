@@ -15,21 +15,27 @@ struct TaskList: View {
     
     var body: some View {
         List {
-            ForEach(taskItems) { task in
-                HStack {
-                    Image(systemName: task.isCompleted ? "checkmark.circle.fill" : "circle")
-                        .onTapGesture {
-                            task.isCompleted = !task.isCompleted;
-                            Task {
-                                let updateTaskResposne = await TaskApi.updateTask(task:task, lists:lists);
-                                
-                                if (!updateTaskResposne) {
+            let taskItemsGroupedByDate = groupTasks(tasks: taskItems)
+            
+            ForEach(taskItemsGroupedByDate.keys.sorted(), id: \.self) { taskGroupKey in
+                Section(header: Text(taskGroupKey)) {
+                    ForEach(taskItemsGroupedByDate[taskGroupKey] ?? []) { task in
+                        HStack {
+                            Image(systemName: task.isCompleted ? "checkmark.circle.fill" : "circle")
+                                .onTapGesture {
                                     task.isCompleted = !task.isCompleted;
+                                    Task {
+                                        let updateTaskResposne = await TaskApi.updateTask(task:task, lists:lists);
+                                        
+                                        if (!updateTaskResposne) {
+                                            task.isCompleted = !task.isCompleted;
+                                        }
+                                    }
                                 }
-                            }
+                            Text(task.taskName)
+                                .strikethrough(task.isCompleted, color: .black)
                         }
-                    Text(task.taskName)
-                        .strikethrough(task.isCompleted, color: .black)
+                    }
                 }
             }
         }.navigationTitle(navTitle)
