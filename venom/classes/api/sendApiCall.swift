@@ -7,6 +7,7 @@
 
 import Foundation
 
+@discardableResult
 func sendApiCall(url: URL, requestMethod: String, requestBody: Any? = nil, verboseLogging: Bool = false) async throws -> Data {
     var urlRequest = URLRequest(url: url)
     urlRequest.httpMethod = requestMethod

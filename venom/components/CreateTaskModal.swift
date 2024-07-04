@@ -44,7 +44,14 @@ struct CreateTaskModal: View {
                         Spacer()
                         
                         Button(action: {
-                            isShowingNewTaskModal = false;
+                            Task {
+                                if (listId == nil) {
+                                    // TODO: Show some error message
+                                    return;
+                                }
+                                await TaskApi.createTask(taskName: taskName, dueDate: dueDate, listId: listId!, lists: lists)
+                                isShowingNewTaskModal = false;
+                            }
                         }) {
                             Text("Save")
                         }.buttonStyle(BorderedButtonStyle())

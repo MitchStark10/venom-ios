@@ -12,4 +12,5 @@ struct Constants {
     static let accessTokenKeychainKey = "accessToken"
     static let loginUrl = URL(string: baseApiUrl + "/users/login")
     static let listsUrl = URL(string: baseApiUrl + "/lists")
+    static let tasksUrl = URL(string: baseApiUrl + "/tasks")
 }
