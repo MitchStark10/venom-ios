@@ -10,6 +10,7 @@ import SwiftUI
 
 struct CreateTaskModal: View {
     @EnvironmentObject var lists: Lists;
+    @EnvironmentObject var taskApi: TaskApi
     @Binding var isShowingNewTaskModal: Bool;
     @State var taskName = "";
     @State var listId: Int? = nil;
@@ -49,7 +50,7 @@ struct CreateTaskModal: View {
                                     // TODO: Show some error message
                                     return;
                                 }
-                                await TaskApi.createTask(taskName: taskName, dueDate: dueDate, listId: listId!, lists: lists)
+                                await taskApi.createTask(taskName: taskName, dueDate: dueDate, listId: listId!, lists: lists)
                                 isShowingNewTaskModal = false;
                             }
                         }) {

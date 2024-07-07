@@ -10,6 +10,7 @@ import SwiftUI
 
 struct TaskList: View {
     @EnvironmentObject var lists: Lists;
+    @EnvironmentObject var taskApi: TaskApi;
     var taskItems: [VenomTask]
     var navTitle: String
     
@@ -25,7 +26,7 @@ struct TaskList: View {
                                 .onTapGesture {
                                     task.isCompleted = !task.isCompleted;
                                     Task {
-                                        let updateTaskResposne = await TaskApi.updateTask(task:task, lists:lists);
+                                        let updateTaskResposne = await taskApi.updateTask(task:task, lists:lists);
                                         
                                         if (!updateTaskResposne) {
                                             task.isCompleted = !task.isCompleted;

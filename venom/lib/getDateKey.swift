@@ -8,6 +8,9 @@
 import Foundation
 
 func getRelativeTimeSpanString(for date: Date?) -> String {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "MM/dd"
+    
     if (date == nil) {
         return "No Due Date"
     }
@@ -17,14 +20,15 @@ func getRelativeTimeSpanString(for date: Date?) -> String {
     let now = Date()
     let relativeFormattedDueDate = relativeFormatter.localizedString(for: Calendar.current.startOfDay(for: date!), relativeTo: Calendar.current.startOfDay(for: now))
     
+    let prefix = "\(dateFormatter.string(for: date!)!) -"
+    
     if (relativeFormattedDueDate.lowercased() == "in 0 seconds") {
-        return "Due Today"
+        return "\(prefix) Due Today"
     }
     
-    let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "MM/dd"
+
     
-    return "\(dateFormatter.string(for: date!)!) - Due \(relativeFormattedDueDate)"
+    return "\(prefix) Due \(relativeFormattedDueDate)"
 }
 
 func getDateKey(task: VenomTask) -> String {

@@ -10,10 +10,11 @@ import SwiftUI
 @main
 struct venomApp: App {
     @State var lists = Lists(lists: [])
+    @State var taskApi = TaskApi()
     
     var body: some Scene {
         WindowGroup {
-            AppEntryView().environmentObject(lists)
+            AppEntryView().environmentObject(lists).environmentObject(taskApi)
         }
     }
 }

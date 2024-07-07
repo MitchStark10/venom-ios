@@ -11,10 +11,11 @@ struct AppEntryView: View {
     @State private var hasSignedIn = initializeSignInStatus();
     @State private var isShowingNewTaskModal = false;
     @EnvironmentObject var lists: Lists
+    @EnvironmentObject var taskApi: TaskApi
+    private let defaultMenuItems = [NavMenuItem(label: "Today"), NavMenuItem(label: "Upcoming"), NavMenuItem(label: "Completed")];
     
     private func getMenuItems() -> [NavMenuItem] {
-        var menuItems = [NavMenuItem(label: "Today"), NavMenuItem(label: "Upcoming"), NavMenuItem(label: "Completed")];
-        
+        var menuItems: [NavMenuItem] = []
         for list in lists.lists {
             menuItems.append(NavMenuItem(label: list.listName, list: list))
         }
@@ -27,22 +28,33 @@ struct AppEntryView: View {
             if (!hasSignedIn) {
                 LoginSignUp(hasSignedIn: $hasSignedIn)
             } else {
-                NavigationStack {
-                    ZStack(alignment: .bottomTrailing) {
-                        List(getMenuItems(), id: \.self) { listItem in
-                            NavigationLink(destination: SubViewRouter(navMenuItem: listItem)) {
-                                Text(listItem.label)
+                ZStack(alignment: .bottomTrailing) {
+                    NavigationStack {
+                        List {
+                            ForEach(defaultMenuItems) { menuItem in
+                                NavigationLink(destination: SubViewRouter(navMenuItem: menuItem)) {
+                                    Text(menuItem.label)
+                                }
+                            }
+                            
+                            Section(header: Text("Lists")) {
+                                ForEach(getMenuItems()) { menuItem in
+                                    NavigationLink(destination: SubViewRouter(navMenuItem: menuItem)) {
+                                        Text(menuItem.label)
+                                    }
+                                }
                             }
                         }
                         .navigationTitle("Home")
                         .navigationBarTitleDisplayMode(.inline)
                         
-                        NewTaskFAB(isShowingNewTaskModal: $isShowingNewTaskModal)
+                    }.onAppear {
+                        Task {
+                            await lists.fetchLists()
+                        }
                     }
-                }.onAppear {
-                    Task {
-                        await lists.fetchLists()
-                    }
+                    
+                    NewTaskFAB(isShowingNewTaskModal: $isShowingNewTaskModal)
                 }
             }
         }

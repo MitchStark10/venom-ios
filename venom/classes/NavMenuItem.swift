@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct NavMenuItem: Hashable, Equatable {
+struct NavMenuItem: Hashable, Equatable, Identifiable {
+    var id: UUID
     let label: String;
     let list: VenomList?;
     
@@ -24,6 +25,7 @@ struct NavMenuItem: Hashable, Equatable {
     }
     
     init(label: String, list: VenomList? = nil) {
+        self.id = UUID()
         self.label = label
         self.list = list
     }
