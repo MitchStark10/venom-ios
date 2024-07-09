@@ -13,10 +13,11 @@ struct TaskList: View {
     @EnvironmentObject var taskApi: TaskApi;
     var taskItems: [VenomTask]
     var navTitle: String
+    var groupBy: GroupByOptions = GroupByOptions.date;
     
     var body: some View {
         List {
-            let taskItemsGroupedByDate = groupTasks(tasks: taskItems)
+            let taskItemsGroupedByDate = groupTasks(tasks: taskItems, groupBy: groupBy)
             
             ForEach(taskItemsGroupedByDate.keys.sorted(), id: \.self) { taskGroupKey in
                 Section(header: Text(taskGroupKey)) {

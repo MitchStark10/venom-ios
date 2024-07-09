@@ -13,7 +13,13 @@ struct Constants {
     static let loginUrl = URL(string: baseApiUrl + "/users/login")
     static let listsUrl = URL(string: baseApiUrl + "/lists")
     static let tasksUrl = URL(string: baseApiUrl + "/tasks")
-    static let todayTasksUrl = URL(string: baseApiUrl + "/tasks/today")
+    
+    static func getTodayTasksUrl() -> URL {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        
+        return URL(string: "\(baseApiUrl)/tasks/today?today=\(dateFormatter.string(from: Date()))")!
+    }
 
     static func getTaskUrlWithId(id: Int) -> URL {
         return URL(string: baseApiUrl + "/tasks/\(id)")!

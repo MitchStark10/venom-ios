@@ -10,7 +10,7 @@ import SwiftUI
 struct VenomList: Decodable, Hashable {
     let id, order: Int;
     let listName: String;
-    let tasks: [VenomTask];
+    var tasks: [VenomTask]? = [];
     
     static func == (lhs: VenomList, rhs: VenomList) -> Bool {
         return lhs.identifier == rhs.identifier

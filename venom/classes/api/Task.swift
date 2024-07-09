@@ -14,6 +14,7 @@ class VenomTask: Decodable, Identifiable {
     let listViewOrder, timeViewOrder: Int?;
     var isCompleted: Bool;
     let taskTag: [TaskTag]?;
+    let list: VenomList?;
     let tagIds: [Int]
     
     public func toJsonObject() -> [String: Any] {
@@ -66,7 +67,7 @@ class TaskApi: ObservableObject {
     
     func fetchTodayTasks() async {
         do {
-            let data = try await sendApiCall(url: Constants.todayTasksUrl!, requestMethod: "GET")
+            let data = try await sendApiCall(url: Constants.getTodayTasksUrl(), requestMethod: "GET")
             let fetchedTasks = try JSONDecoder().decode([VenomTask].self, from: data)
             
             DispatchQueue.main.async {

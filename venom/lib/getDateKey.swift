@@ -26,8 +26,6 @@ func getRelativeTimeSpanString(for date: Date?) -> String {
         return "\(prefix) Due Today"
     }
     
-
-    
     return "\(prefix) Due \(relativeFormattedDueDate)"
 }
 

@@ -17,7 +17,7 @@ struct SubViewRouter: View {
             if (navMenuItem.list != nil) {
                 TaskList(taskItems: navMenuItem.list?.tasks ?? [], navTitle: navMenuItem.label)
             } else if (navMenuItem.label == "Today") {
-                TaskList(taskItems: taskApi.todayTasks, navTitle: navMenuItem.label).onAppear {
+                TaskList(taskItems: taskApi.todayTasks, navTitle: navMenuItem.label, groupBy: GroupByOptions.list).onAppear {
                     Task {
                         await taskApi.fetchTodayTasks()
                     }
