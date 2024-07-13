@@ -7,6 +7,14 @@
 
 import Foundation
 
+enum NavigationOption: String {
+    case home
+    case today
+    case upcoming
+    case completed
+    case list
+}
+
 struct NavMenuItem: Hashable, Equatable, Identifiable {
     var id: UUID
     let label: String;

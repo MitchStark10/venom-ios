@@ -35,7 +35,10 @@ struct TaskList: View {
                                     }
                                 }
                             Text(task.taskName)
-                                .strikethrough(task.isCompleted, color: .black)
+                                .strikethrough(task.isCompleted, color: .black).onTapGesture {
+                                    taskApi.taskToEdit = task;
+                                    taskApi.showTaskModal = true;
+                                }
                         }
                     }
                 }

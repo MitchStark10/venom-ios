@@ -11,16 +11,35 @@ import SwiftUI
 struct CreateTaskModal: View {
     @EnvironmentObject var lists: Lists;
     @EnvironmentObject var taskApi: TaskApi
-    @Binding var isShowingNewTaskModal: Bool;
-    @State var taskName = "";
-    @State var listId: Int? = nil;
-    @State private var dueDate = Date();
+    
+    var task: VenomTask?;
+    @State var taskName: String;
+    @State var listId: Int?;
+    @State private var dueDate: Date;
+    
+    init(task: VenomTask? = nil) {
+        self.task = task;
+        self.taskName = task?.taskName ?? "";
+        self.listId = nil
+        
+        if (task?.dueDate != nil) {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            self.dueDate = dateFormatter.date(from: task!.dueDate!)!
+        } else {
+            self.dueDate = Date();
+        }
+    }
+    
+    var headerText: String {
+        return self.task == nil ? "Create New Task" : "Edit Task"
+    }
     
     var body: some View {
         VStack {
             Form {
-                Section(header: Text("Create New Task").font(.subheadline)) {
-                    TextField(text: $taskName, prompt: Text("Task Name")) {
+                Section(header: Text(headerText).font(.subheadline)) {
+                    TextField(text: $taskName, prompt: Text("Task Name"), axis: .vertical) {
                         Text("Task Name")
                     }
                     DatePicker(
@@ -28,7 +47,7 @@ struct CreateTaskModal: View {
                         selection: $dueDate,
                         displayedComponents: [.date]
                     )
-                    if (listId != nil) {
+                    if (listId != nil && task == nil) {
                         Picker("List", selection: $listId) {
                             ForEach(lists.lists, id: \.self) { list in
                                 Text(list.listName).tag(list.id as Int?)
@@ -37,7 +56,8 @@ struct CreateTaskModal: View {
                     }
                     HStack {
                         Button(action: {
-                            isShowingNewTaskModal = false;
+                            taskApi.taskToEdit = nil;
+                            taskApi.showTaskModal = false;
                         }) {
                             Text("Dismiss")
                         }.buttonStyle(BorderlessButtonStyle()).padding()
@@ -46,12 +66,24 @@ struct CreateTaskModal: View {
                         
                         Button(action: {
                             Task {
-                                if (listId == nil) {
+                                if (listId == nil && task == nil) {
                                     // TODO: Show some error message
                                     return;
                                 }
-                                await taskApi.createTask(taskName: taskName, dueDate: dueDate, listId: listId!, lists: lists)
-                                isShowingNewTaskModal = false;
+                                
+                                if (task != nil) {
+                                    let dateFormatter = DateFormatter()
+                                    dateFormatter.dateFormat = "yyyy-MM-dd"
+                                    
+                                    task!.taskName = taskName;
+                                    task!.dueDate = dateFormatter.string(from: self.dueDate)
+                                    
+                                    await taskApi.updateTask(task: task!, lists: lists);
+                                } else {
+                                    await taskApi.createTask(taskName: taskName, dueDate: dueDate, listId: listId!, lists: lists)
+                                }
+                                taskApi.showTaskModal = false;
+                                taskApi.taskToEdit = nil;
                             }
                         }) {
                             Text("Save")

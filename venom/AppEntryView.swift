@@ -9,10 +9,16 @@ import SwiftUI
 
 struct AppEntryView: View {
     @State private var hasSignedIn = initializeSignInStatus();
-    @State private var isShowingNewTaskModal = false;
     @EnvironmentObject var lists: Lists
     @EnvironmentObject var taskApi: TaskApi
-    private let defaultMenuItems = [NavMenuItem(label: "Today"), NavMenuItem(label: "Upcoming"), NavMenuItem(label: "Completed")];
+    @State private var selectedOption: NavigationOption? = .home
+    @Environment (\.scenePhase) private var scenePhase;
+    
+    private let defaultMenuItems = [
+        NavMenuItem(label: "Today"),
+        NavMenuItem(label: "Upcoming"),
+        NavMenuItem(label: "Completed")
+    ];
     
     private func getMenuItems() -> [NavMenuItem] {
         var menuItems: [NavMenuItem] = []
@@ -29,7 +35,7 @@ struct AppEntryView: View {
                 LoginSignUp(hasSignedIn: $hasSignedIn)
             } else {
                 ZStack(alignment: .bottomTrailing) {
-                    NavigationStack {
+                    NavigationStack() {
                         List {
                             ForEach(defaultMenuItems) { menuItem in
                                 NavigationLink(destination: SubViewRouter(navMenuItem: menuItem)) {
@@ -52,15 +58,21 @@ struct AppEntryView: View {
                         Task {
                             await lists.fetchLists()
                         }
+                    }.onChange(of: scenePhase) { oldPhase, newPhase in
+                        if (newPhase == .active) {
+                            Task {
+                                await lists.fetchLists()
+                            }
+                        }
                     }
                     
-                    NewTaskFAB(isShowingNewTaskModal: $isShowingNewTaskModal)
+                    NewTaskFAB()
                 }
             }
         }
         .frame(width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height, alignment: .topLeading)
-        .sheet(isPresented: $isShowingNewTaskModal) {
-            CreateTaskModal(isShowingNewTaskModal: $isShowingNewTaskModal)
+        .sheet(isPresented: $taskApi.showTaskModal) {
+            CreateTaskModal(task: taskApi.taskToEdit)
         }
     }
 }

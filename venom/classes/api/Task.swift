@@ -9,8 +9,8 @@ import SwiftUI
 
 class VenomTask: Decodable, Identifiable {
     let id: Int;
-    let taskName: String;
-    let dueDate: String?;
+    var taskName: String;
+    var dueDate: String?;
     let listViewOrder, timeViewOrder: Int?;
     var isCompleted: Bool;
     let taskTag: [TaskTag]?;
@@ -29,6 +29,8 @@ class VenomTask: Decodable, Identifiable {
 
 class TaskApi: ObservableObject {
     @Published var todayTasks: [VenomTask] = [];
+    @Published var taskToEdit: VenomTask?;
+    @Published var showTaskModal: Bool = false;
     
     @discardableResult
     func createTask(taskName: String, dueDate: Date?, listId: Int, lists: Lists) async -> Bool {
