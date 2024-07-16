@@ -11,14 +11,16 @@ import SwiftUI
 struct CreateTaskModal: View {
     @EnvironmentObject var lists: Lists;
     @EnvironmentObject var taskApi: TaskApi
+    private var currentViewLabel: String?
     
     var task: VenomTask?;
     @State var taskName: String;
     @State var listId: Int?;
     @State private var dueDate: Date;
     
-    init(task: VenomTask? = nil) {
+    init(task: VenomTask? = nil, currentViewLabel: String?) {
         self.task = task;
+        self.currentViewLabel = currentViewLabel;
         self.taskName = task?.taskName ?? "";
         self.listId = nil
         
@@ -84,6 +86,12 @@ struct CreateTaskModal: View {
                                 }
                                 taskApi.showTaskModal = false;
                                 taskApi.taskToEdit = nil;
+                                
+                                if (currentViewLabel == "Today") {
+                                    await taskApi.fetchTodayTasks()
+                                } else if (currentViewLabel == "Upcoming") {
+                                    await taskApi.fetchUpcomingTasks()
+                                }
                             }
                         }) {
                             Text("Save")

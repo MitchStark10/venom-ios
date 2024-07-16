@@ -11,9 +11,27 @@ import SwiftUI
 struct TaskList: View {
     @EnvironmentObject var lists: Lists;
     @EnvironmentObject var taskApi: TaskApi;
+    
     var taskItems: [VenomTask]
     var navTitle: String
     var groupBy: GroupByOptions = GroupByOptions.date;
+    
+    private func handleTaskCheck(task: VenomTask) async {
+        task.isCompleted = !task.isCompleted;
+        let updateTaskResposne = await taskApi.updateTask(task:task, lists:lists);
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            Task {
+                if (!updateTaskResposne) {
+                    task.isCompleted = !task.isCompleted;
+                } else if (navTitle == "Today") {
+                    await taskApi.fetchTodayTasks()
+                } else if (navTitle == "Upcoming") {
+                    await taskApi.fetchUpcomingTasks()
+                }
+            }
+        }
+    }
     
     var body: some View {
         List {
@@ -25,13 +43,8 @@ struct TaskList: View {
                         HStack {
                             Image(systemName: task.isCompleted ? "checkmark.circle.fill" : "circle")
                                 .onTapGesture {
-                                    task.isCompleted = !task.isCompleted;
                                     Task {
-                                        let updateTaskResposne = await taskApi.updateTask(task:task, lists:lists);
-                                        
-                                        if (!updateTaskResposne) {
-                                            task.isCompleted = !task.isCompleted;
-                                        }
+                                        await handleTaskCheck(task: task)
                                     }
                                 }
                             Text(task.taskName)

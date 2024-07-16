@@ -22,6 +22,5 @@ struct NewTaskFAB: View {
                 .shadow(radius: 4, x: 0, y: 4)
         }
         .padding(.trailing, 20)
-        .padding(.bottom, 40)
     }
 }

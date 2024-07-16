@@ -20,6 +20,13 @@ struct Constants {
         
         return URL(string: "\(baseApiUrl)/tasks/today?today=\(dateFormatter.string(from: Date()))")!
     }
+    
+    static func getUpcomingTasksUrl() -> URL {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        
+        return URL(string: "\(baseApiUrl)/tasks/upcoming?today=\(dateFormatter.string(from: Date()))")!
+    }
 
     static func getTaskUrlWithId(id: Int) -> URL {
         return URL(string: baseApiUrl + "/tasks/\(id)")!

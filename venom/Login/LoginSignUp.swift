@@ -42,27 +42,45 @@ struct LoginSignUp: View {
     }
     
     var body: some View {
-        Form {
-            TextField(text: $email, prompt: Text("Email")) {
-                Text("Email")
-            }
-            SecureField(text: $password, prompt: Text("Password")) {
-                Text("Password")
-            }
-            Button {
-                Task {
-                    await signIn()
+        VStack {
+            Section {
+                Text("Log In")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .padding(.horizontal)
+                
+                TextField(text: $email, prompt: Text("Email")) {
+                    Text("Email")
                 }
-            } label: {
-                Text("Login")
-            }
-            .disabled(email.isEmpty || password.isEmpty || apiRequestStatus == APIRequestStatus.processing)
-            
-            if (!getStatusText().isEmpty) {
-                Text(getStatusText())
-            }
-            
-        }.background(.white)
+                    .padding()
+                    .background(Color(.systemGray6))
+                    .cornerRadius(5.0)
+                    .autocapitalization(.none)
+                
+                SecureField(text: $password, prompt: Text("Password")) {
+                    Text("Password")
+                }
+                    .padding()
+                    .background(Color(.systemGray6))
+                    .cornerRadius(5.0)
+                    .autocapitalization(.none)
+                
+                Button {
+                    Task {
+                        await signIn()
+                    }
+                } label: {
+                    Text("Login")
+                        .frame(maxWidth: .infinity)
+                }
+                .buttonStyle(BorderedProminentButtonStyle())
+                .disabled(email.isEmpty || password.isEmpty || apiRequestStatus == APIRequestStatus.processing)
+                
+                if (!getStatusText().isEmpty) {
+                    Text(getStatusText())
+                }
+            }.padding(.horizontal, 10)
+        }
     }
 }
 

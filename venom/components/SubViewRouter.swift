@@ -22,6 +22,12 @@ struct SubViewRouter: View {
                         await taskApi.fetchTodayTasks()
                     }
                 }
+            } else if (navMenuItem.label == "Upcoming") {
+                TaskList(taskItems: taskApi.upcomingTasks, navTitle: navMenuItem.label).onAppear {
+                    Task {
+                        await taskApi.fetchUpcomingTasks()
+                    }
+                }
             } else {
                 Text(navMenuItem.label)
             }

@@ -11,7 +11,8 @@ struct AppEntryView: View {
     @State private var hasSignedIn = initializeSignInStatus();
     @EnvironmentObject var lists: Lists
     @EnvironmentObject var taskApi: TaskApi
-    @State private var selectedOption: NavigationOption? = .home
+    @State private var path: NavigationPath = NavigationPath()
+    @State private var currentViewLabel: String? = nil;
     @Environment (\.scenePhase) private var scenePhase;
     
     private let defaultMenuItems = [
@@ -29,30 +30,43 @@ struct AppEntryView: View {
         return menuItems
     }
     
+    func getAllMenuItems() -> [NavMenuItem] {
+        return defaultMenuItems + getMenuItems();
+    }
+    
     var body: some View {
         VStack {
             if (!hasSignedIn) {
                 LoginSignUp(hasSignedIn: $hasSignedIn)
             } else {
                 ZStack(alignment: .bottomTrailing) {
-                    NavigationStack() {
+                    NavigationStack(path: $path) {
                         List {
                             ForEach(defaultMenuItems) { menuItem in
-                                NavigationLink(destination: SubViewRouter(navMenuItem: menuItem)) {
-                                    Text(menuItem.label)
-                                }
+                                Button(menuItem.label) {
+                                    path.append(menuItem.label)
+                                }.foregroundColor(Color(UIColor.label))
                             }
                             
                             Section(header: Text("Lists")) {
                                 ForEach(getMenuItems()) { menuItem in
-                                    NavigationLink(destination: SubViewRouter(navMenuItem: menuItem)) {
-                                        Text(menuItem.label)
-                                    }
+                                    Button (menuItem.label) {
+                                        path.append(menuItem.label)
+                                    }.foregroundColor(Color(UIColor.label))
                                 }
                             }
                         }
                         .navigationTitle("Home")
-                        .navigationBarTitleDisplayMode(.inline)
+                        .navigationDestination(for: String.self) { viewLabel in
+                            let associatedNavMenuItem = getAllMenuItems().first(where: { $0.label == viewLabel })
+                            if (associatedNavMenuItem != nil) {
+                                SubViewRouter(navMenuItem: associatedNavMenuItem!).onAppear {
+                                    currentViewLabel = viewLabel
+                                }.onDisappear {
+                                    currentViewLabel = nil
+                                }
+                            }
+                        }
                         
                     }.onAppear {
                         Task {
@@ -70,9 +84,12 @@ struct AppEntryView: View {
                 }
             }
         }
-        .frame(width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height, alignment: .topLeading)
-        .sheet(isPresented: $taskApi.showTaskModal) {
-            CreateTaskModal(task: taskApi.taskToEdit)
+        .ignoresSafeArea(.keyboard)
+        .sheet(isPresented: $taskApi.showTaskModal, onDismiss: {
+            taskApi.taskToEdit = nil;
+            taskApi.showTaskModal = false;
+        }) {
+            CreateTaskModal(task: taskApi.taskToEdit, currentViewLabel: currentViewLabel)
         }
     }
 }
