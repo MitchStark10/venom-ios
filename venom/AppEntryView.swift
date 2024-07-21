@@ -76,6 +76,14 @@ struct AppEntryView: View {
                         if (newPhase == .active) {
                             Task {
                                 await lists.fetchLists()
+                                
+                                if (currentViewLabel == "Today") {
+                                    await taskApi.fetchTodayTasks()
+                                } else if (currentViewLabel == "Upcoming") {
+                                    await taskApi.fetchUpcomingTasks()
+                                } else if (currentViewLabel == "Completed") {
+                                    await taskApi.fetchCompletedTasks()
+                                }
                             }
                         }
                     }

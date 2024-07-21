@@ -30,6 +30,7 @@ class VenomTask: Decodable, Identifiable {
 class TaskApi: ObservableObject {
     @Published var todayTasks: [VenomTask] = [];
     @Published var upcomingTasks: [VenomTask] = [];
+    @Published var completedTasks: [VenomTask] = [];
     @Published var taskToEdit: VenomTask?;
     @Published var showTaskModal: Bool = false;
     
@@ -91,6 +92,20 @@ class TaskApi: ObservableObject {
             
             DispatchQueue.main.async {
                 self.upcomingTasks = fetchedTasks;
+                self.objectWillChange.send()
+            }
+        } catch {
+            print("Caught an error retrieving today's tasks: \(error)")
+        }
+    }
+    
+    func fetchCompletedTasks() async {
+        do {
+            let data = try await sendApiCall(url: Constants.completedTasksUrl!, requestMethod: "GET")
+            let fetchedTasks = try JSONDecoder().decode([VenomTask].self, from: data)
+            
+            DispatchQueue.main.async {
+                self.completedTasks = fetchedTasks;
                 self.objectWillChange.send()
             }
         } catch {

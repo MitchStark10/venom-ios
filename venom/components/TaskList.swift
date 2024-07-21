@@ -28,6 +28,8 @@ struct TaskList: View {
                     await taskApi.fetchTodayTasks()
                 } else if (navTitle == "Upcoming") {
                     await taskApi.fetchUpcomingTasks()
+                } else if (navTitle == "Completed") {
+                    await taskApi.fetchCompletedTasks()
                 }
             }
         }

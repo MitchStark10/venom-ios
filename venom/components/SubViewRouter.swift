@@ -28,6 +28,12 @@ struct SubViewRouter: View {
                         await taskApi.fetchUpcomingTasks()
                     }
                 }
+            } else if (navMenuItem.label == "Completed") {
+                TaskList(taskItems: taskApi.completedTasks, navTitle: navMenuItem.label).onAppear {
+                    Task {
+                        await taskApi.fetchCompletedTasks()
+                    }
+                }
             } else {
                 Text(navMenuItem.label)
             }
