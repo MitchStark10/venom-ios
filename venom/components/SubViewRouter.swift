@@ -23,15 +23,17 @@ struct SubViewRouter: View {
                     }
                 }
             } else if (navMenuItem.label == "Upcoming") {
-                TaskList(taskItems: taskApi.upcomingTasks, navTitle: navMenuItem.label).onAppear {
+                TaskList(taskItems: taskApi.upcomingTasks, navTitle: navMenuItem.label, showListName: true).onAppear {
                     Task {
                         await taskApi.fetchUpcomingTasks()
                     }
                 }
             } else if (navMenuItem.label == "Completed") {
-                TaskList(taskItems: taskApi.completedTasks, navTitle: navMenuItem.label).onAppear {
-                    Task {
-                        await taskApi.fetchCompletedTasks()
+                VStack {
+                    TaskList(taskItems: taskApi.completedTasks, navTitle: navMenuItem.label, showListName: true, showDeleteTasksButton: true).onAppear {
+                        Task {
+                            await taskApi.fetchCompletedTasks()
+                        }
                     }
                 }
             } else {

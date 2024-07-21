@@ -109,7 +109,16 @@ class TaskApi: ObservableObject {
                 self.objectWillChange.send()
             }
         } catch {
-            print("Caught an error retrieving today's tasks: \(error)")
+            print("Caught an error retrieving completed tasks: \(error)")
+        }
+    }
+    
+    func deleteCompletedTasks() async {
+        do {
+            try await sendApiCall(url: Constants.completedTasksUrl!, requestMethod: "DELETE")
+            await fetchCompletedTasks()
+        } catch {
+            print("Caught an error deleting completed tasks: \(error)")
         }
     }
 }

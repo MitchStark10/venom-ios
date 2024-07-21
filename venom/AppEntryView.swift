@@ -95,7 +95,9 @@ struct AppEntryView: View {
                         }
                     }
                     
-                    NewTaskFAB()
+                    if (currentViewLabel != "Completed") {
+                        NewTaskFAB()
+                    }
                 }
             }
         }
