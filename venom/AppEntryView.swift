@@ -53,6 +53,13 @@ struct AppEntryView: View {
                                     Button (menuItem.label) {
                                         path.append(menuItem.label)
                                     }.foregroundColor(Color(UIColor.label))
+                                        .contextMenu(ContextMenu(menuItems: {
+                                            Button("Delete List") {
+                                                Task {
+                                                    await lists.deleteList(listId: menuItem.list!.id)
+                                                }
+                                            }
+                                        }))
                                 }
                             }
                         }
@@ -98,6 +105,10 @@ struct AppEntryView: View {
             taskApi.showTaskModal = false;
         }) {
             CreateTaskModal(task: taskApi.taskToEdit, currentViewLabel: currentViewLabel)
+        }.sheet(isPresented: $lists.showNewListModal, onDismiss: {
+            lists.showNewListModal = false;
+        }) {
+            CreateListModal()
         }
     }
 }

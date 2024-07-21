@@ -13,6 +13,7 @@
 		805910E82C2F4782005780C1 /* APIRequestStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805910E72C2F4782005780C1 /* APIRequestStatus.swift */; };
 		805910EA2C2F5013005780C1 /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805910E92C2F5013005780C1 /* KeychainHelper.swift */; };
 		805910EC2C2F5155005780C1 /* initializeSignInStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805910EB2C2F5155005780C1 /* initializeSignInStatus.swift */; };
+		807098DE2C4DB30100FC5DCE /* CreateListModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807098DD2C4DB30100FC5DCE /* CreateListModal.swift */; };
 		8071FA6C2C3639D500930AD4 /* CreateTaskModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8071FA6B2C3639D500930AD4 /* CreateTaskModal.swift */; };
 		8071FA6E2C363D0300930AD4 /* DropdownMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8071FA6D2C363D0300930AD4 /* DropdownMenu.swift */; };
 		80C368212C2F761C0023DC52 /* sendApiCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C368202C2F761C0023DC52 /* sendApiCall.swift */; };
@@ -63,6 +64,7 @@
 		805910E72C2F4782005780C1 /* APIRequestStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequestStatus.swift; sourceTree = "<group>"; };
 		805910E92C2F5013005780C1 /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
 		805910EB2C2F5155005780C1 /* initializeSignInStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = initializeSignInStatus.swift; sourceTree = "<group>"; };
+		807098DD2C4DB30100FC5DCE /* CreateListModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateListModal.swift; sourceTree = "<group>"; };
 		8071FA6B2C3639D500930AD4 /* CreateTaskModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTaskModal.swift; sourceTree = "<group>"; };
 		8071FA6D2C363D0300930AD4 /* DropdownMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropdownMenu.swift; sourceTree = "<group>"; };
 		80C368202C2F761C0023DC52 /* sendApiCall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sendApiCall.swift; sourceTree = "<group>"; };
@@ -151,6 +153,7 @@
 				80CCF6A02C34C60200AB4483 /* SubViewRouter.swift */,
 				8071FA6B2C3639D500930AD4 /* CreateTaskModal.swift */,
 				8071FA6D2C363D0300930AD4 /* DropdownMenu.swift */,
+				807098DD2C4DB30100FC5DCE /* CreateListModal.swift */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -388,6 +391,7 @@
 				805910DD2C2F41BF005780C1 /* UserSettings.swift in Sources */,
 				80E4C6A62BABD8E300C17AC9 /* Constants.swift in Sources */,
 				80CCF69F2C34C5BE00AB4483 /* NavMenuItem.swift in Sources */,
+				807098DE2C4DB30100FC5DCE /* CreateListModal.swift in Sources */,
 				80C3682A2C2F871B0023DC52 /* Task.swift in Sources */,
 				805910E12C2F4459005780C1 /* LoginResponse.swift in Sources */,
 				8071FA6E2C363D0300930AD4 /* DropdownMenu.swift in Sources */,

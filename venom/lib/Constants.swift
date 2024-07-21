@@ -32,4 +32,8 @@ struct Constants {
     static func getTaskUrlWithId(id: Int) -> URL {
         return URL(string: baseApiUrl + "/tasks/\(id)")!
     }
+    
+    static func getListUrlWithId(id: Int) -> URL {
+        return URL(string: baseApiUrl + "/lists/\(id)")!
+    }
 }

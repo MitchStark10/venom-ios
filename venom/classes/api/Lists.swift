@@ -28,6 +28,7 @@ struct VenomList: Decodable, Hashable {
 
 class Lists: ObservableObject {
     @Published var lists: [VenomList] = []
+    @Published var showNewListModal = false;
     
     init(lists: [VenomList]) {
         self.lists = lists
@@ -43,6 +44,25 @@ class Lists: ObservableObject {
         } catch {
             print("Caught error when fetching lists \(error)")
             // TODO: Toast message in the UI?
+        }
+    }
+    
+    public func createList(listName: String) async {
+        do {
+            let requestBody = ["listName": listName]
+            let createListResponse = try await sendApiCall(url: Constants.listsUrl!, requestMethod: "POST", requestBody: requestBody)
+            await fetchLists()
+        } catch {
+            print("Caught error when creating a new list \(error)")
+        }
+    }
+    
+    public func deleteList(listId: Int) async {
+        do {
+            try await sendApiCall(url: Constants.getListUrlWithId(id: listId), requestMethod: "DELETE")
+            await fetchLists()
+        } catch {
+            print("Caught error when deleting a list \(error)")
         }
     }
 }
