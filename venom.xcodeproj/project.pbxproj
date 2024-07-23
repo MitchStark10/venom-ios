@@ -20,6 +20,8 @@
 		80C368242C2F7B970023DC52 /* NewTaskFAB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C368232C2F7B970023DC52 /* NewTaskFAB.swift */; };
 		80C368282C2F86B80023DC52 /* Lists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C368272C2F86B80023DC52 /* Lists.swift */; };
 		80C3682A2C2F871B0023DC52 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C368292C2F871B0023DC52 /* Task.swift */; };
+		80C531352C4F47A6008B0FAA /* CheckboxToggleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C531342C4F47A6008B0FAA /* CheckboxToggleStyle.swift */; };
+		80C531372C4F4B64008B0FAA /* TaskItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C531362C4F4B64008B0FAA /* TaskItem.swift */; };
 		80C706512C36F28C0092D6B4 /* formatDueDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C706502C36F28C0092D6B4 /* formatDueDate.swift */; };
 		80C706532C37512B0092D6B4 /* groupTasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C706522C37512B0092D6B4 /* groupTasks.swift */; };
 		80C706552C3751B80092D6B4 /* getDateKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C706542C3751B80092D6B4 /* getDateKey.swift */; };
@@ -71,6 +73,8 @@
 		80C368232C2F7B970023DC52 /* NewTaskFAB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTaskFAB.swift; sourceTree = "<group>"; };
 		80C368272C2F86B80023DC52 /* Lists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lists.swift; sourceTree = "<group>"; };
 		80C368292C2F871B0023DC52 /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
+		80C531342C4F47A6008B0FAA /* CheckboxToggleStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxToggleStyle.swift; sourceTree = "<group>"; };
+		80C531362C4F4B64008B0FAA /* TaskItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskItem.swift; sourceTree = "<group>"; };
 		80C706502C36F28C0092D6B4 /* formatDueDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = formatDueDate.swift; sourceTree = "<group>"; };
 		80C706522C37512B0092D6B4 /* groupTasks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = groupTasks.swift; sourceTree = "<group>"; };
 		80C706542C3751B80092D6B4 /* getDateKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = getDateKey.swift; sourceTree = "<group>"; };
@@ -154,6 +158,8 @@
 				8071FA6B2C3639D500930AD4 /* CreateTaskModal.swift */,
 				8071FA6D2C363D0300930AD4 /* DropdownMenu.swift */,
 				807098DD2C4DB30100FC5DCE /* CreateListModal.swift */,
+				80C531342C4F47A6008B0FAA /* CheckboxToggleStyle.swift */,
+				80C531362C4F4B64008B0FAA /* TaskItem.swift */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -370,9 +376,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				80C531352C4F47A6008B0FAA /* CheckboxToggleStyle.swift in Sources */,
 				8071FA6C2C3639D500930AD4 /* CreateTaskModal.swift in Sources */,
 				80CCF69D2C34C49A00AB4483 /* Tag.swift in Sources */,
 				805910E42C2F46C6005780C1 /* LoginSignUpApi.swift in Sources */,
+				80C531372C4F4B64008B0FAA /* TaskItem.swift in Sources */,
 				80C368242C2F7B970023DC52 /* NewTaskFAB.swift in Sources */,
 				805910EC2C2F5155005780C1 /* initializeSignInStatus.swift in Sources */,
 				80E4C6792BA732B700C17AC9 /* AppEntryView.swift in Sources */,
