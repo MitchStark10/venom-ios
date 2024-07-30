@@ -36,6 +36,8 @@ struct SubViewRouter: View {
                         }
                     }
                 }
+            } else if (navMenuItem.label == "Tags") {
+              Text("TODO: tags")
             } else {
                 Text(navMenuItem.label)
             }

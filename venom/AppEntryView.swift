@@ -21,6 +21,10 @@ struct AppEntryView: View {
         NavMenuItem(label: "Completed")
     ];
     
+    private let secondaryMenuItems = [
+        NavMenuItem(label: "Tags")
+    ];
+    
     private func getMenuItems() -> [NavMenuItem] {
         var menuItems: [NavMenuItem] = []
         for list in lists.lists {
@@ -31,7 +35,7 @@ struct AppEntryView: View {
     }
     
     func getAllMenuItems() -> [NavMenuItem] {
-        return defaultMenuItems + getMenuItems();
+        return defaultMenuItems + secondaryMenuItems + getMenuItems();
     }
     
     var body: some View {
@@ -47,6 +51,15 @@ struct AppEntryView: View {
                                     path.append(menuItem.label)
                                 }.foregroundColor(Color(UIColor.label))
                             }
+                            
+                            Section {
+                                ForEach(secondaryMenuItems) { menuItem in
+                                    Button(menuItem.label) {
+                                        path.append(menuItem.label)
+                                    }.foregroundColor(Color(UIColor.label))
+                                }
+                            }
+                            
                             
                             Section(header: Text("Lists")) {
                                 ForEach(getMenuItems()) { menuItem in
