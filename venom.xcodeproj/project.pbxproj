@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8002A0472C59D74C006018B1 /* TagList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8002A0462C59D74C006018B1 /* TagList.swift */; };
 		805910DD2C2F41BF005780C1 /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805910DC2C2F41BF005780C1 /* UserSettings.swift */; };
 		805910E12C2F4459005780C1 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805910E02C2F4459005780C1 /* LoginResponse.swift */; };
 		805910E42C2F46C6005780C1 /* LoginSignUpApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805910E32C2F46C6005780C1 /* LoginSignUpApi.swift */; };
@@ -59,6 +60,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8002A0462C59D74C006018B1 /* TagList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagList.swift; sourceTree = "<group>"; };
 		802860092C460C5E00533AFF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		805910DC2C2F41BF005780C1 /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
 		805910E02C2F4459005780C1 /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
@@ -160,6 +162,7 @@
 				807098DD2C4DB30100FC5DCE /* CreateListModal.swift */,
 				80C531342C4F47A6008B0FAA /* CheckboxToggleStyle.swift */,
 				80C531362C4F4B64008B0FAA /* TaskItem.swift */,
+				8002A0462C59D74C006018B1 /* TagList.swift */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -384,6 +387,7 @@
 				80C368242C2F7B970023DC52 /* NewTaskFAB.swift in Sources */,
 				805910EC2C2F5155005780C1 /* initializeSignInStatus.swift in Sources */,
 				80E4C6792BA732B700C17AC9 /* AppEntryView.swift in Sources */,
+				8002A0472C59D74C006018B1 /* TagList.swift in Sources */,
 				80CCF6A12C34C60200AB4483 /* SubViewRouter.swift in Sources */,
 				80E4C6772BA732B700C17AC9 /* venomApp.swift in Sources */,
 				80C368282C2F86B80023DC52 /* Lists.swift in Sources */,

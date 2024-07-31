@@ -11,6 +11,7 @@ struct AppEntryView: View {
     @State private var hasSignedIn = initializeSignInStatus();
     @EnvironmentObject var lists: Lists
     @EnvironmentObject var taskApi: TaskApi
+    @EnvironmentObject var tagApi: TagApi
     @State private var path: NavigationPath = NavigationPath()
     @State private var currentViewLabel: String? = nil;
     @Environment (\.scenePhase) private var scenePhase;
@@ -103,6 +104,8 @@ struct AppEntryView: View {
                                     await taskApi.fetchUpcomingTasks()
                                 } else if (currentViewLabel == "Completed") {
                                     await taskApi.fetchCompletedTasks()
+                                } else if (currentViewLabel == "Tags") {
+                                    await tagApi.fetchTags()
                                 }
                             }
                         }

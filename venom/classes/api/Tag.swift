@@ -7,8 +7,24 @@
 
 import Foundation
 
-struct Tag: Decodable {
+struct Tag: Decodable, Identifiable {
     let id: Int;
     let tagName: String;
     let tagColor: String;
+}
+
+class TagApi: ObservableObject {
+    @Published var tags: [Tag] = [];
+    
+    public func fetchTags() async {
+        do {
+            let tagsResponse = try await sendApiCall(url: Constants.tagsUrl!, requestMethod: "GET")
+            let newTags = try JSONDecoder().decode([Tag].self, from: tagsResponse)
+            DispatchQueue.main.async {
+                self.tags = newTags;
+            }
+        } catch {
+            print("Caught error when fetching lists \(error)")
+        }
+    }
 }

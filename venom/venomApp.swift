@@ -11,10 +11,14 @@ import SwiftUI
 struct venomApp: App {
     @State var lists = Lists(lists: [])
     @State var taskApi = TaskApi()
+    @State var tagApi = TagApi()
     
     var body: some Scene {
         WindowGroup {
-            AppEntryView().environmentObject(lists).environmentObject(taskApi)
+            AppEntryView()
+                .environmentObject(lists)
+                .environmentObject(taskApi)
+                .environmentObject(tagApi)
         }
     }
 }

@@ -10,6 +10,7 @@ import SwiftUI
 
 struct SubViewRouter: View {
     @EnvironmentObject var taskApi: TaskApi;
+    @EnvironmentObject var tagApi: TagApi;
     let navMenuItem: NavMenuItem;
     
     var body: some View {
@@ -37,7 +38,11 @@ struct SubViewRouter: View {
                     }
                 }
             } else if (navMenuItem.label == "Tags") {
-              Text("TODO: tags")
+                TagList().onAppear {
+                    Task {
+                        await tagApi.fetchTags();
+                    }
+                }
             } else {
                 Text(navMenuItem.label)
             }
