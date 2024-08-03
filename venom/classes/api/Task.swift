@@ -17,10 +17,10 @@ class VenomTask: Decodable, Identifiable {
     let list: VenomList?;
     let tagIds: [Int]
     
-    public func toJsonObject() -> [String: Any] {
+    public func toJsonObject() -> [String: Any?] {
         return [
             "taskName": self.taskName,
-            "dueDate": self.dueDate ?? "",
+            "dueDate": self.dueDate ?? nil,
             "isCompleted": self.isCompleted,
             "tagIds": self.tagIds
         ]
@@ -60,7 +60,7 @@ class TaskApi: ObservableObject {
     @discardableResult
     func updateTask(task: VenomTask, lists: Lists) async -> Bool {
         do {
-            try await sendApiCall(url: Constants.getTaskUrlWithId(id: task.id), requestMethod: "PUT", requestBody: task.toJsonObject())
+            try await sendApiCall(url: Constants.getTaskUrlWithId(id: task.id), requestMethod: "PUT", requestBody: task.toJsonObject(), verboseLogging: true)
             Task {
                 await lists.fetchLists()
             }

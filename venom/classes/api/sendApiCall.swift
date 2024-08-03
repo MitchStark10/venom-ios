@@ -12,6 +12,10 @@ func sendApiCall(url: URL, requestMethod: String, requestBody: Any? = nil, verbo
     var urlRequest = URLRequest(url: url)
     urlRequest.httpMethod = requestMethod
     if (requestBody != nil) {
+        if (verboseLogging) {
+            print("Request body: \(requestBody!)")
+        }
+        
         let jsonData = try JSONSerialization.data(withJSONObject: requestBody!)
         urlRequest.httpBody = jsonData
         urlRequest.setValue("\(String(describing: jsonData.count))", forHTTPHeaderField: "Content-Length")
