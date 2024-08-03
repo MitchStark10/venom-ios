@@ -8,6 +8,8 @@
 import Foundation
 import SwiftUI
 
+let rightAlignmentWidth: CGFloat = 30;
+
 struct TaskItem: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var taskApi: TaskApi;
@@ -57,11 +59,20 @@ struct TaskItem: View {
                 }))
             }
             
+            if (task.taskTag?.isEmpty == false) {
+                HStack {
+                    ForEach(task.taskTag!) { taskTag in
+                        Flag(tag: taskTag.tag)
+                            .padding(.leading, rightAlignmentWidth)
+                    }
+                }
+            }
+            
             if (showListName && task.list != nil) {
                 Text(task.list!.listName)
                     .font(.caption)
                     .padding(.top, 2)
-                    .padding(.leading, 30)
+                    .padding(.leading, rightAlignmentWidth)
             }
         }
         .frame(maxWidth: .infinity, alignment: .topLeading)

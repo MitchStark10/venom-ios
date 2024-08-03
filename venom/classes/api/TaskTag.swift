@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct TaskTag: Decodable {
+struct TaskTag: Decodable, Identifiable {
+    var id: String { "\(taskId)\(tagId)" }
     let taskId: Int;
     let tagId: Int;
     let tag: Tag;

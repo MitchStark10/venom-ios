@@ -11,6 +11,8 @@ import SwiftUI
 struct TagList: View {
     @EnvironmentObject var tagApi: TagApi;
     
+    
+    
     var body: some View {
         VStack(alignment: .leading) {
             List {
@@ -20,7 +22,7 @@ struct TagList: View {
                 
                 Section {
                     ForEach(tagApi.tags) { tag in
-                        Text(tag.tagName)
+                        Flag(tag: tag)
                     }
                 }
             }
