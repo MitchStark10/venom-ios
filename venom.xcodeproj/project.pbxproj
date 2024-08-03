@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8001C25C2C5DC09200565EEA /* Flag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8001C25B2C5DC09200565EEA /* Flag.swift */; };
+		8001C25E2C5DC87B00565EEA /* MultiSelect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8001C25D2C5DC87B00565EEA /* MultiSelect.swift */; };
 		8002A0472C59D74C006018B1 /* TagList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8002A0462C59D74C006018B1 /* TagList.swift */; };
 		805910DD2C2F41BF005780C1 /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805910DC2C2F41BF005780C1 /* UserSettings.swift */; };
 		805910E12C2F4459005780C1 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805910E02C2F4459005780C1 /* LoginResponse.swift */; };
@@ -62,6 +63,7 @@
 
 /* Begin PBXFileReference section */
 		8001C25B2C5DC09200565EEA /* Flag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flag.swift; sourceTree = "<group>"; };
+		8001C25D2C5DC87B00565EEA /* MultiSelect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiSelect.swift; sourceTree = "<group>"; };
 		8002A0462C59D74C006018B1 /* TagList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagList.swift; sourceTree = "<group>"; };
 		802860092C460C5E00533AFF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		805910DC2C2F41BF005780C1 /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
@@ -166,6 +168,7 @@
 				80C531362C4F4B64008B0FAA /* TaskItem.swift */,
 				8002A0462C59D74C006018B1 /* TagList.swift */,
 				8001C25B2C5DC09200565EEA /* Flag.swift */,
+				8001C25D2C5DC87B00565EEA /* MultiSelect.swift */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -411,6 +414,7 @@
 				80C3682A2C2F871B0023DC52 /* Task.swift in Sources */,
 				805910E12C2F4459005780C1 /* LoginResponse.swift in Sources */,
 				8071FA6E2C363D0300930AD4 /* DropdownMenu.swift in Sources */,
+				8001C25E2C5DC87B00565EEA /* MultiSelect.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

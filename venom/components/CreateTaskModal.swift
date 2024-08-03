@@ -11,18 +11,27 @@ import SwiftUI
 struct CreateTaskModal: View {
     @EnvironmentObject var lists: Lists;
     @EnvironmentObject var taskApi: TaskApi
+    @EnvironmentObject var tagApi: TagApi
     private var currentViewLabel: String?
     
     var task: VenomTask?;
     @State var taskName: String;
     @State var listId: Int?;
     @State private var dueDate: Date;
+    @State private var selectedTagIds: Set<Int>;
+    @FocusState private var isTextFieldFocused: Bool
     
     init(task: VenomTask? = nil, currentViewLabel: String?) {
         self.task = task;
         self.currentViewLabel = currentViewLabel;
         self.taskName = task?.taskName ?? "";
         self.listId = nil
+        
+        if (task?.tagIds != nil) {
+            self.selectedTagIds = Set(task!.tagIds);
+        } else {
+            self.selectedTagIds = [];
+        }
         
         if (task?.dueDate != nil) {
             let dateFormatter = DateFormatter()
@@ -44,6 +53,11 @@ struct CreateTaskModal: View {
                     TextField(text: $taskName, prompt: Text("Task Name"), axis: .vertical) {
                         Text("Task Name")
                     }
+                    .focused($isTextFieldFocused)
+                    .onAppear {
+                        isTextFieldFocused = true
+                    }
+                    
                     DatePicker(
                         "Due Date",
                         selection: $dueDate,
@@ -56,6 +70,9 @@ struct CreateTaskModal: View {
                             }
                         }
                     }
+                    MultiSelect(title: "Tags", items: tagApi.tags.map { tag in
+                        return MultiSelectData(value: tag.id, label: tag.tagName)
+                    }, selectedItems: $selectedTagIds)
                     HStack {
                         Button(action: {
                             taskApi.taskToEdit = nil;
@@ -79,10 +96,11 @@ struct CreateTaskModal: View {
                                     
                                     task!.taskName = taskName;
                                     task!.dueDate = dateFormatter.string(from: self.dueDate)
+                                    task!.tagIds = Array(selectedTagIds);
                                     
                                     await taskApi.updateTask(task: task!, lists: lists);
                                 } else {
-                                    await taskApi.createTask(taskName: taskName, dueDate: dueDate, listId: listId!, lists: lists)
+                                    await taskApi.createTask(taskName: taskName, dueDate: dueDate, listId: listId!, lists: lists, tagIds: Array(selectedTagIds))
                                 }
                                 taskApi.showTaskModal = false;
                                 taskApi.taskToEdit = nil;

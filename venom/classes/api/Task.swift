@@ -15,7 +15,7 @@ class VenomTask: Decodable, Identifiable {
     var isCompleted: Bool;
     let taskTag: [TaskTag]?;
     let list: VenomList?;
-    let tagIds: [Int]
+    var tagIds: [Int]
     
     public func toJsonObject() -> [String: Any?] {
         return [
@@ -35,12 +35,13 @@ class TaskApi: ObservableObject {
     @Published var showTaskModal: Bool = false;
     
     @discardableResult
-    func createTask(taskName: String, dueDate: Date?, listId: Int, lists: Lists) async -> Bool {
+    func createTask(taskName: String, dueDate: Date?, listId: Int, lists: Lists, tagIds: [Int]) async -> Bool {
         do {
             let newTaskBody: [String: Any] = [
                 "taskName": taskName,
                 "dueDate": formatDate(dateToFormat: dueDate),
-                "listId": listId
+                "listId": listId,
+                "tagIds": tagIds
             ];
             try await sendApiCall(url: Constants.tasksUrl!, requestMethod: "POST", requestBody: newTaskBody)
             
@@ -60,7 +61,7 @@ class TaskApi: ObservableObject {
     @discardableResult
     func updateTask(task: VenomTask, lists: Lists) async -> Bool {
         do {
-            try await sendApiCall(url: Constants.getTaskUrlWithId(id: task.id), requestMethod: "PUT", requestBody: task.toJsonObject(), verboseLogging: true)
+            try await sendApiCall(url: Constants.getTaskUrlWithId(id: task.id), requestMethod: "PUT", requestBody: task.toJsonObject())
             Task {
                 await lists.fetchLists()
             }

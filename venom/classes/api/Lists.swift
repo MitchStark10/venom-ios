@@ -50,7 +50,7 @@ class Lists: ObservableObject {
     public func createList(listName: String) async {
         do {
             let requestBody = ["listName": listName]
-            let createListResponse = try await sendApiCall(url: Constants.listsUrl!, requestMethod: "POST", requestBody: requestBody)
+            try await sendApiCall(url: Constants.listsUrl!, requestMethod: "POST", requestBody: requestBody)
             await fetchLists()
         } catch {
             print("Caught error when creating a new list \(error)")

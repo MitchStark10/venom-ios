@@ -92,6 +92,7 @@ struct AppEntryView: View {
                     }.onAppear {
                         Task {
                             await lists.fetchLists()
+                            await tagApi.fetchTags()
                         }
                     }.onChange(of: scenePhase) { oldPhase, newPhase in
                         if (newPhase == .active) {

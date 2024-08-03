@@ -60,12 +60,12 @@ struct TaskItem: View {
             }
             
             if (task.taskTag?.isEmpty == false) {
-                HStack {
+                HStack(spacing: 4) {
                     ForEach(task.taskTag!) { taskTag in
                         Flag(tag: taskTag.tag)
-                            .padding(.leading, rightAlignmentWidth)
                     }
                 }
+                .padding(.leading, rightAlignmentWidth)
             }
             
             if (showListName && task.list != nil) {
