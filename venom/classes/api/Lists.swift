@@ -7,9 +7,9 @@
 import Foundation
 import SwiftUI
 
-struct VenomList: Decodable, Hashable {
+class VenomList: Decodable, Hashable {
     let id, order: Int;
-    let listName: String;
+    var listName: String;
     var tasks: [VenomTask]? = [];
     
     static func == (lhs: VenomList, rhs: VenomList) -> Bool {
@@ -31,7 +31,7 @@ class Lists: ObservableObject {
     @Published var lists: [VenomList] = []
     
     @Published var showListModal = false;
-    @Published var listToEdit: Int? = nil;
+    @Published var listToEdit: VenomList? = nil;
     
     init(lists: [VenomList]) {
         self.lists = lists
@@ -61,9 +61,12 @@ class Lists: ObservableObject {
         }
     }
     
-    public func updateList(listId: Int, listName: String) async {
+    public func updateList(list: VenomList) async {
         do {
-            try await sendApiCall(url: Constants.getListUrlWithId(id: listId), requestMethod: "PUT")
+            let requestBody = [
+                "listName": list.listName
+            ];
+            try await sendApiCall(url: Constants.getListUrlWithId(id: list.id), requestMethod: "PUT", requestBody: requestBody)
             await fetchLists()
         } catch {
             print("Caught error when updating a list \(error)")

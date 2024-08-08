@@ -10,7 +10,18 @@ import SwiftUI
 
 struct CreateListModal: View {
     @EnvironmentObject var lists: Lists;
-    @State var listName = ""
+    @State var listName: String;
+    var listToEdit: VenomList?
+    
+    public init(listToEdit: VenomList?) {
+        self.listToEdit = listToEdit;
+        
+        if (listToEdit != nil) {
+            self.listName = listToEdit!.listName;
+        } else {
+            self.listName = "";
+        }
+    }
     
     var body: some View {
         VStack {
@@ -31,7 +42,14 @@ struct CreateListModal: View {
                         
                         Button(action: {
                             Task {
-                                await lists.createList(listName: listName)
+                                if (listToEdit != nil) {
+                                    listToEdit!.listName = listName;
+                                    await lists.updateList(list: listToEdit!);
+                                } else {
+                                    await lists.createList(listName: listName);
+                                }
+                                
+                                lists.listToEdit = nil;
                                 lists.showListModal = false;
                             }
                         }) {

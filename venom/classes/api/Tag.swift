@@ -23,7 +23,7 @@ class TagApi: ObservableObject {
             let newTags = try JSONDecoder().decode([Tag].self, from: tagsResponse)
             DispatchQueue.main.async {
                 self.tags = newTags;
-                self.hasFetchedTags;
+                self.hasFetchedTags = true;
             }
         } catch {
             print("Caught error when fetching lists \(error)")

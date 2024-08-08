@@ -76,7 +76,7 @@ struct AppEntryView: View {
                                                 Button("Update List") {
                                                     Task {
                                                         lists.showListModal = true;
-                                                        lists.listToEdit = menuItem.list!.id;
+                                                        lists.listToEdit = menuItem.list;
                                                     }
                                                 }
                                                 Button("Delete List", role: .destructive) {
@@ -140,7 +140,7 @@ struct AppEntryView: View {
         }.sheet(isPresented: $lists.showListModal, onDismiss: {
             lists.showListModal = false;
         }) {
-            CreateListModal()
+            CreateListModal(listToEdit: lists.listToEdit)
         }.confirmationDialog(
             "This will delete the list and all tasks in it. Are you sure you want to proceed?",
             isPresented: $isPresentingDeleteDialog
