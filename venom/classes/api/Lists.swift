@@ -29,7 +29,9 @@ struct VenomList: Decodable, Hashable {
 class Lists: ObservableObject {
     @Published var hasFetchedLists = false;
     @Published var lists: [VenomList] = []
-    @Published var showNewListModal = false;
+    
+    @Published var showListModal = false;
+    @Published var listToEdit: Int? = nil;
     
     init(lists: [VenomList]) {
         self.lists = lists
@@ -56,6 +58,15 @@ class Lists: ObservableObject {
             await fetchLists()
         } catch {
             print("Caught error when creating a new list \(error)")
+        }
+    }
+    
+    public func updateList(listId: Int, listName: String) async {
+        do {
+            try await sendApiCall(url: Constants.getListUrlWithId(id: listId), requestMethod: "PUT")
+            await fetchLists()
+        } catch {
+            print("Caught error when updating a list \(error)")
         }
     }
     

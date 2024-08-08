@@ -22,7 +22,7 @@ struct CreateListModal: View {
                     
                     HStack {
                         Button(action: {
-                            lists.showNewListModal = false
+                            lists.showListModal = false
                         }) {
                             Text("Dismiss")
                         }.buttonStyle(BorderlessButtonStyle()).padding()
@@ -32,7 +32,7 @@ struct CreateListModal: View {
                         Button(action: {
                             Task {
                                 await lists.createList(listName: listName)
-                                lists.showNewListModal = false;
+                                lists.showListModal = false;
                             }
                         }) {
                             Text("Save")

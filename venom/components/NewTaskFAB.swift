@@ -30,7 +30,7 @@ struct NewTaskFAB: View {
                     taskApi.showTaskModal = true;
                 },
                 .default(Text("Create List")) {
-                    listApi.showNewListModal = true;
+                    listApi.showListModal = true;
                 },
                 .cancel()
             ])

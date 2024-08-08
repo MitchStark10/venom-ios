@@ -8,12 +8,16 @@
 import SwiftUI
 
 struct AppEntryView: View {
-    @State private var hasSignedIn = initializeSignInStatus();
     @EnvironmentObject var lists: Lists
     @EnvironmentObject var taskApi: TaskApi
     @EnvironmentObject var tagApi: TagApi
+    
+    @State private var hasSignedIn = initializeSignInStatus();
     @State private var path: NavigationPath = NavigationPath()
     @State private var currentViewLabel: String? = nil;
+    @State private var isPresentingDeleteDialog = false;
+    @State private var listIdToDelete: Int? = nil;
+
     @Environment (\.scenePhase) private var scenePhase;
     
     private let defaultMenuItems = [
@@ -69,10 +73,15 @@ struct AppEntryView: View {
                                             path.append(menuItem.label)
                                         }.foregroundColor(Color(UIColor.label))
                                             .contextMenu(ContextMenu(menuItems: {
-                                                Button("Delete List") {
+                                                Button("Update List") {
                                                     Task {
-                                                        await lists.deleteList(listId: menuItem.list!.id)
+                                                        lists.showListModal = true;
+                                                        lists.listToEdit = menuItem.list!.id;
                                                     }
+                                                }
+                                                Button("Delete List", role: .destructive) {
+                                                    isPresentingDeleteDialog = true;
+                                                    listIdToDelete = menuItem.list?.id;
                                                 }
                                             }))
                                     }
@@ -128,10 +137,21 @@ struct AppEntryView: View {
             taskApi.showTaskModal = false;
         }) {
             CreateTaskModal(task: taskApi.taskToEdit, currentViewLabel: currentViewLabel)
-        }.sheet(isPresented: $lists.showNewListModal, onDismiss: {
-            lists.showNewListModal = false;
+        }.sheet(isPresented: $lists.showListModal, onDismiss: {
+            lists.showListModal = false;
         }) {
             CreateListModal()
+        }.confirmationDialog(
+            "This will delete the list and all tasks in it. Are you sure you want to proceed?",
+            isPresented: $isPresentingDeleteDialog
+        ) {
+            Button("Delete list and all tasks", role: .destructive) {
+                Task {
+                    await lists.deleteList(listId: listIdToDelete!)
+                }
+            }.onDisappear {
+                listIdToDelete = nil;
+            }
         }
     }
 }
