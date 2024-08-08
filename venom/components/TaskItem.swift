@@ -36,11 +36,11 @@ struct TaskItem: View {
             Task {
                 if (!updateTaskResposne) {
                     task.isCompleted = !task.isCompleted;
-                } else if (navTitle == "Today") {
+                } else if (navTitle == Constants.todayViewLabel) {
                     await taskApi.fetchTodayTasks()
-                } else if (navTitle == "Upcoming") {
+                } else if (navTitle == Constants.upcomingViewLabel) {
                     await taskApi.fetchUpcomingTasks()
-                } else if (navTitle == "Completed") {
+                } else if (navTitle == Constants.completedViewLabel) {
                     await taskApi.fetchCompletedTasks()
                 }
             }

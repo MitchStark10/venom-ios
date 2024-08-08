@@ -17,7 +17,11 @@ struct TagList: View {
         VStack(alignment: .leading) {
             List {
                 if (tagApi.tags.count == 0) {
-                    Text("No tags found")
+                    if (!tagApi.hasFetchedTags) {
+                        ProgressView()
+                    } else {
+                        Text("No tags found")
+                    }
                 }
                 
                 Section {
@@ -27,7 +31,7 @@ struct TagList: View {
                 }
             }
         }
-        .navigationTitle("Tags")
+        .navigationTitle(Constants.tagsViewLabel)
     }
 }
 

@@ -28,9 +28,15 @@ class VenomTask: Decodable, Identifiable {
 }
 
 class TaskApi: ObservableObject {
+    @Published var hasFetchedTodayTasks = false;
     @Published var todayTasks: [VenomTask] = [];
+    
+    @Published var hasFetchedUpcomingTasks = false;
     @Published var upcomingTasks: [VenomTask] = [];
+    
+    @Published var hasFetchedCompletedTasks = false;
     @Published var completedTasks: [VenomTask] = [];
+    
     @Published var taskToEdit: VenomTask?;
     @Published var showTaskModal: Bool = false;
     
@@ -80,6 +86,7 @@ class TaskApi: ObservableObject {
             DispatchQueue.main.async {
                 self.todayTasks = fetchedTasks;
                 self.objectWillChange.send()
+                self.hasFetchedTodayTasks = true;
             }
         } catch {
             print("Caught an error retrieving today's tasks: \(error)")
@@ -94,6 +101,7 @@ class TaskApi: ObservableObject {
             DispatchQueue.main.async {
                 self.upcomingTasks = fetchedTasks;
                 self.objectWillChange.send()
+                self.hasFetchedUpcomingTasks = true;
             }
         } catch {
             print("Caught an error retrieving today's tasks: \(error)")
@@ -108,6 +116,7 @@ class TaskApi: ObservableObject {
             DispatchQueue.main.async {
                 self.completedTasks = fetchedTasks;
                 self.objectWillChange.send()
+                self.hasFetchedCompletedTasks = true;
             }
         } catch {
             print("Caught an error retrieving completed tasks: \(error)")

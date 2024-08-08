@@ -8,6 +8,11 @@
 import Foundation
 
 struct Constants {
+    static let todayViewLabel = "Today"
+    static let upcomingViewLabel = "Upcoming"
+    static let completedViewLabel = "Completed"
+    static let tagsViewLabel = "Tags"
+    
     static let baseApiUrl = "https://venom-backend-pjv4.onrender.com"
     static let accessTokenKeychainKey = "accessToken"
     static let loginUrl = URL(string: baseApiUrl + "/users/login")

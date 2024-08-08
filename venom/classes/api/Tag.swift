@@ -14,6 +14,7 @@ struct Tag: Decodable, Identifiable {
 }
 
 class TagApi: ObservableObject {
+    @Published var hasFetchedTags = false;
     @Published var tags: [Tag] = [];
     
     public func fetchTags() async {
@@ -22,6 +23,7 @@ class TagApi: ObservableObject {
             let newTags = try JSONDecoder().decode([Tag].self, from: tagsResponse)
             DispatchQueue.main.async {
                 self.tags = newTags;
+                self.hasFetchedTags;
             }
         } catch {
             print("Caught error when fetching lists \(error)")

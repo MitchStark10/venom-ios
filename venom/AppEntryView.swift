@@ -17,13 +17,13 @@ struct AppEntryView: View {
     @Environment (\.scenePhase) private var scenePhase;
     
     private let defaultMenuItems = [
-        NavMenuItem(label: "Today"),
-        NavMenuItem(label: "Upcoming"),
-        NavMenuItem(label: "Completed")
+        NavMenuItem(label: Constants.todayViewLabel),
+        NavMenuItem(label: Constants.upcomingViewLabel),
+        NavMenuItem(label: Constants.completedViewLabel)
     ];
     
     private let secondaryMenuItems = [
-        NavMenuItem(label: "Tags")
+        NavMenuItem(label: Constants.tagsViewLabel)
     ];
     
     private func getMenuItems() -> [NavMenuItem] {
@@ -62,19 +62,23 @@ struct AppEntryView: View {
                             }
                             
                             
-                            Section(header: Text("Lists")) {
-                                ForEach(getMenuItems()) { menuItem in
-                                    Button (menuItem.label) {
-                                        path.append(menuItem.label)
-                                    }.foregroundColor(Color(UIColor.label))
-                                        .contextMenu(ContextMenu(menuItems: {
-                                            Button("Delete List") {
-                                                Task {
-                                                    await lists.deleteList(listId: menuItem.list!.id)
+                            if (lists.hasFetchedLists) {
+                                Section(header: Text("Lists")) {
+                                    ForEach(getMenuItems()) { menuItem in
+                                        Button (menuItem.label) {
+                                            path.append(menuItem.label)
+                                        }.foregroundColor(Color(UIColor.label))
+                                            .contextMenu(ContextMenu(menuItems: {
+                                                Button("Delete List") {
+                                                    Task {
+                                                        await lists.deleteList(listId: menuItem.list!.id)
+                                                    }
                                                 }
-                                            }
-                                        }))
+                                            }))
+                                    }
                                 }
+                            } else {
+                                ProgressView()
                             }
                         }
                         .navigationTitle("Home")
@@ -99,13 +103,13 @@ struct AppEntryView: View {
                             Task {
                                 await lists.fetchLists()
                                 
-                                if (currentViewLabel == "Today") {
+                                if (currentViewLabel == Constants.todayViewLabel) {
                                     await taskApi.fetchTodayTasks()
-                                } else if (currentViewLabel == "Upcoming") {
+                                } else if (currentViewLabel == Constants.completedViewLabel) {
                                     await taskApi.fetchUpcomingTasks()
-                                } else if (currentViewLabel == "Completed") {
+                                } else if (currentViewLabel == Constants.completedViewLabel) {
                                     await taskApi.fetchCompletedTasks()
-                                } else if (currentViewLabel == "Tags") {
+                                } else if (currentViewLabel == Constants.tagsViewLabel) {
                                     await tagApi.fetchTags()
                                 }
                             }

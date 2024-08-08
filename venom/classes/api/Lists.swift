@@ -27,6 +27,7 @@ struct VenomList: Decodable, Hashable {
 }
 
 class Lists: ObservableObject {
+    @Published var hasFetchedLists = false;
     @Published var lists: [VenomList] = []
     @Published var showNewListModal = false;
     
@@ -40,6 +41,7 @@ class Lists: ObservableObject {
             let newLists = try JSONDecoder().decode([VenomList].self, from: listsResponse)
             DispatchQueue.main.async {
                 self.lists = newLists
+                self.hasFetchedLists = true;
             }
         } catch {
             print("Caught error when fetching lists \(error)")

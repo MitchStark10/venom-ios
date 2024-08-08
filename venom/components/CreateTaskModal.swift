@@ -38,7 +38,7 @@ struct CreateTaskModal: View {
             dateFormatter.dateFormat = "yyyy-MM-dd"
             self.dueDate = dateFormatter.date(from: task!.dueDate!)!
         } else {
-            self.dueDate = Date();
+           self.dueDate = Date();
         }
     }
     
@@ -70,7 +70,7 @@ struct CreateTaskModal: View {
                             }
                         }
                     }
-                    MultiSelect(title: "Tags", items: tagApi.tags.map { tag in
+                    MultiSelect(title: Constants.tagsViewLabel, items: tagApi.tags.map { tag in
                         return MultiSelectData(value: tag.id, label: tag.tagName)
                     }, selectedItems: $selectedTagIds)
                     HStack {
@@ -105,11 +105,11 @@ struct CreateTaskModal: View {
                                 taskApi.showTaskModal = false;
                                 taskApi.taskToEdit = nil;
                                 
-                                if (currentViewLabel == "Today") {
+                                if (currentViewLabel == Constants.todayViewLabel) {
                                     await taskApi.fetchTodayTasks()
-                                } else if (currentViewLabel == "Upcoming") {
+                                } else if (currentViewLabel == Constants.upcomingViewLabel) {
                                     await taskApi.fetchUpcomingTasks()
-                                } else if (currentViewLabel == "Completed") {
+                                } else if (currentViewLabel == Constants.completedViewLabel) {
                                     await taskApi.fetchCompletedTasks()
                                 }
                             }

@@ -18,11 +18,27 @@ struct TaskList: View {
     var showListName = false;
     var showDeleteTasksButton = false;
     
+    private var shouldShowLoader: Bool {
+        if (
+            (navTitle == Constants.todayViewLabel && !taskApi.hasFetchedTodayTasks) ||
+            (navTitle == Constants.upcomingViewLabel && !taskApi.hasFetchedUpcomingTasks) ||
+            (navTitle == Constants.completedViewLabel && !taskApi.hasFetchedCompletedTasks)
+        ) {
+            return true;
+        }
+        
+        return false;
+    }
+    
     var body: some View {
         VStack(alignment: .leading) {
             List {
                 if (taskItems.count == 0) {
-                    Text("No tasks found")
+                    if (shouldShowLoader) {
+                        ProgressView()
+                    } else {
+                        Text("No tasks found")
+                    }
                 }
                 
                 let taskItemsGroupedByDate = groupTasks(tasks: taskItems, groupBy: groupBy)

@@ -17,19 +17,19 @@ struct SubViewRouter: View {
         VStack {
             if (navMenuItem.list != nil) {
                 TaskList(taskItems: navMenuItem.list?.tasks ?? [], navTitle: navMenuItem.label)
-            } else if (navMenuItem.label == "Today") {
+            } else if (navMenuItem.label == Constants.todayViewLabel) {
                 TaskList(taskItems: taskApi.todayTasks, navTitle: navMenuItem.label, groupBy: GroupByOptions.list).onAppear {
                     Task {
                         await taskApi.fetchTodayTasks()
                     }
                 }
-            } else if (navMenuItem.label == "Upcoming") {
+            } else if (navMenuItem.label == Constants.upcomingViewLabel) {
                 TaskList(taskItems: taskApi.upcomingTasks, navTitle: navMenuItem.label, showListName: true).onAppear {
                     Task {
                         await taskApi.fetchUpcomingTasks()
                     }
                 }
-            } else if (navMenuItem.label == "Completed") {
+            } else if (navMenuItem.label == Constants.completedViewLabel) {
                 VStack {
                     TaskList(taskItems: taskApi.completedTasks, navTitle: navMenuItem.label, showListName: true, showDeleteTasksButton: true).onAppear {
                         Task {
@@ -37,7 +37,7 @@ struct SubViewRouter: View {
                         }
                     }
                 }
-            } else if (navMenuItem.label == "Tags") {
+            } else if (navMenuItem.label == Constants.tagsViewLabel) {
                 TagList().onAppear {
                     Task {
                         await tagApi.fetchTags();
