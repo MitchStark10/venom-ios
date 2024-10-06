@@ -14,11 +14,11 @@ struct AppEntryView: View {
     
     @State private var hasSignedIn = initializeSignInStatus();
     @State private var path: NavigationPath = NavigationPath()
-    @State private var currentViewLabel: String? = nil;
+    @State private var currentNavMenuItem: NavMenuItem? = nil;
     @State private var isPresentingDeleteDialog = false;
     @State private var listIdToDelete: Int? = nil;
 
-    @Environment (\.scenePhase) private var scenePhase;
+    @Environment(\.scenePhase) private var scenePhase;
     
     private let defaultMenuItems = [
         NavMenuItem(label: Constants.todayViewLabel),
@@ -95,9 +95,9 @@ struct AppEntryView: View {
                             let associatedNavMenuItem = getAllMenuItems().first(where: { $0.label == viewLabel })
                             if (associatedNavMenuItem != nil) {
                                 SubViewRouter(navMenuItem: associatedNavMenuItem!).onAppear {
-                                    currentViewLabel = viewLabel
+                                    currentNavMenuItem = associatedNavMenuItem!
                                 }.onDisappear {
-                                    currentViewLabel = nil
+                                    currentNavMenuItem = nil
                                 }
                             }
                         }
@@ -112,20 +112,20 @@ struct AppEntryView: View {
                             Task {
                                 await lists.fetchLists()
                                 
-                                if (currentViewLabel == Constants.todayViewLabel) {
+                                if (currentNavMenuItem?.label == Constants.todayViewLabel) {
                                     await taskApi.fetchTodayTasks()
-                                } else if (currentViewLabel == Constants.completedViewLabel) {
+                                } else if (currentNavMenuItem?.label == Constants.completedViewLabel) {
                                     await taskApi.fetchUpcomingTasks()
-                                } else if (currentViewLabel == Constants.completedViewLabel) {
+                                } else if (currentNavMenuItem?.label == Constants.completedViewLabel) {
                                     await taskApi.fetchCompletedTasks()
-                                } else if (currentViewLabel == Constants.tagsViewLabel) {
+                                } else if (currentNavMenuItem?.label == Constants.tagsViewLabel) {
                                     await tagApi.fetchTags()
                                 }
                             }
                         }
                     }
                     
-                    if (currentViewLabel != "Completed") {
+                    if (currentNavMenuItem?.label != "Completed") {
                         NewTaskFAB()
                     }
                 }
@@ -136,7 +136,7 @@ struct AppEntryView: View {
             taskApi.taskToEdit = nil;
             taskApi.showTaskModal = false;
         }) {
-            CreateTaskModal(task: taskApi.taskToEdit, currentViewLabel: currentViewLabel)
+            CreateTaskModal(task: taskApi.taskToEdit, currentNavMenuItem: currentNavMenuItem)
         }.sheet(isPresented: $lists.showListModal, onDismiss: {
             lists.showListModal = false;
         }) {

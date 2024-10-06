@@ -44,21 +44,26 @@ struct MultiSelect: View {
         }
         
         if (isExpanded) {
-            List(items, id: \.self, selection: $selectedItems) { item in
-                HStack {
-                    Text(item.label)
-                    Spacer()
-                    if selectedItems.contains(item.value) {
-                        Image(systemName: "checkmark")
-                            .foregroundColor(.blue)
+            Section {
+                List(items, id: \.self, selection: $selectedItems) { item in
+                    HStack {
+                        Text(item.label)
+                        Spacer()
+                        if selectedItems.contains(item.value) {
+                            Image(systemName: "checkmark")
+                                .foregroundColor(.blue)
+                        }
                     }
-                }
-                .contentShape(Rectangle()) // Ensures the whole row is tappable
-                .onTapGesture {
-                    if selectedItems.contains(item.value) {
-                        selectedItems.remove(item.value)
-                    } else {
-                        selectedItems.insert(item.value)
+                    .contentShape(Rectangle()) // Ensures the whole row is tappable
+                    .padding(8)
+                    .overlay(Rectangle().frame(height: 2).foregroundColor(.gray),
+                             alignment: .bottom)
+                    .onTapGesture {
+                        if selectedItems.contains(item.value) {
+                            selectedItems.remove(item.value)
+                        } else {
+                            selectedItems.insert(item.value)
+                        }
                     }
                 }
             }

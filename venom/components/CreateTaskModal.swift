@@ -12,7 +12,8 @@ struct CreateTaskModal: View {
     @EnvironmentObject var lists: Lists;
     @EnvironmentObject var taskApi: TaskApi
     @EnvironmentObject var tagApi: TagApi
-    private var currentViewLabel: String?
+    private var currentNavMenuitem: NavMenuItem?
+    
     
     var task: VenomTask?;
     @State var taskName: String;
@@ -21,11 +22,11 @@ struct CreateTaskModal: View {
     @State private var selectedTagIds: Set<Int>;
     @FocusState private var isTextFieldFocused: Bool
     
-    init(task: VenomTask? = nil, currentViewLabel: String?) {
+    init(task: VenomTask? = nil, currentNavMenuItem: NavMenuItem?) {
         self.task = task;
-        self.currentViewLabel = currentViewLabel;
+        self.currentNavMenuitem = currentNavMenuItem;
         self.taskName = task?.taskName ?? "";
-        self.listId = nil
+        self.listId = task?.listId ?? nil;
         
         if (task?.tagIds != nil) {
             self.selectedTagIds = Set(task!.tagIds);
@@ -50,6 +51,11 @@ struct CreateTaskModal: View {
         VStack {
             Form {
                 Section(header: Text(headerText).font(.subheadline)) {
+                    Picker("List", selection: $listId) {
+                        ForEach(lists.lists, id: \.self.id) { list in
+                            Text(list.listName).tag(list.id as Int?)
+                        }
+                    }
                     TextField(text: $taskName, prompt: Text("Task Name"), axis: .vertical) {
                         Text("Task Name")
                     }
@@ -63,16 +69,11 @@ struct CreateTaskModal: View {
                         selection: $dueDate,
                         displayedComponents: [.date]
                     )
-                    if (listId != nil && task == nil) {
-                        Picker("List", selection: $listId) {
-                            ForEach(lists.lists, id: \.self) { list in
-                                Text(list.listName).tag(list.id as Int?)
-                            }
-                        }
-                    }
+                    
                     MultiSelect(title: Constants.tagsViewLabel, items: tagApi.tags.map { tag in
                         return MultiSelectData(value: tag.id, label: tag.tagName)
                     }, selectedItems: $selectedTagIds)
+                    
                     HStack {
                         Button(action: {
                             taskApi.taskToEdit = nil;
@@ -94,6 +95,9 @@ struct CreateTaskModal: View {
                                     let dateFormatter = DateFormatter()
                                     dateFormatter.dateFormat = "yyyy-MM-dd"
                                     
+                                    if (listId != nil) {
+                                        task!.listId = listId!;
+                                    }
                                     task!.taskName = taskName;
                                     task!.dueDate = dateFormatter.string(from: self.dueDate)
                                     task!.tagIds = Array(selectedTagIds);
@@ -105,11 +109,11 @@ struct CreateTaskModal: View {
                                 taskApi.showTaskModal = false;
                                 taskApi.taskToEdit = nil;
                                 
-                                if (currentViewLabel == Constants.todayViewLabel) {
+                                if (currentNavMenuitem?.label == Constants.todayViewLabel) {
                                     await taskApi.fetchTodayTasks()
-                                } else if (currentViewLabel == Constants.upcomingViewLabel) {
+                                } else if (currentNavMenuitem?.label == Constants.upcomingViewLabel) {
                                     await taskApi.fetchUpcomingTasks()
-                                } else if (currentViewLabel == Constants.completedViewLabel) {
+                                } else if (currentNavMenuitem?.label == Constants.completedViewLabel) {
                                     await taskApi.fetchCompletedTasks()
                                 }
                             }
@@ -121,8 +125,9 @@ struct CreateTaskModal: View {
                 }
             }
         }.onAppear {
-            if (lists.lists.first != nil) {
-                listId = lists.lists.first!.id
+            let defaultListId = currentNavMenuitem?.list?.id ?? lists.lists.first?.id ?? nil
+            if (defaultListId != nil && listId == nil) {
+                listId = defaultListId;
             }
         }
     }

@@ -16,9 +16,11 @@ class VenomTask: Decodable, Identifiable {
     let taskTag: [TaskTag]?;
     let list: VenomList?;
     var tagIds: [Int]
+    var listId: Int?
     
     public func toJsonObject() -> [String: Any?] {
         return [
+            "listId": self.listId,
             "taskName": self.taskName,
             "dueDate": self.dueDate ?? nil,
             "isCompleted": self.isCompleted,

@@ -10,7 +10,7 @@ import SwiftUI
 
 struct TagList: View {
     @EnvironmentObject var tagApi: TagApi;
-    
+    @State var isShowingTagEditor = false;
     
     
     var body: some View {
@@ -26,7 +26,9 @@ struct TagList: View {
                 
                 Section {
                     ForEach(tagApi.tags) { tag in
-                        Flag(tag: tag)
+                        Flag(tag: tag).onTapGesture {
+                            isShowingTagEditor = true;
+                        }
                     }
                 }
             }
