@@ -10,7 +10,7 @@ import SwiftUI
 class VenomTask: Decodable, Identifiable {
     let id: Int;
     var taskName: String;
-    var dueDate: String?;
+    var dueDate, dateCompleted: String?;
     let listViewOrder, timeViewOrder: Int?;
     var isCompleted: Bool;
     let taskTag: [TaskTag]?;
@@ -23,6 +23,7 @@ class VenomTask: Decodable, Identifiable {
             "listId": self.listId,
             "taskName": self.taskName,
             "dueDate": self.dueDate ?? nil,
+            "dateCompleted": self.dateCompleted ?? nil,
             "isCompleted": self.isCompleted,
             "tagIds": self.tagIds
         ]

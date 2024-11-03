@@ -30,6 +30,11 @@ struct TaskItem: View {
 
     private func handleTaskCheck() async {
         task.isCompleted = !task.isCompleted;
+        if (task.isCompleted) {
+            task.dateCompleted = formatDate(dateToFormat: Date())
+        } else {
+            task.dateCompleted = nil
+        }
         let updateTaskResposne = await taskApi.updateTask(task:task, lists:lists);
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
