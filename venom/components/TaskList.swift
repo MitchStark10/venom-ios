@@ -44,7 +44,7 @@ struct TaskList: View {
                 let taskItemsGroupedByDate = groupTasks(tasks: taskItems, groupBy: groupBy)
                 
                 ForEach(taskItemsGroupedByDate.keys.sorted(), id: \.self) { taskGroupKey in
-                    Section(header: Text(taskGroupKey)) {
+                    Section(header: Text(getDateGroupHeader(for: taskGroupKey))) {
                         ForEach(taskItemsGroupedByDate[taskGroupKey] ?? []) { task in
                             TaskItem(task: task, showListName: showListName, navTitle: navTitle)
                         }

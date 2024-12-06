@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-let rightAlignmentWidth: CGFloat = 30;
+let rightAlignmentWidth: CGFloat = 40;
 
 struct TaskItem: View {
     @Environment(\.colorScheme) var colorScheme
@@ -54,9 +54,9 @@ struct TaskItem: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            HStack {
+            HStack(alignment: .center) {
                 Toggle(isOn: $isOn) {
-                    Text(task.taskName).strikethrough(isOn, color: strikethroughColor)
+                    Text(task.taskName).strikethrough(isOn, color: strikethroughColor).padding(.leading, 5)
                 }.toggleStyle(CheckboxToggleStyle(onTap: {
                     Task {
                         await handleTaskCheck()
@@ -80,6 +80,7 @@ struct TaskItem: View {
                     .padding(.leading, rightAlignmentWidth)
             }
         }
+        .padding(.vertical, 5)
         .frame(maxWidth: .infinity, alignment: .topLeading)
         .onTapGesture {
             taskApi.taskToEdit = task;

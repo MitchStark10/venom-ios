@@ -7,7 +7,15 @@
 
 import Foundation
 
-func getRelativeTimeSpanString(for date: Date?) -> String {
+func getDateGroupHeader(for dateString: String) -> String {
+    if (dateString == "No Due Date") {
+        return dateString;
+    }
+    
+    let dateFormatParser = DateFormatter()
+    dateFormatParser.dateFormat = "yyyy-MM-dd"
+    let date = dateFormatParser.date(from: dateString)
+    
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "MM/dd"
     
@@ -34,8 +42,5 @@ func getDateKey(task: VenomTask) -> String {
         return "No Due Date"
     }
     
-    let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "yyyy-MM-dd"
-    
-    return getRelativeTimeSpanString(for: dateFormatter.date(from: task.dueDate!))
+    return task.dueDate!
 }

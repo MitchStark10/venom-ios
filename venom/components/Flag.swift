@@ -22,15 +22,15 @@ struct Flag: View {
             return Color.orange.opacity(colorOpacity);
         }
         
-        return Color.green.opacity(colorOpacity);
+        return Color.green;
     }
     
     var body: some View {
         Text(tag.tagName)
             .foregroundColor(.white)
             .font(.caption)
-            .padding(.horizontal, 8)
-            .padding(.vertical, 2)
+            .padding(.horizontal, 12)
+            .padding(.vertical, 4)
             .background(
                 Capsule()
                     .fill(getColorFromTagColor(tagColor: tag.tagColor))

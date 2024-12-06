@@ -15,7 +15,7 @@ struct CheckboxToggleStyle: ToggleStyle {
         HStack {
             RoundedRectangle(cornerRadius: 4)
                 .fill(configuration.isOn ? Color.blue : Color.clear)
-                .frame(width: 20, height: 20)
+                .frame(width: 25, height: 25)
                 .overlay(
                     RoundedRectangle(cornerRadius: 4)
                         .stroke(Color.gray, lineWidth: 1)
