@@ -6,15 +6,35 @@
 //
 import SwiftUI
 
+let autoCreateTaskLabels = [Constants.todayViewLabel, Constants.upcomingViewLabel, Constants.completedViewLabel]
+
 struct NewTaskFAB: View {
     @EnvironmentObject var listApi: Lists;
     @EnvironmentObject var taskApi: TaskApi;
+    @EnvironmentObject var tagApi: TagApi;
     
     @State private var showingActionSheet = false;
     
+    let currentNavMenuItem: NavMenuItem?
+    
+    init (currentNavMenuItem: NavMenuItem?) {
+        self.currentNavMenuItem = currentNavMenuItem
+    }
+    
     var body: some View {
         Button {
-            showingActionSheet = true;
+            let currentLabel = currentNavMenuItem?.label ?? "";
+            if (listApi.lists.isEmpty) {
+                listApi.showListModal = true;
+            } else if (autoCreateTaskLabels.contains(currentLabel)) {
+                taskApi.showTaskModal = true
+            } else if (currentLabel == Constants.tagsViewLabel) {
+                tagApi.showTagModal = true
+            } else if (currentLabel != "") {
+                taskApi.showTaskModal = true
+            } else {
+                showingActionSheet = true;
+            }
         } label: {
             Image(systemName: "plus")
                 .font(.title.weight(.semibold))
@@ -31,6 +51,9 @@ struct NewTaskFAB: View {
                 },
                 .default(Text("Create List")) {
                     listApi.showListModal = true;
+                },
+                .default(Text("Create Tag")) {
+                    tagApi.showTagModal = true;
                 },
                 .cancel()
             ])

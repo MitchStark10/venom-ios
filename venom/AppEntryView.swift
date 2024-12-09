@@ -126,7 +126,7 @@ struct AppEntryView: View {
                     }
                     
                     if (currentNavMenuItem?.label != "Completed") {
-                        NewTaskFAB()
+                        NewTaskFAB(currentNavMenuItem: currentNavMenuItem)
                     }
                 }
             }
@@ -137,11 +137,18 @@ struct AppEntryView: View {
             taskApi.showTaskModal = false;
         }) {
             CreateTaskModal(task: taskApi.taskToEdit, currentNavMenuItem: currentNavMenuItem)
-        }.sheet(isPresented: $lists.showListModal, onDismiss: {
+        }
+        .sheet(isPresented: $lists.showListModal, onDismiss: {
             lists.showListModal = false;
         }) {
             CreateListModal(listToEdit: lists.listToEdit)
-        }.confirmationDialog(
+        }
+        .sheet(isPresented: $tagApi.showTagModal, onDismiss: {
+            tagApi.showTagModal = false
+        }) {
+            TagModal(tag: tagApi.selectedTag)
+        }
+        .confirmationDialog(
             "This will delete the list and all tasks in it. Are you sure you want to proceed?",
             isPresented: $isPresentingDeleteDialog
         ) {

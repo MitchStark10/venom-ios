@@ -6,16 +6,26 @@
 //
 
 import Foundation
+import SwiftUI
 
-struct Tag: Decodable, Identifiable {
+class Tag: Decodable, Identifiable {
     let id: Int;
-    let tagName: String;
-    let tagColor: String;
+    var tagName: String;
+    var tagColor: String;
+    
+    public func toJsonObject() -> [String: Any?] {
+        return [
+            "tagName": self.tagName,
+            "tagColor": self.tagColor
+        ]
+    }
 }
 
 class TagApi: ObservableObject {
     @Published var hasFetchedTags = false;
     @Published var tags: [Tag] = [];
+    @Published var showTagModal = false;
+    @Published var selectedTag: Tag?
     
     public func fetchTags() async {
         do {
@@ -27,6 +37,34 @@ class TagApi: ObservableObject {
             }
         } catch {
             print("Caught error when fetching lists \(error)")
+        }
+    }
+    
+    public func createTag(tagName: String, tagColor: String) async {
+        do {
+            let createTagRequest = ["tagName": tagName, "tagColor": tagColor]
+            try await sendApiCall(url: Constants.tagsUrl!, requestMethod: "POST", requestBody: createTagRequest)
+            await self.fetchTags()
+        } catch {
+            print("Caught error when creating tag \(error)")
+        }
+    }
+    
+    public func updateTag(tag: Tag) async {
+        do {
+            try await sendApiCall(url: Constants.getTagUrlWithId(id: tag.id), requestMethod: "PUT", requestBody: tag.toJsonObject())
+            await self.fetchTags()
+        } catch {
+            print("Caught error when creating tag \(error)")
+        }
+    }
+    
+    public func deleteTag(tag: Tag) async {
+        do {
+            try await sendApiCall(url: Constants.getTagUrlWithId(id: tag.id), requestMethod: "DELETE")
+            await self.fetchTags()
+        } catch {
+            print("Caught error when creating tag \(error)")
         }
     }
 }

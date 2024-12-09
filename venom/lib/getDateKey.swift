@@ -7,6 +7,19 @@
 
 import Foundation
 
+func isValidDateString(_ dateString: String) -> Bool {
+    // Create a date formatter
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "yyyy-MM-dd"
+    
+    // Check if the string can be converted to a date
+    if let _ = dateFormatter.date(from: dateString) {
+        return true
+    } else {
+        return false
+    }
+}
+
 func getDateGroupHeader(for dateString: String) -> String {
     if (dateString == "No Due Date") {
         return dateString;
@@ -20,7 +33,7 @@ func getDateGroupHeader(for dateString: String) -> String {
     dateFormatter.dateFormat = "MM/dd"
     
     if (date == nil) {
-        return "No Due Date"
+        return dateString
     }
     
     let relativeFormatter = RelativeDateTimeFormatter()

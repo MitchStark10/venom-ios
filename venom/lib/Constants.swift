@@ -20,6 +20,7 @@ struct Constants {
     static let tasksUrl = URL(string: baseApiUrl + "/tasks")
     static let tagsUrl = URL(string: baseApiUrl + "/tags")
     static let completedTasksUrl = URL(string: baseApiUrl + "/tasks/completed")
+    static let colorOptions = ["blue", "green", "orange", "red"]
 
     static func getTodayTasksUrl() -> URL {
         let dateFormatter = DateFormatter()
@@ -41,5 +42,9 @@ struct Constants {
     
     static func getListUrlWithId(id: Int) -> URL {
         return URL(string: baseApiUrl + "/lists/\(id)")!
+    }
+    
+    static func getTagUrlWithId(id: Int) -> URL {
+        return URL(string: baseApiUrl + "/tags/\(id)")!
     }
 }

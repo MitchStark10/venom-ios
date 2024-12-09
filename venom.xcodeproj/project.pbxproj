@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -16,8 +16,6 @@
 		805910E82C2F4782005780C1 /* APIRequestStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805910E72C2F4782005780C1 /* APIRequestStatus.swift */; };
 		805910EA2C2F5013005780C1 /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805910E92C2F5013005780C1 /* KeychainHelper.swift */; };
 		805910EC2C2F5155005780C1 /* initializeSignInStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805910EB2C2F5155005780C1 /* initializeSignInStatus.swift */; };
-		807098DE2C4DB30100FC5DCE /* CreateListModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807098DD2C4DB30100FC5DCE /* CreateListModal.swift */; };
-		8071FA6C2C3639D500930AD4 /* CreateTaskModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8071FA6B2C3639D500930AD4 /* CreateTaskModal.swift */; };
 		8071FA6E2C363D0300930AD4 /* DropdownMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8071FA6D2C363D0300930AD4 /* DropdownMenu.swift */; };
 		80C368212C2F761C0023DC52 /* sendApiCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C368202C2F761C0023DC52 /* sendApiCall.swift */; };
 		80C368242C2F7B970023DC52 /* NewTaskFAB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C368232C2F7B970023DC52 /* NewTaskFAB.swift */; };
@@ -72,8 +70,6 @@
 		805910E72C2F4782005780C1 /* APIRequestStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequestStatus.swift; sourceTree = "<group>"; };
 		805910E92C2F5013005780C1 /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
 		805910EB2C2F5155005780C1 /* initializeSignInStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = initializeSignInStatus.swift; sourceTree = "<group>"; };
-		807098DD2C4DB30100FC5DCE /* CreateListModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateListModal.swift; sourceTree = "<group>"; };
-		8071FA6B2C3639D500930AD4 /* CreateTaskModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTaskModal.swift; sourceTree = "<group>"; };
 		8071FA6D2C363D0300930AD4 /* DropdownMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropdownMenu.swift; sourceTree = "<group>"; };
 		80C368202C2F761C0023DC52 /* sendApiCall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sendApiCall.swift; sourceTree = "<group>"; };
 		80C368232C2F7B970023DC52 /* NewTaskFAB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTaskFAB.swift; sourceTree = "<group>"; };
@@ -103,6 +99,10 @@
 		80E4C6A22BAA84AF00C17AC9 /* LoginSignUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginSignUp.swift; sourceTree = "<group>"; };
 		80E4C6A52BABD8E300C17AC9 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		80903FF42D06469900E79027 /* Modals */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Modals; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		80E4C6702BA732B700C17AC9 /* Frameworks */ = {
@@ -158,12 +158,11 @@
 		80C368222C2F7B890023DC52 /* components */ = {
 			isa = PBXGroup;
 			children = (
+				80903FF42D06469900E79027 /* Modals */,
 				80C368232C2F7B970023DC52 /* NewTaskFAB.swift */,
 				80CCF6982C34C22E00AB4483 /* TaskList.swift */,
 				80CCF6A02C34C60200AB4483 /* SubViewRouter.swift */,
-				8071FA6B2C3639D500930AD4 /* CreateTaskModal.swift */,
 				8071FA6D2C363D0300930AD4 /* DropdownMenu.swift */,
-				807098DD2C4DB30100FC5DCE /* CreateListModal.swift */,
 				80C531342C4F47A6008B0FAA /* CheckboxToggleStyle.swift */,
 				80C531362C4F4B64008B0FAA /* TaskItem.swift */,
 				8002A0462C59D74C006018B1 /* TagList.swift */,
@@ -269,6 +268,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				80903FF42D06469900E79027 /* Modals */,
 			);
 			name = venom;
 			productName = venom;
@@ -386,7 +388,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				80C531352C4F47A6008B0FAA /* CheckboxToggleStyle.swift in Sources */,
-				8071FA6C2C3639D500930AD4 /* CreateTaskModal.swift in Sources */,
 				80CCF69D2C34C49A00AB4483 /* Tag.swift in Sources */,
 				805910E42C2F46C6005780C1 /* LoginSignUpApi.swift in Sources */,
 				80C531372C4F4B64008B0FAA /* TaskItem.swift in Sources */,
@@ -410,7 +411,6 @@
 				805910DD2C2F41BF005780C1 /* UserSettings.swift in Sources */,
 				80E4C6A62BABD8E300C17AC9 /* Constants.swift in Sources */,
 				80CCF69F2C34C5BE00AB4483 /* NavMenuItem.swift in Sources */,
-				807098DE2C4DB30100FC5DCE /* CreateListModal.swift in Sources */,
 				80C3682A2C2F871B0023DC52 /* Task.swift in Sources */,
 				805910E12C2F4459005780C1 /* LoginResponse.swift in Sources */,
 				8071FA6E2C363D0300930AD4 /* DropdownMenu.swift in Sources */,

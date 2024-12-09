@@ -10,7 +10,9 @@ import SwiftUI
 
 struct TagList: View {
     @EnvironmentObject var tagApi: TagApi;
-    @State var isShowingTagEditor = false;
+    
+    @State var isPresentingDeleteDialog = false
+    @State var selectedTag: Tag?
     
     
     var body: some View {
@@ -27,13 +29,34 @@ struct TagList: View {
                 Section {
                     ForEach(tagApi.tags) { tag in
                         Flag(tag: tag).onTapGesture {
-                            isShowingTagEditor = true;
-                        }
+                            tagApi.selectedTag = tag;
+                            tagApi.showTagModal = true;
+                        }.contextMenu(
+                            ContextMenu(menuItems: {
+                                Button("Delete Tag", role: .destructive) {
+                                    isPresentingDeleteDialog = true;
+                                    selectedTag = tag;
+                                }
+                            })
+                        )
                     }
                 }
             }
         }
         .navigationTitle(Constants.tagsViewLabel)
+        .confirmationDialog(
+            "This will delete the tag permanently. Are you sure you wish to proceed?",
+            isPresented: $isPresentingDeleteDialog
+        ) {
+            Button("Delete Tag", role: .destructive) {
+                Task {
+                    await tagApi.deleteTag(tag: selectedTag!);
+                    selectedTag = nil;
+                }
+            }.onDisappear {
+                selectedTag = nil;
+            }
+        }
     }
 }
 
