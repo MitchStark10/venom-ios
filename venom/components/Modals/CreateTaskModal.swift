@@ -20,6 +20,7 @@ struct CreateTaskModal: View {
     @State var listId: Int?;
     @State private var dueDate: Date;
     @State private var selectedTagIds: Set<Int>;
+    @State private var useDatePicker: Bool;
     @FocusState private var isTextFieldFocused: Bool
     
     init(task: VenomTask? = nil, currentNavMenuItem: NavMenuItem?) {
@@ -38,8 +39,10 @@ struct CreateTaskModal: View {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd"
             self.dueDate = dateFormatter.date(from: task!.dueDate!)!
+            self.useDatePicker = true
         } else {
-           self.dueDate = Date();
+            self.dueDate = Date();
+            self.useDatePicker = false;
         }
     }
     
@@ -64,11 +67,15 @@ struct CreateTaskModal: View {
                         isTextFieldFocused = true
                     }
                     
-                    DatePicker(
-                        "Due Date",
-                        selection: $dueDate,
-                        displayedComponents: [.date]
-                    )
+                    Toggle("Due Date", isOn: $useDatePicker)
+                    if (self.useDatePicker) {
+                        DatePicker(
+                            "Due Date",
+                            selection: $dueDate,
+                            displayedComponents: [.date]
+                        ).datePickerStyle(.graphical)
+                    }
+                    
                     
                     MultiSelect(title: Constants.tagsViewLabel, items: tagApi.tags.map { tag in
                         return MultiSelectData(value: tag.id, label: tag.tagName)
@@ -99,7 +106,11 @@ struct CreateTaskModal: View {
                                         task!.listId = listId!;
                                     }
                                     task!.taskName = taskName;
-                                    task!.dueDate = dateFormatter.string(from: self.dueDate)
+                                    if (useDatePicker) {
+                                        task!.dueDate = dateFormatter.string(from: self.dueDate);
+                                    } else {
+                                        task!.dueDate = nil;
+                                    }
                                     task!.tagIds = Array(selectedTagIds);
                                     
                                     await taskApi.updateTask(task: task!, lists: lists);
