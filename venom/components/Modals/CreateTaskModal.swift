@@ -59,13 +59,17 @@ struct CreateTaskModal: View {
                             Text(list.listName).tag(list.id as Int?)
                         }
                     }
-                    TextField(text: $taskName, prompt: Text("Task Name"), axis: .vertical) {
+                    TextField(text: $taskName, prompt: Text("Task Name")) {
                         Text("Task Name")
                     }
                     .focused($isTextFieldFocused)
                     .onAppear {
                         isTextFieldFocused = true
                     }
+                    .onSubmit {
+                        isTextFieldFocused = false
+                    }
+                    .submitLabel(SubmitLabel.done)
                     
                     Toggle("Due Date", isOn: $useDatePicker)
                     if (self.useDatePicker) {
