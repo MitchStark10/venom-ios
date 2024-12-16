@@ -22,6 +22,7 @@ struct AppEntryView: View {
     
     private let defaultMenuItems = [
         NavMenuItem(label: Constants.todayViewLabel),
+		NavMenuItem(label: Constants.standupViewLabel),
         NavMenuItem(label: Constants.upcomingViewLabel),
         NavMenuItem(label: Constants.completedViewLabel)
     ];
@@ -120,6 +121,8 @@ struct AppEntryView: View {
                                     await taskApi.fetchCompletedTasks()
                                 } else if (currentNavMenuItem?.label == Constants.tagsViewLabel) {
                                     await tagApi.fetchTags()
+                                } else if (currentNavMenuItem?.label == Constants.standupViewLabel) {
+									await taskApi.fetchStandupTasks()
                                 }
                             }
                         }

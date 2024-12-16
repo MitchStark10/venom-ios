@@ -130,6 +130,8 @@ struct CreateTaskModal: View {
                                     await taskApi.fetchUpcomingTasks()
                                 } else if (currentNavMenuitem?.label == Constants.completedViewLabel) {
                                     await taskApi.fetchCompletedTasks()
+                                } else if (currentNavMenuitem?.label == Constants.standupViewLabel) {
+									await taskApi.fetchStandupTasks()
                                 }
                             }
                         }) {

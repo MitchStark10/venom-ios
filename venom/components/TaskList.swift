@@ -22,7 +22,8 @@ struct TaskList: View {
         if (
             (navTitle == Constants.todayViewLabel && !taskApi.hasFetchedTodayTasks) ||
             (navTitle == Constants.upcomingViewLabel && !taskApi.hasFetchedUpcomingTasks) ||
-            (navTitle == Constants.completedViewLabel && !taskApi.hasFetchedCompletedTasks)
+            (navTitle == Constants.completedViewLabel && !taskApi.hasFetchedCompletedTasks) ||
+			(navTitle == Constants.standupViewLabel && !taskApi.hasFetchedStandupTasks)
         ) {
             return true;
         }

@@ -10,6 +10,7 @@ import Foundation
 struct Constants {
     static let todayViewLabel = "Today"
     static let upcomingViewLabel = "Upcoming"
+	static let standupViewLabel = "Standup"
     static let completedViewLabel = "Completed"
     static let tagsViewLabel = "Tags"
     
@@ -28,6 +29,13 @@ struct Constants {
         
         return URL(string: "\(baseApiUrl)/tasks/today?today=\(dateFormatter.string(from: Date()))")!
     }
+	
+	static func getStandupTasksUrl() -> URL {
+		let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        
+        return URL(string: "\(baseApiUrl)/tasks/standup?today=\(dateFormatter.string(from: Date()))")!
+	}
     
     static func getUpcomingTasksUrl() -> URL {
         let dateFormatter = DateFormatter()

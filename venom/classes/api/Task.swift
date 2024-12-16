@@ -39,6 +39,9 @@ class TaskApi: ObservableObject {
     
     @Published var hasFetchedCompletedTasks = false;
     @Published var completedTasks: [VenomTask] = [];
+	
+	@Published var hasFetchedStandupTasks = false;
+	@Published var standupTasks: [VenomTask] = [];
     
     @Published var taskToEdit: VenomTask?;
     @Published var showTaskModal: Bool = false;
@@ -134,4 +137,19 @@ class TaskApi: ObservableObject {
             print("Caught an error deleting completed tasks: \(error)")
         }
     }
+	
+	func fetchStandupTasks() {
+        do {
+            let data = try await sendApiCall(url: Constants.getStandupTasksUrl(), requestMethod: "GET")
+            let fetchedTasks = try JSONDecoder().decode([VenomTask].self, from: data)
+            
+            DispatchQueue.main.async {
+                self.standupTasks = fetchedTasks;
+                self.objectWillChange.send()
+                self.hasFetchedStandupTasks = true;
+            }
+        } catch {
+            print("Caught an error retrieving today's tasks: \(error)")
+        }		
+	}
 }

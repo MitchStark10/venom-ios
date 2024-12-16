@@ -43,6 +43,12 @@ struct SubViewRouter: View {
                         await tagApi.fetchTags();
                     }
                 }
+            } else if (navMenuItem.label == Constants.standupViewLabel) {
+				TaskList(taskItems.taskApi.standupTasks, navTitle: navMenuItem.label, showListName: true, showDeleteTasksButton: false, groupBy: GroupByOptions.customGroup).onAppear {
+					Task {
+						await taskApi.fetchStandupTasks()
+					}
+				}
             } else {
                 Text(navMenuItem.label)
             }

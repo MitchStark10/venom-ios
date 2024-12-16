@@ -6,7 +6,7 @@
 //
 import SwiftUI
 
-let autoCreateTaskLabels = [Constants.todayViewLabel, Constants.upcomingViewLabel, Constants.completedViewLabel]
+let autoCreateTaskLabels = [Constants.todayViewLabel, Constants.upcomingViewLabel, Constants.standupViewLabel, Constants.completedViewLabel]
 
 struct NewTaskFAB: View {
     @EnvironmentObject var listApi: Lists;

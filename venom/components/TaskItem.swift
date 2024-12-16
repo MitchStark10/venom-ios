@@ -47,6 +47,8 @@ struct TaskItem: View {
                     await taskApi.fetchUpcomingTasks()
                 } else if (navTitle == Constants.completedViewLabel) {
                     await taskApi.fetchCompletedTasks()
+                } else if (navTitle == Constants.standupViewLabel) {
+					await taskApi.fetchStandupTasks()
                 }
             }
         }
