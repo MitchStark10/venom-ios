@@ -66,21 +66,18 @@ struct TaskItem: View {
                 }))
             }
             
-            if (task.taskTag?.isEmpty == false) {
-                HStack(spacing: 4) {
+            HStack(spacing: 8) {
+                if (showListName && task.list != nil) {
+                    Text(task.list!.listName).font(.caption).bold()
+                }
+                
+                if (task.taskTag?.isEmpty == false) {
                     ForEach(task.taskTag!) { taskTag in
                         Flag(tag: taskTag.tag)
                     }
                 }
-                .padding(.leading, rightAlignmentWidth)
             }
-            
-            if (showListName && task.list != nil) {
-                Text(task.list!.listName)
-                    .font(.caption)
-                    .padding(.top, 2)
-                    .padding(.leading, rightAlignmentWidth)
-            }
+            .padding(.leading, rightAlignmentWidth)
         }
         .padding(.vertical, 5)
         .frame(maxWidth: .infinity, alignment: .topLeading)

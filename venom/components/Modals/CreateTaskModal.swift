@@ -63,9 +63,6 @@ struct CreateTaskModal: View {
                         Text("Task Name")
                     }
                     .focused($isTextFieldFocused)
-                    .onAppear {
-                        isTextFieldFocused = true
-                    }
                     .onSubmit {
                         isTextFieldFocused = false
                     }

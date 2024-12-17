@@ -22,7 +22,7 @@ struct Flag: View {
             return Color.orange.opacity(colorOpacity);
         }
         
-        return Color.green;
+        return Color(UIColor(red: 0, green: 102/255.0, blue: 51/255.0, alpha: 1.0));
     }
     
     var body: some View {
@@ -30,7 +30,7 @@ struct Flag: View {
             .foregroundColor(.white)
             .font(.caption)
             .padding(.horizontal, 12)
-            .padding(.vertical, 4)
+            .padding(.vertical, 1)
             .background(
                 Capsule()
                     .fill(getColorFromTagColor(tagColor: tag.tagColor))
