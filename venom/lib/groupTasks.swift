@@ -23,6 +23,7 @@ func taskSorter(a: VenomTask?, b: VenomTask?) -> Bool {
 enum GroupByOptions: String {
     case date = "date"
     case list = "list"
+    case customGroup = "customGroup"
 }
 
 func groupTasks(tasks: [VenomTask], groupBy: GroupByOptions) -> Dictionary<String, [VenomTask]> {
@@ -39,6 +40,15 @@ func groupTasks(tasks: [VenomTask], groupBy: GroupByOptions) -> Dictionary<Strin
             }
             
             groupedTasks[taskDateKey]?.append(task)
+        }
+    } else if (groupBy == GroupByOptions.customGroup) {
+        for task in tasks {
+            let groupKey = task.customGroup ?? "Unknown Group";
+            if (groupedTasks[groupKey] == nil) {
+                groupedTasks[groupKey] = []
+            }
+            
+            groupedTasks[groupKey]?.append(task)
         }
     } else {
         for task in tasks {

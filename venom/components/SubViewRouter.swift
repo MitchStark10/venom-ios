@@ -44,7 +44,7 @@ struct SubViewRouter: View {
                     }
                 }
             } else if (navMenuItem.label == Constants.standupViewLabel) {
-				TaskList(taskItems.taskApi.standupTasks, navTitle: navMenuItem.label, showListName: true, showDeleteTasksButton: false, groupBy: GroupByOptions.customGroup).onAppear {
+                TaskList(taskItems: taskApi.standupTasks, navTitle: navMenuItem.label, groupBy: GroupByOptions.customGroup, showListName: true, showDeleteTasksButton: false).onAppear {
 					Task {
 						await taskApi.fetchStandupTasks()
 					}

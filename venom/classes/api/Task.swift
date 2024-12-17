@@ -7,6 +7,12 @@
 import Foundation
 import SwiftUI
 
+class StandupResponse: Decodable {
+    let today: [VenomTask]
+    let yesterday: [VenomTask]
+    let blocked: [VenomTask]
+}
+
 class VenomTask: Decodable, Identifiable {
     let id: Int;
     var taskName: String;
@@ -17,6 +23,7 @@ class VenomTask: Decodable, Identifiable {
     let list: VenomList?;
     var tagIds: [Int]
     var listId: Int?
+    var customGroup: String?
     
     public func toJsonObject() -> [String: Any?] {
         return [
@@ -41,7 +48,10 @@ class TaskApi: ObservableObject {
     @Published var completedTasks: [VenomTask] = [];
 	
 	@Published var hasFetchedStandupTasks = false;
-	@Published var standupTasks: [VenomTask] = [];
+	@Published var standupYesterdayTasks: [VenomTask] = [];
+    @Published var standupTodayTasks: [VenomTask] = [];
+    @Published var standupBlockedTasks: [VenomTask] = [];
+    @Published var standupTasks: [VenomTask] = [];
     
     @Published var taskToEdit: VenomTask?;
     @Published var showTaskModal: Bool = false;
@@ -138,18 +148,31 @@ class TaskApi: ObservableObject {
         }
     }
 	
-	func fetchStandupTasks() {
+	func fetchStandupTasks() async {
         do {
             let data = try await sendApiCall(url: Constants.getStandupTasksUrl(), requestMethod: "GET")
-            let fetchedTasks = try JSONDecoder().decode([VenomTask].self, from: data)
+            let fetchedTasks = try JSONDecoder().decode(StandupResponse.self, from: data)
             
             DispatchQueue.main.async {
-                self.standupTasks = fetchedTasks;
+                self.standupTodayTasks = fetchedTasks.today.map { task in
+                    task.customGroup = "Today";
+                    return task;
+                }
+                self.standupYesterdayTasks = fetchedTasks.yesterday.map { task in
+                    task.customGroup = "Yesterday";
+                    return task;
+                }
+                self.standupBlockedTasks = fetchedTasks.blocked.map { task in
+                    task.customGroup = "Blocked";
+                    return task;
+                }
+                self.standupTasks =  self.standupYesterdayTasks + self.standupTodayTasks + self.standupBlockedTasks
+                
                 self.objectWillChange.send()
                 self.hasFetchedStandupTasks = true;
             }
         } catch {
-            print("Caught an error retrieving today's tasks: \(error)")
-        }		
+            print("Caught an error retrieving standup tasks: \(error)")
+        }
 	}
 }
