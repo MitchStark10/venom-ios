@@ -12,9 +12,9 @@ func taskSorter(a: VenomTask?, b: VenomTask?) -> Bool {
     let listBViewOrder = b?.listViewOrder ?? Int.max
     
     if listAViewOrder > listBViewOrder {
-        return true;
-    } else if listAViewOrder < listBViewOrder {
         return false;
+    } else if listAViewOrder < listBViewOrder {
+        return true;
     } else {
         return true;
     }

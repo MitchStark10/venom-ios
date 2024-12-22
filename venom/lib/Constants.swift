@@ -10,7 +10,7 @@ import Foundation
 struct Constants {
     static let todayViewLabel = "Today"
     static let upcomingViewLabel = "Upcoming"
-	static let standupViewLabel = "Standup"
+	static let standupViewLabel = "Daily Report"
     static let completedViewLabel = "Completed"
     static let tagsViewLabel = "Tags"
     
@@ -21,6 +21,8 @@ struct Constants {
     static let tasksUrl = URL(string: baseApiUrl + "/tasks")
     static let tagsUrl = URL(string: baseApiUrl + "/tags")
     static let completedTasksUrl = URL(string: baseApiUrl + "/tasks/completed")
+    static let reorderTaskUrl = URL(string: baseApiUrl + "/tasks/reorder")
+    
     static let colorOptions = ["blue", "green", "orange", "red"]
 
     static func getTodayTasksUrl() -> URL {

@@ -175,4 +175,25 @@ class TaskApi: ObservableObject {
             print("Caught an error retrieving standup tasks: \(error)")
         }
 	}
+    
+    func reorder(taskList: [VenomTask], lists: Lists) async {
+        do {
+            let tasksToUpdate = taskList.enumerated().map { (index, task) in
+                return [
+                    "id": task.id,
+                    "fieldToUpdate": "listViewOrder",
+                    "newOrder": index,
+                    "newDueDate": task.dueDate ?? ""
+                ]
+            }
+            
+            let requestBody = [
+                "tasksToUpdate": tasksToUpdate
+            ]
+            
+            try await sendApiCall(url: Constants.reorderTaskUrl!, requestMethod: "PUT", requestBody: requestBody)
+        } catch {
+            print("Caught an error while reordering task: \(error.localizedDescription)")
+        }
+    }
 }

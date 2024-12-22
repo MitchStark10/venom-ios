@@ -33,7 +33,7 @@ struct TaskList: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            List {
+            List() {
                 if (taskItems.count == 0) {
                     if (shouldShowLoader) {
                         ProgressView()
@@ -48,7 +48,9 @@ struct TaskList: View {
                     Section(header: Text(getDateGroupHeader(for: taskGroupKey))) {
                         ForEach(taskItemsGroupedByDate[taskGroupKey] ?? []) { task in
                             TaskItem(task: task, showListName: showListName, navTitle: navTitle)
-                        }
+                        }.onMove(perform: { source, newIndex in
+                            move(source: source, newIndex: newIndex, taskListSource: taskItemsGroupedByDate[taskGroupKey])
+                        })
                     }
                 }
                 if (showDeleteTasksButton && taskItems.count > 0) {
@@ -61,6 +63,23 @@ struct TaskList: View {
             }
         }
         .navigationTitle(navTitle)
+    }
+    
+    private func move(source: IndexSet, newIndex: Int, taskListSource: [VenomTask]?) {
+        if (taskListSource == nil) {
+            return;
+        }
+        
+        var taskList = taskListSource!
+        
+        Task {
+            guard let sourceIndex = source.first else { return }
+            let insertIndex = sourceIndex > newIndex ? newIndex : newIndex - 1
+            
+            let task = taskList.remove(at: sourceIndex)
+            taskList.insert(task, at: insertIndex)
+            await taskApi.reorder(taskList: taskList, lists: lists)
+        }
     }
 }
 
