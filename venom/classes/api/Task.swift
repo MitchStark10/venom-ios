@@ -192,6 +192,10 @@ class TaskApi: ObservableObject {
             ]
             
             try await sendApiCall(url: Constants.reorderTaskUrl!, requestMethod: "PUT", requestBody: requestBody)
+            
+            Task {
+                await lists.fetchLists()
+            }
         } catch {
             print("Caught an error while reordering task: \(error.localizedDescription)")
         }

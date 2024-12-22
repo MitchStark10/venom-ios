@@ -16,7 +16,7 @@ struct SubViewRouter: View {
     var body: some View {
         VStack {
             if (navMenuItem.list != nil) {
-                TaskList(taskItems: navMenuItem.list?.tasks ?? [], navTitle: navMenuItem.label)
+                TaskList(taskItems: navMenuItem.list?.tasks ?? [], navTitle: navMenuItem.label, enableReordering: true)
             } else if (navMenuItem.label == Constants.todayViewLabel) {
                 TaskList(taskItems: taskApi.todayTasks, navTitle: navMenuItem.label, groupBy: GroupByOptions.list).onAppear {
                     Task {

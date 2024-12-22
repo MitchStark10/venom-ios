@@ -17,6 +17,7 @@ struct TaskList: View {
     var groupBy: GroupByOptions = GroupByOptions.date;
     var showListName = false;
     var showDeleteTasksButton = false;
+    var enableReordering = false;
     
     private var shouldShowLoader: Bool {
         if (
@@ -48,9 +49,9 @@ struct TaskList: View {
                     Section(header: Text(getDateGroupHeader(for: taskGroupKey))) {
                         ForEach(taskItemsGroupedByDate[taskGroupKey] ?? []) { task in
                             TaskItem(task: task, showListName: showListName, navTitle: navTitle)
-                        }.onMove(perform: { source, newIndex in
+                        }.onMove(perform: enableReordering ? { source, newIndex in
                             move(source: source, newIndex: newIndex, taskListSource: taskItemsGroupedByDate[taskGroupKey])
-                        })
+                        } : nil)
                     }
                 }
                 if (showDeleteTasksButton && taskItems.count > 0) {
