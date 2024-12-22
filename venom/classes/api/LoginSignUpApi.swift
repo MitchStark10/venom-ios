@@ -7,7 +7,9 @@
 
 import Foundation
 
-class LoginSignUpApi {
+class LoginSignUpApi: ObservableObject {
+    @Published var isLoggedIn: Bool = initializeSignInStatus()
+    
     public func signIn(email: String, password: String) async throws -> Bool {
         let rawRequestBody = ["email": email, "password": password]
         let data = try await sendApiCall(url: Constants.loginUrl!, requestMethod: "POST", requestBody: rawRequestBody)
@@ -25,6 +27,15 @@ class LoginSignUpApi {
         }
         
         return false;
+    }
+    
+    public func signOut() -> Bool {
+        let status = KeychainHelper.shared.delete(key: Constants.accessTokenKeychainKey)
+        if status == errSecSuccess {
+            return true
+        }
+        
+        return false
     }
     
 }

@@ -12,8 +12,8 @@ struct AppEntryView: View {
     @EnvironmentObject var lists: Lists
     @EnvironmentObject var taskApi: TaskApi
     @EnvironmentObject var tagApi: TagApi
+    @EnvironmentObject var loginSignUpApi: LoginSignUpApi
     
-    @State private var hasSignedIn = initializeSignInStatus();
     @State private var path: NavigationPath = NavigationPath()
     @State private var currentNavMenuItem: NavMenuItem? = nil;
     @State private var isPresentingDeleteDialog = false;
@@ -32,6 +32,10 @@ struct AppEntryView: View {
         NavMenuItem(label: Constants.tagsViewLabel)
     ];
     
+    private let settingsMenuItems: [NavMenuItem] = [
+        NavMenuItem(label: Constants.settingsViewLabel)
+    ];
+    
     private func getMenuItems() -> [NavMenuItem] {
         var menuItems: [NavMenuItem] = []
         for list in lists.lists {
@@ -42,13 +46,13 @@ struct AppEntryView: View {
     }
     
     func getAllMenuItems() -> [NavMenuItem] {
-        return defaultMenuItems + secondaryMenuItems + getMenuItems();
+        return defaultMenuItems + secondaryMenuItems + getMenuItems() + settingsMenuItems;
     }
     
     var body: some View {
         VStack {
-            if (!hasSignedIn) {
-                LoginSignUp(hasSignedIn: $hasSignedIn)
+            if (!loginSignUpApi.isLoggedIn) {
+                LoginSignUp()
             } else {
                 ZStack(alignment: .bottomTrailing) {
                     NavigationStack(path: $path) {
@@ -102,8 +106,18 @@ struct AppEntryView: View {
                                     currentNavMenuItem = nil
                                 }
                             }
+                        }.toolbar {
+                            ToolbarItem(placement: .navigationBarTrailing) {
+                                Button(action: {
+                                    path.append(Constants.settingsViewLabel)
+                                }) {
+                                    Image(systemName: "person.crop.circle")
+                                        .resizable()
+                                        .frame(width: 30, height: 30)
+                                        .foregroundColor(.blue) // Customize color
+                                }
+                            }
                         }
-                        
                     }.onAppear {
                         Task {
                             await lists.fetchLists()

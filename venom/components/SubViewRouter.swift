@@ -11,6 +11,7 @@ import SwiftUI
 struct SubViewRouter: View {
     @EnvironmentObject var taskApi: TaskApi;
     @EnvironmentObject var tagApi: TagApi;
+    
     let navMenuItem: NavMenuItem;
     
     var body: some View {
@@ -49,7 +50,10 @@ struct SubViewRouter: View {
 						await taskApi.fetchStandupTasks()
 					}
 				}
-            } else {
+            } else if (navMenuItem.label == Constants.settingsViewLabel) {
+                Settings()
+            }
+            else {
                 Text(navMenuItem.label)
             }
         }

@@ -10,6 +10,7 @@ import SwiftUI
 class VenomList: Decodable, Hashable {
     let id, order: Int;
     var listName: String;
+    var isStandupList: Bool;
     var tasks: [VenomTask]? = [];
     
     static func == (lhs: VenomList, rhs: VenomList) -> Bool {
@@ -63,8 +64,9 @@ class Lists: ObservableObject {
     
     public func updateList(list: VenomList) async {
         do {
-            let requestBody = [
-                "listName": list.listName
+            let requestBody: [String: Any] = [
+                "listName": list.listName,
+                "isStandupList": list.isStandupList
             ];
             try await sendApiCall(url: Constants.getListUrlWithId(id: list.id), requestMethod: "PUT", requestBody: requestBody)
             await fetchLists()

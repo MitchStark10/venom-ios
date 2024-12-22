@@ -12,6 +12,8 @@ struct venomApp: App {
     @State var lists = Lists(lists: [])
     @State var taskApi = TaskApi()
     @State var tagApi = TagApi()
+    @State var loginSignUpApi = LoginSignUpApi()
+    @State var settingsApi = SettingsApi()
     
     var body: some Scene {
         WindowGroup {
@@ -19,6 +21,8 @@ struct venomApp: App {
                 .environmentObject(lists)
                 .environmentObject(taskApi)
                 .environmentObject(tagApi)
+                .environmentObject(loginSignUpApi)
+                .environmentObject(settingsApi)
         }
     }
 }

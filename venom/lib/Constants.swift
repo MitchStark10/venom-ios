@@ -13,6 +13,7 @@ struct Constants {
 	static let standupViewLabel = "Daily Report"
     static let completedViewLabel = "Completed"
     static let tagsViewLabel = "Tags"
+    static let settingsViewLabel = "Settings"
     
     static let baseApiUrl = "https://venom-backend-pjv4.onrender.com"
     static let accessTokenKeychainKey = "accessToken"
@@ -22,6 +23,7 @@ struct Constants {
     static let tagsUrl = URL(string: baseApiUrl + "/tags")
     static let completedTasksUrl = URL(string: baseApiUrl + "/tasks/completed")
     static let reorderTaskUrl = URL(string: baseApiUrl + "/tasks/reorder")
+    static let settingsUrl = URL(string: baseApiUrl + "/settings")
     
     static let colorOptions = ["blue", "green", "orange", "red"]
 

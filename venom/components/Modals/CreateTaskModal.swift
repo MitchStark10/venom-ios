@@ -143,6 +143,10 @@ struct CreateTaskModal: View {
             if (defaultListId != nil && listId == nil) {
                 listId = defaultListId;
             }
+            
+            Task {
+                
+            }
         }
     }
     

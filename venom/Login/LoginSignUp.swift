@@ -10,7 +10,8 @@ struct LoginSignUp: View {
     @State private var email: String = ""
     @State private var password: String = ""
     @State private var apiRequestStatus: APIRequestStatus = APIRequestStatus.initial
-    @Binding public var hasSignedIn: Bool
+    
+    @EnvironmentObject var loginSignUpApi: LoginSignUpApi
     
     private func signIn() async -> Void {
         do {
@@ -19,7 +20,7 @@ struct LoginSignUp: View {
             
             if (didLoginSucceed) {
                 apiRequestStatus = APIRequestStatus.success
-                hasSignedIn = true;
+                loginSignUpApi.isLoggedIn = true;
             } else {
                 apiRequestStatus = APIRequestStatus.failure
             }
@@ -82,8 +83,4 @@ struct LoginSignUp: View {
             }.padding(.horizontal, 10)
         }
     }
-}
-
-#Preview {
-    LoginSignUp(hasSignedIn: .constant(true))
 }
