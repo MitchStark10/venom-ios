@@ -8,18 +8,16 @@
 import Foundation
 import SwiftUI
 
-let colorOpacity = 0.7;
-
 struct Flag: View {
     let tag: Tag;
     
     private func getColorFromTagColor(tagColor: String) -> Color {
         if (tagColor.lowercased() == "red") {
-            return Color.red.opacity(colorOpacity);
+            return Color.red;
         } else if (tagColor.lowercased() == "blue") {
-            return Color.blue.opacity(colorOpacity);
+            return Color.blue;
         } else if (tagColor.lowercased() == "orange") {
-            return Color.orange.opacity(colorOpacity);
+            return Color.orange;
         }
         
         return Color(UIColor(red: 0, green: 102/255.0, blue: 51/255.0, alpha: 1.0));
