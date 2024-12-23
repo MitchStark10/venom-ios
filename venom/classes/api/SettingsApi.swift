@@ -25,7 +25,7 @@ class SettingsApi: ObservableObject {
     
     public func fetchSettings() async {
         do {
-            let settingsResponse = try await sendApiCall(url: Constants.settingsUrl!, requestMethod: "GET", verboseLogging: true)
+            let settingsResponse = try await sendApiCall(url: Constants.settingsUrl!, requestMethod: "GET")
             let settingsResponseData = try JSONDecoder().decode(SettingsResponse.self, from: settingsResponse)
             DispatchQueue.main.async {
                 self.userEmail = settingsResponseData.email

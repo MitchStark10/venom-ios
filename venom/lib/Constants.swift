@@ -18,6 +18,7 @@ struct Constants {
     static let baseApiUrl = "https://venom-backend-pjv4.onrender.com"
     static let accessTokenKeychainKey = "accessToken"
     static let loginUrl = URL(string: baseApiUrl + "/users/login")
+    static let signUpUrl = URL(string: baseApiUrl + "/users/createUser")
     static let listsUrl = URL(string: baseApiUrl + "/lists")
     static let tasksUrl = URL(string: baseApiUrl + "/tasks")
     static let tagsUrl = URL(string: baseApiUrl + "/tags")

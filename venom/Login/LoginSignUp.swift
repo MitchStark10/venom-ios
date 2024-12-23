@@ -9,6 +9,8 @@ import SwiftUI
 struct LoginSignUp: View {
     @State private var email: String = ""
     @State private var password: String = ""
+    @State private var confirmPassword: String = ""
+    @State private var isSigningUp: Bool = false
     @State private var apiRequestStatus: APIRequestStatus = APIRequestStatus.initial
     
     @EnvironmentObject var loginSignUpApi: LoginSignUpApi
@@ -16,7 +18,9 @@ struct LoginSignUp: View {
     private func signIn() async -> Void {
         do {
             apiRequestStatus = APIRequestStatus.processing
-            let didLoginSucceed = try await LoginSignUpApi().signIn(email: email, password: password)
+            let didLoginSucceed = isSigningUp ?
+                try await LoginSignUpApi().signUp(email: email, password: password)
+                : try await LoginSignUpApi().signIn(email: email, password: password)
             
             if (didLoginSucceed) {
                 apiRequestStatus = APIRequestStatus.success
@@ -36,7 +40,7 @@ struct LoginSignUp: View {
         case APIRequestStatus.success:
             return "Successfully logged in."
         case APIRequestStatus.failure:
-            return "Failed to log in. Please try again."
+            return "Failed to \(isSigningUp ? "sign up" : "log in"). Please try again."
         default:
             return ""
         }
@@ -53,25 +57,35 @@ struct LoginSignUp: View {
                 TextField(text: $email, prompt: Text("Email")) {
                     Text("Email")
                 }
-                    .padding()
-                    .background(Color(.systemGray6))
-                    .cornerRadius(5.0)
-                    .autocapitalization(.none)
+                .padding()
+                .background(Color(.systemGray6))
+                .cornerRadius(5.0)
+                .autocapitalization(.none)
                 
                 SecureField(text: $password, prompt: Text("Password")) {
                     Text("Password")
                 }
+                .padding()
+                .background(Color(.systemGray6))
+                .cornerRadius(5.0)
+                .autocapitalization(.none)
+                
+                if (isSigningUp) {
+                    SecureField(text: $confirmPassword, prompt: Text("Confirm Password")) {
+                        Text("Confirm Password")
+                    }
                     .padding()
                     .background(Color(.systemGray6))
                     .cornerRadius(5.0)
                     .autocapitalization(.none)
+                }
                 
                 Button {
                     Task {
                         await signIn()
                     }
                 } label: {
-                    Text("Login")
+                    Text(isSigningUp ? "Sign Up" : "Log In")
                         .frame(maxWidth: .infinity)
                 }
                 .buttonStyle(BorderedProminentButtonStyle())
@@ -79,6 +93,10 @@ struct LoginSignUp: View {
                 
                 if (!getStatusText().isEmpty) {
                     Text(getStatusText())
+                }
+                
+                Button(isSigningUp ? "Already have an account? Log in instead." : "Need an account? Sign up instead.") {
+                    isSigningUp.toggle()
                 }
             }.padding(.horizontal, 10)
         }
