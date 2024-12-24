@@ -53,18 +53,17 @@ struct Settings: View {
                                     loginSignUpApi.isLoggedIn = false
                                 }
                             }.buttonStyle(BorderedProminentButtonStyle()).padding(0)
+                            
                             Button("Delete Account", role: .destructive) {
                                 isPresentingDeleteDialog = true;
                             }.buttonStyle(BorderedButtonStyle()).padding(0)
                         }
-                    }.listRowBackground(Color.clear).padding(0)
+                    }
                     
                     Section(header: Text("Desktop Access").font(.subheadline)) {
                         Text("You can also use Venom tasks on the web at: https://venomtasks.com")
                     }
                 }
-                .scrollContentBackground(.hidden) // Hides default form background
-                .background(colorScheme == .light ? Color.white : Color.clear)
                 .onChange(of: dailyReportListIds) {
                     for list in lists.lists {
                         let isListNewlyAddedToStandup = !list.isStandupList && dailyReportListIds.contains(list.id);
@@ -84,7 +83,6 @@ struct Settings: View {
             }
             
         }
-        .padding()
         .onAppear() {
             dailyReportListIds = Set(lists.lists.filter { $0.isStandupList }.map { $0.id })
             Task {
@@ -104,6 +102,6 @@ struct Settings: View {
                     loginSignUpApi.isLoggedIn = false
                 }
             }
-        }
+        }.navigationTitle("Settings")
     }
 }
