@@ -44,5 +44,13 @@ class SettingsApi: ObservableObject {
             print("Caught error when updating settings \(error)")
         }
     }
+    
+    public func deleteAccount() async {
+        do {
+            try await sendApiCall(url: Constants.accountDeletionUrl!, requestMethod: "DELETE")
+        } catch {
+            print("Caught error when deleting account \(error)")
+        }
+    }
 }
 

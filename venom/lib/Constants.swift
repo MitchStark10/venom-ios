@@ -25,6 +25,7 @@ struct Constants {
     static let completedTasksUrl = URL(string: baseApiUrl + "/tasks/completed")
     static let reorderTaskUrl = URL(string: baseApiUrl + "/tasks/reorder")
     static let settingsUrl = URL(string: baseApiUrl + "/settings")
+    static let accountDeletionUrl = URL(string: baseApiUrl + "/settings/full-account")
     
     static let colorOptions = ["blue", "green", "orange", "red"]
 

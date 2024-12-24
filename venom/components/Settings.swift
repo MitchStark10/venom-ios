@@ -16,6 +16,7 @@ struct Settings: View {
     @EnvironmentObject var loginSignUpApi: LoginSignUpApi
     @EnvironmentObject var settingsApi: SettingsApi
     
+    @State var isPresentingDeleteDialog = false;
     @State var isLoading = true
     @State var dailyReportListIds: Set<Int> = []
     
@@ -43,12 +44,17 @@ struct Settings: View {
                     
                     Section(header: Text("Account Settings").font(.subheadline)) {
                         Text("Signed in as: \(settingsApi.userEmail)")
-                        Button("Logout", role: .destructive) {
-                            let signoutResponse = LoginSignUpApi().signOut()
-                            if (signoutResponse) {
-                                loginSignUpApi.isLoggedIn = false
-                            }
-                        }.buttonStyle(BorderedProminentButtonStyle()).padding(0)
+                        HStack {
+                            Button("Logout") {
+                                let signoutResponse = LoginSignUpApi().signOut()
+                                if (signoutResponse) {
+                                    loginSignUpApi.isLoggedIn = false
+                                }
+                            }.buttonStyle(BorderedProminentButtonStyle()).padding(0)
+                            Button("Delete Account", role: .destructive) {
+                                isPresentingDeleteDialog = true;
+                            }.buttonStyle(BorderedButtonStyle()).padding(0)
+                        }
                     }.listRowBackground(Color.clear).padding(0)
                     
                     Section(header: Text("Desktop Access").font(.subheadline)) {
@@ -79,6 +85,19 @@ struct Settings: View {
             Task {
                 await settingsApi.fetchSettings()
                 isLoading = false
+            }
+        }
+        .confirmationDialog(
+            "Your entire account will be deleted. This includes all lists, tags, and tasks. Are you sure you wish to proceed?",
+            isPresented: $isPresentingDeleteDialog,
+            titleVisibility: .visible
+        ) {
+            Button("Delete account", role: .destructive) {
+                Task {
+                    await settingsApi.deleteAccount()
+                    loginSignUpApi.signOut()
+                    loginSignUpApi.isLoggedIn = false
+                }
             }
         }
     }
