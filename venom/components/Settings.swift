@@ -16,6 +16,8 @@ struct Settings: View {
     @EnvironmentObject var loginSignUpApi: LoginSignUpApi
     @EnvironmentObject var settingsApi: SettingsApi
     
+    @Environment(\.colorScheme) var colorScheme // Detect the current color scheme
+    
     @State var isPresentingDeleteDialog = false;
     @State var isLoading = true
     @State var dailyReportListIds: Set<Int> = []
@@ -60,7 +62,10 @@ struct Settings: View {
                     Section(header: Text("Desktop Access").font(.subheadline)) {
                         Text("You can also use Venom tasks on the web at: https://venomtasks.com")
                     }
-                }.onChange(of: dailyReportListIds) {
+                }
+                .scrollContentBackground(.hidden) // Hides default form background
+                .background(colorScheme == .light ? Color.white : Color.clear)
+                .onChange(of: dailyReportListIds) {
                     for list in lists.lists {
                         let isListNewlyAddedToStandup = !list.isStandupList && dailyReportListIds.contains(list.id);
                         let isListRemovedFromStandup = list.isStandupList && !dailyReportListIds.contains(list.id);
