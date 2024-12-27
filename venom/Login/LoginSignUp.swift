@@ -12,15 +12,23 @@ struct LoginSignUp: View {
     @State private var confirmPassword: String = ""
     @State private var isSigningUp: Bool = false
     @State private var apiRequestStatus: APIRequestStatus = APIRequestStatus.initial
+    @State private var customStatusText = ""
     
     @EnvironmentObject var loginSignUpApi: LoginSignUpApi
     
     private func signIn() async -> Void {
+        if (isSigningUp && password != confirmPassword) {
+            customStatusText = "Passwords do not match"
+            return
+        }
+        
+        customStatusText = ""
+        
         do {
             apiRequestStatus = APIRequestStatus.processing
             let didLoginSucceed = isSigningUp ?
-                try await LoginSignUpApi().signUp(email: email, password: password)
-                : try await LoginSignUpApi().signIn(email: email, password: password)
+            try await loginSignUpApi.signUp(email: email, password: password)
+            : try await loginSignUpApi.signIn(email: email, password: password)
             
             if (didLoginSucceed) {
                 apiRequestStatus = APIRequestStatus.success
@@ -34,6 +42,12 @@ struct LoginSignUp: View {
     }
     
     private func getStatusText () -> String {
+        if (loginSignUpApi.errorMessage != "") {
+            return loginSignUpApi.errorMessage
+        } else if (customStatusText != "") {
+            return customStatusText
+        }
+        
         switch apiRequestStatus {
         case APIRequestStatus.processing:
             return "Processing..."
@@ -94,6 +108,7 @@ struct LoginSignUp: View {
                 if (!getStatusText().isEmpty) {
                     Text(getStatusText())
                 }
+                
                 
                 Button(isSigningUp ? "Already have an account? Log in instead." : "Need an account? Sign up instead.") {
                     isSigningUp.toggle()

@@ -19,7 +19,7 @@ struct SettingsResponse: Decodable {
     let autoDeleteTasks: String
 }
 
-class SettingsApi: ObservableObject {
+class SettingsApi: ObservableObject, @unchecked Sendable {
     @Published var userEmail = "";
     @Published var autoDeleteTasksValue = "-1";
     
