@@ -16,7 +16,7 @@ class LoginSignUpApi: ObservableObject, @unchecked Sendable {
             self.errorMessage = ""
         }
         let rawRequestBody = ["email": email, "password": password]
-        let data = try await sendApiCall(url: Constants.loginUrl!, requestMethod: "POST", requestBody: rawRequestBody, verboseLogging: true)
+        let data = try await sendApiCall(url: Constants.loginUrl!, requestMethod: "POST", requestBody: rawRequestBody)
         let loginResponse = try JSONDecoder().decode(LoginResponse.self, from: data)
         
         if (loginResponse.token != nil) {
@@ -42,7 +42,7 @@ class LoginSignUpApi: ObservableObject, @unchecked Sendable {
             self.errorMessage = ""
         }
         let rawRequestBody = ["email": email, "password": password]
-        let data = try await sendApiCall(url: Constants.signUpUrl!, requestMethod: "POST", requestBody: rawRequestBody, verboseLogging: true)
+        let data = try await sendApiCall(url: Constants.signUpUrl!, requestMethod: "POST", requestBody: rawRequestBody)
         let signUpResponse = try JSONDecoder().decode(LoginResponse.self, from: data)
         
         if (signUpResponse.token != nil) {

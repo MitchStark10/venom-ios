@@ -17,6 +17,7 @@ struct LoginSignUp: View {
     @EnvironmentObject var loginSignUpApi: LoginSignUpApi
     
     private func signIn() async -> Void {
+        loginSignUpApi.errorMessage = ""
         if (isSigningUp && password != confirmPassword) {
             customStatusText = "Passwords do not match"
             return
