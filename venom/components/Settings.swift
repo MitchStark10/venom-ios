@@ -61,7 +61,7 @@ struct Settings: View {
                     }
                     
                     Section(header: Text("Desktop Access").font(.subheadline)) {
-                        Text("You can also use Venom tasks on the web at: https://venomtasks.com")
+                        Text("You can also use Venom Tasks on the web at: https://venomtasks.com")
                     }
                 }
                 .onChange(of: dailyReportListIds) {
