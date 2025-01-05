@@ -17,11 +17,13 @@ import Foundation
 struct SettingsResponse: Decodable {
     let email: String
     let autoDeleteTasks: String
+    let dailyReportIgnoreWeekends: Bool
 }
 
 class SettingsApi: ObservableObject, @unchecked Sendable {
     @Published var userEmail = "";
     @Published var autoDeleteTasksValue = "-1";
+    @Published var dailyReportIgnoreWeekends = false;
     
     public func fetchSettings() async {
         do {
@@ -30,15 +32,19 @@ class SettingsApi: ObservableObject, @unchecked Sendable {
             DispatchQueue.main.async {
                 self.userEmail = settingsResponseData.email
                 self.autoDeleteTasksValue = settingsResponseData.autoDeleteTasks
+                self.dailyReportIgnoreWeekends = settingsResponseData.dailyReportIgnoreWeekends
             }
         } catch {
             print("Caught error when updating a list \(error)")
         }
     }
     
-    public func updateSettings(newValue: String) async {
+    public func updateSettings(newAutoDeleteTasksValue: String, newDailyReportIgnoreWeeekndsValue: Bool) async {
         do {
-            let settingsRequestBody = ["autoDeleteTasks": newValue];
+            let settingsRequestBody: [String: Any] = [
+                "autoDeleteTasks": newAutoDeleteTasksValue,
+                "dailyReportIgnoreWeekends": newDailyReportIgnoreWeeekndsValue
+            ];
             try await sendApiCall(url: Constants.settingsUrl!, requestMethod: "PUT", requestBody: settingsRequestBody)
         } catch {
             print("Caught error when updating settings \(error)")

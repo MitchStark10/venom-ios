@@ -29,6 +29,13 @@ struct Settings: View {
         PickerOption(value: "30", label: "1 Month After Task Completion")
     ]
     
+    private func handleSettingsChange() async {
+        await settingsApi.updateSettings(
+            newAutoDeleteTasksValue: settingsApi.autoDeleteTasksValue,
+            newDailyReportIgnoreWeeekndsValue: settingsApi.dailyReportIgnoreWeekends
+        )
+    }
+    
     var body: some View {
         VStack(alignment: .leading) {
             if (!isLoading) {
@@ -41,7 +48,9 @@ struct Settings: View {
                         }
                         MultiSelect(title: "Daily Report Lists", items: lists.lists.map { list in
                             return MultiSelectData(value: list.id, label: list.listName)
-                        }, selectedItems: $dailyReportListIds )
+                        }, selectedItems: $dailyReportListIds)
+                        
+                        Toggle("Use work week calendar for daily report", isOn: $settingsApi.dailyReportIgnoreWeekends)
                     }
                     
                     Section(header: Text("Account Settings").font(.subheadline)) {
@@ -77,7 +86,11 @@ struct Settings: View {
                     }
                 }.onChange(of: settingsApi.autoDeleteTasksValue) {
                     Task {
-                        await settingsApi.updateSettings(newValue: settingsApi.autoDeleteTasksValue)
+                        await handleSettingsChange()
+                    }
+                }.onChange(of: settingsApi.dailyReportIgnoreWeekends) {
+                    Task {
+                        await handleSettingsChange()
                     }
                 }
             }

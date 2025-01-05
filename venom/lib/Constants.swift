@@ -15,7 +15,12 @@ struct Constants {
     static let tagsViewLabel = "Tags"
     static let settingsViewLabel = "Settings"
     
+#if DEBUG
+    static var baseApiUrl = "https://venom-backend-sand.onrender.com"
+#else
     static let baseApiUrl = "https://venom-backend-pjv4.onrender.com"
+#endif
+    
     static let accessTokenKeychainKey = "accessToken"
     static let loginUrl = URL(string: baseApiUrl + "/users/login")
     static let signUpUrl = URL(string: baseApiUrl + "/users/createUser")
