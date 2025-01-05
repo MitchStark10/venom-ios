@@ -11,6 +11,8 @@ import SwiftUI
 struct SubViewRouter: View {
     @EnvironmentObject var taskApi: TaskApi;
     @EnvironmentObject var tagApi: TagApi;
+    @EnvironmentObject var settingsApi: SettingsApi
+    
     
     let navMenuItem: NavMenuItem;
     
@@ -47,7 +49,7 @@ struct SubViewRouter: View {
             } else if (navMenuItem.label == Constants.standupViewLabel) {
                 TaskList(taskItems: taskApi.standupTasks, navTitle: navMenuItem.label, groupBy: GroupByOptions.customGroup, showListName: true, showDeleteTasksButton: false).onAppear {
 					Task {
-						await taskApi.fetchStandupTasks()
+                        await taskApi.fetchStandupTasks(isIgnoringWeekends: settingsApi.dailyReportIgnoreWeekends)
 					}
 				}
             } else if (navMenuItem.label == Constants.settingsViewLabel) {

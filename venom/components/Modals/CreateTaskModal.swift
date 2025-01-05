@@ -12,6 +12,7 @@ struct CreateTaskModal: View {
     @EnvironmentObject var lists: Lists;
     @EnvironmentObject var taskApi: TaskApi
     @EnvironmentObject var tagApi: TagApi
+    @EnvironmentObject var settingsApi: SettingsApi
     private var currentNavMenuitem: NavMenuItem?
     
     
@@ -128,7 +129,7 @@ struct CreateTaskModal: View {
                                 } else if (currentNavMenuitem?.label == Constants.completedViewLabel) {
                                     await taskApi.fetchCompletedTasks()
                                 } else if (currentNavMenuitem?.label == Constants.standupViewLabel) {
-									await taskApi.fetchStandupTasks()
+                                    await taskApi.fetchStandupTasks(isIgnoringWeekends: settingsApi.dailyReportIgnoreWeekends)
                                 }
                             }
                         }) {

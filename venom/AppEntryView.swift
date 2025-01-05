@@ -13,6 +13,7 @@ struct AppEntryView: View {
     @EnvironmentObject var taskApi: TaskApi
     @EnvironmentObject var tagApi: TagApi
     @EnvironmentObject var loginSignUpApi: LoginSignUpApi
+    @EnvironmentObject var settingsApi: SettingsApi
     
     @State private var path: NavigationPath = NavigationPath()
     @State private var currentNavMenuItem: NavMenuItem? = nil;
@@ -122,6 +123,7 @@ struct AppEntryView: View {
                         Task {
                             await lists.fetchLists()
                             await tagApi.fetchTags()
+                            await settingsApi.fetchSettings()
                         }
                     }.onChange(of: scenePhase) { oldPhase, newPhase in
                         if (newPhase == .active) {
@@ -137,7 +139,7 @@ struct AppEntryView: View {
                                 } else if (currentNavMenuItem?.label == Constants.tagsViewLabel) {
                                     await tagApi.fetchTags()
                                 } else if (currentNavMenuItem?.label == Constants.standupViewLabel) {
-									await taskApi.fetchStandupTasks()
+                                    await taskApi.fetchStandupTasks(isIgnoringWeekends: settingsApi.dailyReportIgnoreWeekends)
                                 }
                             }
                         }

@@ -14,6 +14,8 @@ struct TaskItem: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var taskApi: TaskApi;
     @EnvironmentObject var lists: Lists;
+    @EnvironmentObject var settingsApi: SettingsApi;
+    
     
     let task: VenomTask
     let showListName: Bool
@@ -48,7 +50,7 @@ struct TaskItem: View {
                 } else if (navTitle == Constants.completedViewLabel) {
                     await taskApi.fetchCompletedTasks()
                 } else if (navTitle == Constants.standupViewLabel) {
-					await taskApi.fetchStandupTasks()
+                    await taskApi.fetchStandupTasks(isIgnoringWeekends: settingsApi.dailyReportIgnoreWeekends)
                 }
             }
         }

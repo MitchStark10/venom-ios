@@ -7,13 +7,13 @@
 import Foundation
 import SwiftUI
 
-class StandupResponse: Decodable {
+class StandupResponse: Decodable, @unchecked Sendable {
     let today: [VenomTask]
     let yesterday: [VenomTask]
     let blocked: [VenomTask]
 }
 
-class VenomTask: Decodable, Identifiable {
+class VenomTask: Decodable, Identifiable, @unchecked Sendable {
     let id: Int;
     var taskName: String;
     var dueDate, dateCompleted: String?;
@@ -37,7 +37,7 @@ class VenomTask: Decodable, Identifiable {
     }
 }
 
-class TaskApi: ObservableObject {
+class TaskApi: ObservableObject, @unchecked Sendable {
     @Published var hasFetchedTodayTasks = false;
     @Published var todayTasks: [VenomTask] = [];
     
@@ -148,7 +148,7 @@ class TaskApi: ObservableObject {
         }
     }
 	
-	func fetchStandupTasks() async {
+    func fetchStandupTasks(isIgnoringWeekends: Bool) async {
         do {
             let data = try await sendApiCall(url: Constants.getStandupTasksUrl(), requestMethod: "GET")
             let fetchedTasks = try JSONDecoder().decode(StandupResponse.self, from: data)
@@ -159,7 +159,13 @@ class TaskApi: ObservableObject {
                     return task;
                 }
                 self.standupYesterdayTasks = fetchedTasks.yesterday.map { task in
-                    task.customGroup = "Yesterday";
+                    // If today is Monday and we're ignoring weekends, then the group label
+                    // should instead be "Friday
+                    if isTodayMonday() && isIgnoringWeekends {
+                        task.customGroup = "Friday";
+                    } else {
+                        task.customGroup = "Yesterday";
+                    }
                     return task;
                 }
                 self.standupBlockedTasks = fetchedTasks.blocked.map { task in

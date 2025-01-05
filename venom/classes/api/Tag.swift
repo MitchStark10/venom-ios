@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-class Tag: Decodable, Identifiable {
+class Tag: Decodable, Identifiable, @unchecked Sendable {
     let id: Int;
     var tagName: String;
     var tagColor: String;
@@ -21,7 +21,7 @@ class Tag: Decodable, Identifiable {
     }
 }
 
-class TagApi: ObservableObject {
+class TagApi: ObservableObject, @unchecked Sendable {
     @Published var hasFetchedTags = false;
     @Published var tags: [Tag] = [];
     @Published var showTagModal = false;

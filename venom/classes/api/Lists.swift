@@ -7,7 +7,7 @@
 import Foundation
 import SwiftUI
 
-class VenomList: Decodable, Hashable {
+class VenomList: Decodable, Hashable, @unchecked Sendable {
     let id, order: Int;
     var listName: String;
     var isStandupList: Bool;
@@ -27,7 +27,7 @@ class VenomList: Decodable, Hashable {
     
 }
 
-class Lists: ObservableObject {
+class Lists: ObservableObject, @unchecked Sendable {
     @Published var hasFetchedLists = false;
     @Published var lists: [VenomList] = []
     
