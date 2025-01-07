@@ -132,7 +132,7 @@ struct AppEntryView: View {
                                 
                                 if (currentNavMenuItem?.label == Constants.todayViewLabel) {
                                     await taskApi.fetchTodayTasks()
-                                } else if (currentNavMenuItem?.label == Constants.completedViewLabel) {
+                                } else if (currentNavMenuItem?.label == Constants.upcomingViewLabel) {
                                     await taskApi.fetchUpcomingTasks()
                                 } else if (currentNavMenuItem?.label == Constants.completedViewLabel) {
                                     await taskApi.fetchCompletedTasks()

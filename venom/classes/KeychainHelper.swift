@@ -32,11 +32,11 @@ class KeychainHelper {
             kSecMatchLimit: kSecMatchLimitOne
         ] as CFDictionary
 
-        var dataTypeRef: AnyObject? = nil
+        var dataTypeRef: AnyObject?
         let status: OSStatus = SecItemCopyMatching(query, &dataTypeRef)
 
-        if status == noErr {
-            return dataTypeRef as! Data?
+        if status == noErr, let data = dataTypeRef as? Data {
+            return data
         } else {
             return nil
         }

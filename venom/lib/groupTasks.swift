@@ -7,9 +7,9 @@
 
 import Foundation
 
-func taskSorter(a: VenomTask?, b: VenomTask?) -> Bool {
-    let listAViewOrder = a?.listViewOrder ?? Int.max
-    let listBViewOrder = b?.listViewOrder ?? Int.max
+func taskSorter(taskA: VenomTask?, taskB: VenomTask?) -> Bool {
+    let listAViewOrder = taskA?.listViewOrder ?? Int.max
+    let listBViewOrder = taskB?.listViewOrder ?? Int.max
     
     if listAViewOrder > listBViewOrder {
         return false;

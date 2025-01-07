@@ -8,7 +8,7 @@
 import SwiftUI
 
 @main
-struct venomApp: App {
+struct VenomApp: App {
     @State var lists = Lists(lists: [])
     @State var taskApi = TaskApi()
     @State var tagApi = TagApi()
