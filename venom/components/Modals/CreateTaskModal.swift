@@ -9,41 +9,41 @@ import Foundation
 import SwiftUI
 
 struct CreateTaskModal: View {
-    @EnvironmentObject var lists: Lists;
+    @EnvironmentObject var lists: Lists
     @EnvironmentObject var taskApi: TaskApi
     @EnvironmentObject var tagApi: TagApi
     @EnvironmentObject var settingsApi: SettingsApi
+    
     private var currentNavMenuitem: NavMenuItem?
+    var task: VenomTask?
     
-    
-    var task: VenomTask?;
-    @State var taskName: String;
-    @State var listId: Int?;
-    @State private var dueDate: Date;
-    @State private var selectedTagIds: Set<Int>;
-    @State private var useDatePicker: Bool;
+    @State var taskName: String
+    @State var listId: Int?
+    @State private var dueDate: Date
+    @State private var selectedTagIds: Set<Int>
+    @State private var useDatePicker: Bool
     @FocusState private var isTextFieldFocused: Bool
     
     init(task: VenomTask? = nil, currentNavMenuItem: NavMenuItem?) {
-        self.task = task;
-        self.currentNavMenuitem = currentNavMenuItem;
-        self.taskName = task?.taskName ?? "";
-        self.listId = task?.listId ?? nil;
+        self.task = task
+        self.currentNavMenuitem = currentNavMenuItem
+        self.taskName = task?.taskName ?? ""
+        self.listId = task?.listId ?? nil
         
-        if (task?.tagIds != nil) {
-            self.selectedTagIds = Set(task!.tagIds);
+        if task?.tagIds != nil {
+            self.selectedTagIds = Set(task!.tagIds)
         } else {
-            self.selectedTagIds = [];
+            self.selectedTagIds = []
         }
         
-        if (task?.dueDate != nil) {
+        if task?.dueDate != nil {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd"
             self.dueDate = dateFormatter.date(from: task!.dueDate!)!
             self.useDatePicker = true
         } else {
-            self.dueDate = Date();
-            self.useDatePicker = false;
+            self.dueDate = Date()
+            self.useDatePicker = false
         }
     }
     
@@ -60,17 +60,24 @@ struct CreateTaskModal: View {
                             Text(list.listName).tag(list.id as Int?)
                         }
                     }
-                    TextField(text: $taskName, prompt: Text("Task Name")) {
+                    TextField(text: $taskName, prompt: Text("Task Name"), axis: .vertical) {
                         Text("Task Name")
                     }
                     .focused($isTextFieldFocused)
-                    .onSubmit {
-                        isTextFieldFocused = false
+                    .toolbar {
+                        ToolbarItemGroup(placement: .keyboard) {
+                            HStack {
+                                Spacer()
+                                Button("Done") {
+                                    isTextFieldFocused = false
+                                }
+                            }
+                        }
                     }
-                    .submitLabel(SubmitLabel.done)
                     
                     Toggle("Due Date", isOn: $useDatePicker)
-                    if (self.useDatePicker) {
+                    
+                    if self.useDatePicker {
                         DatePicker(
                             "Due Date",
                             selection: $dueDate,
@@ -78,57 +85,53 @@ struct CreateTaskModal: View {
                         ).datePickerStyle(.graphical)
                     }
                     
-                    
                     MultiSelect(title: Constants.tagsViewLabel, items: tagApi.tags.map { tag in
                         return MultiSelectData(value: tag.id, label: tag.tagName)
                     }, selectedItems: $selectedTagIds)
                     
                     HStack {
                         Button(action: {
-                            taskApi.taskToEdit = nil;
-                            taskApi.showTaskModal = false;
+                            taskApi.taskToEdit = nil
+                            taskApi.showTaskModal = false
                         }) {
                             Text("Dismiss")
                         }.buttonStyle(BorderlessButtonStyle()).padding()
-                        
                         Spacer()
-                        
                         Button(action: {
                             Task {
-                                if (listId == nil && task == nil) {
+                                if listId == nil && task == nil {
                                     // TODO: Show some error message
-                                    return;
+                                    return
                                 }
                                 
-                                if (task != nil) {
+                                if task != nil {
                                     let dateFormatter = DateFormatter()
                                     dateFormatter.dateFormat = "yyyy-MM-dd"
-                                    
-                                    if (listId != nil) {
-                                        task!.listId = listId!;
+                                    if listId != nil {
+                                        task!.listId = listId!
                                     }
-                                    task!.taskName = taskName;
-                                    if (useDatePicker) {
-                                        task!.dueDate = dateFormatter.string(from: self.dueDate);
+                                    task!.taskName = taskName
+                                    if useDatePicker {
+                                        task!.dueDate = dateFormatter.string(from: self.dueDate)
                                     } else {
-                                        task!.dueDate = nil;
+                                        task!.dueDate = nil
                                     }
-                                    task!.tagIds = Array(selectedTagIds);
+                                    task!.tagIds = Array(selectedTagIds)
                                     
-                                    await taskApi.updateTask(task: task!, lists: lists);
+                                    await taskApi.updateTask(task: task!, lists: lists)
                                 } else {
                                     await taskApi.createTask(taskName: taskName, dueDate: dueDate, listId: listId!, lists: lists, tagIds: Array(selectedTagIds))
                                 }
-                                taskApi.showTaskModal = false;
-                                taskApi.taskToEdit = nil;
+                                taskApi.showTaskModal = false
+                                taskApi.taskToEdit = nil
                                 
-                                if (currentNavMenuitem?.label == Constants.todayViewLabel) {
+                                if currentNavMenuitem?.label == Constants.todayViewLabel {
                                     await taskApi.fetchTodayTasks()
-                                } else if (currentNavMenuitem?.label == Constants.upcomingViewLabel) {
+                                } else if currentNavMenuitem?.label == Constants.upcomingViewLabel {
                                     await taskApi.fetchUpcomingTasks()
-                                } else if (currentNavMenuitem?.label == Constants.completedViewLabel) {
+                                } else if currentNavMenuitem?.label == Constants.completedViewLabel {
                                     await taskApi.fetchCompletedTasks()
-                                } else if (currentNavMenuitem?.label == Constants.standupViewLabel) {
+                                } else if currentNavMenuitem?.label == Constants.standupViewLabel {
                                     await taskApi.fetchStandupTasks(isIgnoringWeekends: settingsApi.dailyReportIgnoreWeekends)
                                 }
                             }
@@ -141,26 +144,22 @@ struct CreateTaskModal: View {
             }
         }.onAppear {
             let defaultListId = currentNavMenuitem?.list?.id ?? lists.lists.first?.id ?? nil
-            if (defaultListId != nil && listId == nil) {
-                listId = defaultListId;
-            }
-            
-            Task {
-                
+            if defaultListId != nil && listId == nil {
+                listId = defaultListId
             }
         }
     }
     
     
     var isDisabled: Bool {
-        return taskName.isEmpty || listId == nil;
+        return taskName.isEmpty || listId == nil
     }
     
     var buttonBackgroundColor: Color {
-        return isDisabled ? Color.gray : Color.blue;
+        return isDisabled ? Color.gray : Color.blue
     }
     
     var buttonForegroundColor: Color {
-        return isDisabled ? Color.black : Color.white;
+        return isDisabled ? Color.black : Color.white
     }
 }

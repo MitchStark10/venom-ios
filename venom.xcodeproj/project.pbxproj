@@ -89,6 +89,7 @@
 		80CCF69C2C34C49A00AB4483 /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		80CCF69E2C34C5BE00AB4483 /* NavMenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavMenuItem.swift; sourceTree = "<group>"; };
 		80CCF6A02C34C60200AB4483 /* SubViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubViewRouter.swift; sourceTree = "<group>"; };
+		80DBC3992D32F2860040511E /* swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = swiftlint.yml; sourceTree = "<group>"; };
 		80E4C6732BA732B700C17AC9 /* venom.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = venom.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		80E4C6762BA732B700C17AC9 /* venomApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = venomApp.swift; sourceTree = "<group>"; };
 		80E4C6782BA732B700C17AC9 /* AppEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEntryView.swift; sourceTree = "<group>"; };
@@ -183,6 +184,7 @@
 		80E4C66A2BA732B700C17AC9 = {
 			isa = PBXGroup;
 			children = (
+				80DBC3992D32F2860040511E /* swiftlint.yml */,
 				80E4C6752BA732B700C17AC9 /* venom */,
 				80E4C6872BA732B800C17AC9 /* venomTests */,
 				80E4C6912BA732B800C17AC9 /* venomUITests */,
