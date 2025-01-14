@@ -7,8 +7,8 @@
 import SwiftUI
 
 struct PickerOption {
-    let value: String;
-    let label: String;
+    let value: String
+    let label: String
 }
 
 struct Settings: View {
@@ -18,7 +18,7 @@ struct Settings: View {
     
     @Environment(\.colorScheme) var colorScheme // Detect the current color scheme
     
-    @State var isPresentingDeleteDialog = false;
+    @State var isPresentingDeleteDialog = false
     @State var isLoading = true
     @State var dailyReportListIds: Set<Int> = []
     
@@ -36,48 +36,54 @@ struct Settings: View {
         )
     }
     
+    private var dailyReportSettings: some View {
+        Section(header: Text("Daily Report Settings").font(.subheadline)) {
+            Picker("Auto-Delete Tasks", selection: $settingsApi.autoDeleteTasksValue) {
+                ForEach(autoDeleteTaskOptions, id: \.value) { option in
+                    Text(option.label).tag(option.value)
+                }
+            }
+            MultiSelect(title: "Daily Report Lists", items: lists.lists.map { list in
+                return MultiSelectData(value: list.id, label: list.listName)
+            }, selectedItems: $dailyReportListIds)
+            
+            Toggle("Use work week calendar for daily report", isOn: $settingsApi.dailyReportIgnoreWeekends)
+        }
+    }
+    
+    private var accountSettings: some View {
+        Section(header: Text("Account Settings").font(.subheadline)) {
+            Text("Signed in as: \(settingsApi.userEmail)")
+            HStack {
+                Button("Logout") {
+                    let signoutResponse = loginSignUpApi.signOut()
+                    if signoutResponse {
+                        loginSignUpApi.isLoggedIn = false
+                    }
+                }.buttonStyle(BorderedProminentButtonStyle()).padding(0)
+                
+                Button("Delete Account", role: .destructive) {
+                    isPresentingDeleteDialog = true
+                }.buttonStyle(BorderedButtonStyle()).padding(0)
+            }
+        }
+    }
+    
     var body: some View {
         VStack(alignment: .leading) {
-            if (!isLoading) {
+            if !isLoading {
                 Form {
-                    Section(header: Text("Daily Report Settings").font(.subheadline)) {
-                        Picker("Auto-Delete Tasks", selection: $settingsApi.autoDeleteTasksValue) {
-                            ForEach(autoDeleteTaskOptions, id: \.value) { option in
-                                Text(option.label).tag(option.value)
-                            }
-                        }
-                        MultiSelect(title: "Daily Report Lists", items: lists.lists.map { list in
-                            return MultiSelectData(value: list.id, label: list.listName)
-                        }, selectedItems: $dailyReportListIds)
-                        
-                        Toggle("Use work week calendar for daily report", isOn: $settingsApi.dailyReportIgnoreWeekends)
-                    }
-                    
-                    Section(header: Text("Account Settings").font(.subheadline)) {
-                        Text("Signed in as: \(settingsApi.userEmail)")
-                        HStack {
-                            Button("Logout") {
-                                let signoutResponse = LoginSignUpApi().signOut()
-                                if (signoutResponse) {
-                                    loginSignUpApi.isLoggedIn = false
-                                }
-                            }.buttonStyle(BorderedProminentButtonStyle()).padding(0)
-                            
-                            Button("Delete Account", role: .destructive) {
-                                isPresentingDeleteDialog = true;
-                            }.buttonStyle(BorderedButtonStyle()).padding(0)
-                        }
-                    }
-                    
+                    dailyReportSettings
+                    accountSettings
                     Section(header: Text("Desktop Access").font(.subheadline)) {
                         Text("You can also use Venom Tasks on the web at: https://venomtasks.com")
                     }
                 }
                 .onChange(of: dailyReportListIds) {
                     for list in lists.lists {
-                        let isListNewlyAddedToStandup = !list.isStandupList && dailyReportListIds.contains(list.id);
-                        let isListRemovedFromStandup = list.isStandupList && !dailyReportListIds.contains(list.id);
-                        if (isListNewlyAddedToStandup || isListRemovedFromStandup) {
+                        let isListNewlyAddedToStandup = !list.isStandupList && dailyReportListIds.contains(list.id)
+                        let isListRemovedFromStandup = list.isStandupList && !dailyReportListIds.contains(list.id)
+                        if isListNewlyAddedToStandup || isListRemovedFromStandup {
                             list.isStandupList.toggle()
                             Task {
                                 await lists.updateList(list: list)
@@ -94,9 +100,8 @@ struct Settings: View {
                     }
                 }
             }
-            
         }
-        .onAppear() {
+        .onAppear {
             dailyReportListIds = Set(lists.lists.filter { $0.isStandupList }.map { $0.id })
             Task {
                 await settingsApi.fetchSettings()
@@ -104,7 +109,8 @@ struct Settings: View {
             }
         }
         .confirmationDialog(
-            "Your entire account will be deleted. This includes all lists, tags, and tasks. Are you sure you wish to proceed?",
+            "Your entire account will be deleted. "
+            + "This includes all lists, tags, and tasks. Are you sure you wish to proceed?",
             isPresented: $isPresentingDeleteDialog,
             titleVisibility: .visible
         ) {

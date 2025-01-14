@@ -7,7 +7,7 @@
 
 import Foundation
 
-class LoginSignUpApi: ObservableObject, @unchecked Sendable {
+class LoginSignUpApi: ApiClient, ObservableObject, @unchecked Sendable {
     @Published var isLoggedIn: Bool = initializeSignInStatus()
     @Published var errorMessage: String = ""
     

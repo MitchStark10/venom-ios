@@ -20,7 +20,7 @@ struct SettingsResponse: Decodable {
     let dailyReportIgnoreWeekends: Bool
 }
 
-class SettingsApi: ObservableObject, @unchecked Sendable {
+class SettingsApi: ApiClient, ObservableObject, @unchecked Sendable {
     @Published var userEmail = "";
     @Published var autoDeleteTasksValue = "-1";
     @Published var dailyReportIgnoreWeekends = false;

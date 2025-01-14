@@ -18,7 +18,7 @@
 		805910EC2C2F5155005780C1 /* initializeSignInStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805910EB2C2F5155005780C1 /* initializeSignInStatus.swift */; };
 		8071FA6E2C363D0300930AD4 /* DropdownMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8071FA6D2C363D0300930AD4 /* DropdownMenu.swift */; };
 		8077273F2D2B3F1F00D57DF9 /* isTodayMonday.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8077273E2D2B3F1B00D57DF9 /* isTodayMonday.swift */; };
-		80C368212C2F761C0023DC52 /* sendApiCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C368202C2F761C0023DC52 /* sendApiCall.swift */; };
+		80C368212C2F761C0023DC52 /* ApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C368202C2F761C0023DC52 /* ApiClient.swift */; };
 		80C368242C2F7B970023DC52 /* NewTaskFAB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C368232C2F7B970023DC52 /* NewTaskFAB.swift */; };
 		80C368282C2F86B80023DC52 /* Lists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C368272C2F86B80023DC52 /* Lists.swift */; };
 		80C3682A2C2F871B0023DC52 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C368292C2F871B0023DC52 /* Task.swift */; };
@@ -32,7 +32,6 @@
 		80CCF69D2C34C49A00AB4483 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CCF69C2C34C49A00AB4483 /* Tag.swift */; };
 		80CCF69F2C34C5BE00AB4483 /* NavMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CCF69E2C34C5BE00AB4483 /* NavMenuItem.swift */; };
 		80CCF6A12C34C60200AB4483 /* SubViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CCF6A02C34C60200AB4483 /* SubViewRouter.swift */; };
-		80DBC39B2D32F4640040511E /* RequestOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80DBC39A2D32F4600040511E /* RequestOptions.swift */; };
 		80E4C6772BA732B700C17AC9 /* venomApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E4C6762BA732B700C17AC9 /* venomApp.swift */; };
 		80E4C6792BA732B700C17AC9 /* AppEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E4C6782BA732B700C17AC9 /* AppEntryView.swift */; };
 		80E4C67B2BA732B800C17AC9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 80E4C67A2BA732B800C17AC9 /* Assets.xcassets */; };
@@ -44,6 +43,8 @@
 		80E4C6A62BABD8E300C17AC9 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E4C6A52BABD8E300C17AC9 /* Constants.swift */; };
 		80EACF582D18749D00806B04 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EACF572D18749200806B04 /* Settings.swift */; };
 		80EACF5A2D18B03B00806B04 /* SettingsApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EACF592D18B03800806B04 /* SettingsApi.swift */; };
+		80EED5CD2D33680200911BA8 /* GlobalMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EED5CC2D3367FD00911BA8 /* GlobalMessages.swift */; };
+		80EED5CF2D336A9500911BA8 /* VenomLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EED5CE2D336A9200911BA8 /* VenomLogger.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,7 +77,7 @@
 		805910EB2C2F5155005780C1 /* initializeSignInStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = initializeSignInStatus.swift; sourceTree = "<group>"; };
 		8071FA6D2C363D0300930AD4 /* DropdownMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropdownMenu.swift; sourceTree = "<group>"; };
 		8077273E2D2B3F1B00D57DF9 /* isTodayMonday.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = isTodayMonday.swift; sourceTree = "<group>"; };
-		80C368202C2F761C0023DC52 /* sendApiCall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sendApiCall.swift; sourceTree = "<group>"; };
+		80C368202C2F761C0023DC52 /* ApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiClient.swift; sourceTree = "<group>"; };
 		80C368232C2F7B970023DC52 /* NewTaskFAB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTaskFAB.swift; sourceTree = "<group>"; };
 		80C368272C2F86B80023DC52 /* Lists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lists.swift; sourceTree = "<group>"; };
 		80C368292C2F871B0023DC52 /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
@@ -90,8 +91,6 @@
 		80CCF69C2C34C49A00AB4483 /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		80CCF69E2C34C5BE00AB4483 /* NavMenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavMenuItem.swift; sourceTree = "<group>"; };
 		80CCF6A02C34C60200AB4483 /* SubViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubViewRouter.swift; sourceTree = "<group>"; };
-		80DBC3992D32F2860040511E /* swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = swiftlint.yml; sourceTree = "<group>"; };
-		80DBC39A2D32F4600040511E /* RequestOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestOptions.swift; sourceTree = "<group>"; };
 		80E4C6732BA732B700C17AC9 /* venom.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = venom.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		80E4C6762BA732B700C17AC9 /* venomApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = venomApp.swift; sourceTree = "<group>"; };
 		80E4C6782BA732B700C17AC9 /* AppEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEntryView.swift; sourceTree = "<group>"; };
@@ -107,6 +106,8 @@
 		80E4C6A52BABD8E300C17AC9 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		80EACF572D18749200806B04 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		80EACF592D18B03800806B04 /* SettingsApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsApi.swift; sourceTree = "<group>"; };
+		80EED5CC2D3367FD00911BA8 /* GlobalMessages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalMessages.swift; sourceTree = "<group>"; };
+		80EED5CE2D336A9200911BA8 /* VenomLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenomLogger.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -141,7 +142,8 @@
 		805910DB2C2F4152005780C1 /* classes */ = {
 			isa = PBXGroup;
 			children = (
-				80DBC39A2D32F4600040511E /* RequestOptions.swift */,
+				80EED5CE2D336A9200911BA8 /* VenomLogger.swift */,
+				80EED5CC2D3367FD00911BA8 /* GlobalMessages.swift */,
 				805910E22C2F46B3005780C1 /* api */,
 				805910DC2C2F41BF005780C1 /* UserSettings.swift */,
 				805910E02C2F4459005780C1 /* LoginResponse.swift */,
@@ -157,7 +159,7 @@
 			children = (
 				80EACF592D18B03800806B04 /* SettingsApi.swift */,
 				805910E32C2F46C6005780C1 /* LoginSignUpApi.swift */,
-				80C368202C2F761C0023DC52 /* sendApiCall.swift */,
+				80C368202C2F761C0023DC52 /* ApiClient.swift */,
 				80C368272C2F86B80023DC52 /* Lists.swift */,
 				80C368292C2F871B0023DC52 /* Task.swift */,
 				80CCF69A2C34C46600AB4483 /* TaskTag.swift */,
@@ -187,7 +189,6 @@
 		80E4C66A2BA732B700C17AC9 = {
 			isa = PBXGroup;
 			children = (
-				80DBC3992D32F2860040511E /* swiftlint.yml */,
 				80E4C6752BA732B700C17AC9 /* venom */,
 				80E4C6872BA732B800C17AC9 /* venomTests */,
 				80E4C6912BA732B800C17AC9 /* venomUITests */,
@@ -405,6 +406,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				80EED5CD2D33680200911BA8 /* GlobalMessages.swift in Sources */,
 				80C531352C4F47A6008B0FAA /* CheckboxToggleStyle.swift in Sources */,
 				80CCF69D2C34C49A00AB4483 /* Tag.swift in Sources */,
 				805910E42C2F46C6005780C1 /* LoginSignUpApi.swift in Sources */,
@@ -423,12 +425,12 @@
 				80C706552C3751B80092D6B4 /* getDateKey.swift in Sources */,
 				80CCF6992C34C22E00AB4483 /* TaskList.swift in Sources */,
 				80CCF69B2C34C46600AB4483 /* TaskTag.swift in Sources */,
-				80C368212C2F761C0023DC52 /* sendApiCall.swift in Sources */,
+				80C368212C2F761C0023DC52 /* ApiClient.swift in Sources */,
 				80C706532C37512B0092D6B4 /* groupTasks.swift in Sources */,
 				805910EA2C2F5013005780C1 /* KeychainHelper.swift in Sources */,
 				80E4C6A32BAA84AF00C17AC9 /* LoginSignUp.swift in Sources */,
-				80DBC39B2D32F4640040511E /* RequestOptions.swift in Sources */,
 				805910E82C2F4782005780C1 /* APIRequestStatus.swift in Sources */,
+				80EED5CF2D336A9500911BA8 /* VenomLogger.swift in Sources */,
 				805910DD2C2F41BF005780C1 /* UserSettings.swift in Sources */,
 				80E4C6A62BABD8E300C17AC9 /* Constants.swift in Sources */,
 				80EACF582D18749D00806B04 /* Settings.swift in Sources */,

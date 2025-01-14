@@ -37,7 +37,7 @@ class VenomTask: Decodable, Identifiable, @unchecked Sendable {
     }
 }
 
-class TaskApi: ObservableObject, @unchecked Sendable {
+class TaskApi: ApiClient, ObservableObject, @unchecked Sendable {
     @Published var hasFetchedTodayTasks = false;
     @Published var todayTasks: [VenomTask] = [];
     

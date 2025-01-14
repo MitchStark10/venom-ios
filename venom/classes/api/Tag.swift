@@ -21,7 +21,7 @@ class Tag: Decodable, Identifiable, @unchecked Sendable {
     }
 }
 
-class TagApi: ObservableObject, @unchecked Sendable {
+class TagApi: ApiClient, ObservableObject, @unchecked Sendable {
     @Published var hasFetchedTags = false;
     @Published var tags: [Tag] = [];
     @Published var showTagModal = false;

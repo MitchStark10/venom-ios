@@ -14,28 +14,29 @@ struct AppEntryView: View {
     @EnvironmentObject var tagApi: TagApi
     @EnvironmentObject var loginSignUpApi: LoginSignUpApi
     @EnvironmentObject var settingsApi: SettingsApi
+    @EnvironmentObject var globalMessages: GlobalMessages
     
     @State private var path: NavigationPath = NavigationPath()
-    @State private var currentNavMenuItem: NavMenuItem? = nil;
-    @State private var isPresentingDeleteDialog = false;
-    @State private var listIdToDelete: Int? = nil;
+    @State private var currentNavMenuItem: NavMenuItem?
+    @State private var isPresentingDeleteDialog = false
+    @State private var listIdToDelete: Int?
 
-    @Environment(\.scenePhase) private var scenePhase;
+    @Environment(\.scenePhase) private var scenePhase
     
     private let defaultMenuItems = [
         NavMenuItem(label: Constants.todayViewLabel),
 		NavMenuItem(label: Constants.standupViewLabel),
         NavMenuItem(label: Constants.upcomingViewLabel),
         NavMenuItem(label: Constants.completedViewLabel)
-    ];
+    ]
     
     private let secondaryMenuItems = [
         NavMenuItem(label: Constants.tagsViewLabel)
-    ];
+    ]
     
     private let settingsMenuItems: [NavMenuItem] = [
         NavMenuItem(label: Constants.settingsViewLabel)
-    ];
+    ]
     
     private func getMenuItems() -> [NavMenuItem] {
         var menuItems: [NavMenuItem] = []
@@ -47,7 +48,48 @@ struct AppEntryView: View {
     }
     
     func getAllMenuItems() -> [NavMenuItem] {
-        return defaultMenuItems + secondaryMenuItems + getMenuItems() + settingsMenuItems;
+        return defaultMenuItems + secondaryMenuItems + getMenuItems() + settingsMenuItems
+    }
+    
+    var defaultMenuView: some View {
+        ForEach(defaultMenuItems) { menuItem in
+            Button(menuItem.label) {
+                path.append(menuItem.label)
+            }.foregroundColor(Color(UIColor.label))
+        }
+    }
+    
+    var secondaryMenuView: some View {
+        Section {
+            ForEach(secondaryMenuItems) { menuItem in
+                Button(menuItem.label) {
+                    path.append(menuItem.label)
+                }.foregroundColor(Color(UIColor.label))
+            }
+        }
+    }
+    
+    var listsView: some View {
+        Section(header: Text("Lists")) {
+            ForEach(getMenuItems()) { menuItem in
+                Button (menuItem.label) {
+                    path.append(menuItem.label)
+                }.foregroundColor(Color(UIColor.label))
+                    .contextMenu(ContextMenu(menuItems: {
+                        Button("Update List") {
+                            Task {
+                                lists.showListModal = true;
+                                lists.listToEdit = menuItem.list;
+                            }
+                        }
+                        Button("Delete List", role: .destructive) {
+                            isPresentingDeleteDialog = true;
+                            listIdToDelete = menuItem.list?.id;
+                        }
+                    }))
+            }
+        }
+        
     }
     
     var body: some View {
@@ -58,41 +100,10 @@ struct AppEntryView: View {
                 ZStack(alignment: .bottomTrailing) {
                     NavigationStack(path: $path) {
                         List {
-                            ForEach(defaultMenuItems) { menuItem in
-                                Button(menuItem.label) {
-                                    path.append(menuItem.label)
-                                }.foregroundColor(Color(UIColor.label))
-                            }
-                            
-                            Section {
-                                ForEach(secondaryMenuItems) { menuItem in
-                                    Button(menuItem.label) {
-                                        path.append(menuItem.label)
-                                    }.foregroundColor(Color(UIColor.label))
-                                }
-                            }
-                            
-                            
-                            if (lists.hasFetchedLists) {
-                                Section(header: Text("Lists")) {
-                                    ForEach(getMenuItems()) { menuItem in
-                                        Button (menuItem.label) {
-                                            path.append(menuItem.label)
-                                        }.foregroundColor(Color(UIColor.label))
-                                            .contextMenu(ContextMenu(menuItems: {
-                                                Button("Update List") {
-                                                    Task {
-                                                        lists.showListModal = true;
-                                                        lists.listToEdit = menuItem.list;
-                                                    }
-                                                }
-                                                Button("Delete List", role: .destructive) {
-                                                    isPresentingDeleteDialog = true;
-                                                    listIdToDelete = menuItem.list?.id;
-                                                }
-                                            }))
-                                    }
-                                }
+                            defaultMenuView
+                            secondaryMenuView
+                            if lists.hasFetchedLists {
+                                listsView
                             } else {
                                 ProgressView()
                             }
@@ -126,26 +137,28 @@ struct AppEntryView: View {
                             await settingsApi.fetchSettings()
                         }
                     }.onChange(of: scenePhase) { oldPhase, newPhase in
-                        if (newPhase == .active) {
+                        if newPhase == .active {
                             Task {
                                 await lists.fetchLists()
                                 
-                                if (currentNavMenuItem?.label == Constants.todayViewLabel) {
+                                if currentNavMenuItem?.label == Constants.todayViewLabel {
                                     await taskApi.fetchTodayTasks()
-                                } else if (currentNavMenuItem?.label == Constants.upcomingViewLabel) {
+                                } else if currentNavMenuItem?.label == Constants.upcomingViewLabel {
                                     await taskApi.fetchUpcomingTasks()
-                                } else if (currentNavMenuItem?.label == Constants.completedViewLabel) {
+                                } else if currentNavMenuItem?.label == Constants.completedViewLabel {
                                     await taskApi.fetchCompletedTasks()
-                                } else if (currentNavMenuItem?.label == Constants.tagsViewLabel) {
+                                } else if currentNavMenuItem?.label == Constants.tagsViewLabel {
                                     await tagApi.fetchTags()
-                                } else if (currentNavMenuItem?.label == Constants.standupViewLabel) {
-                                    await taskApi.fetchStandupTasks(isIgnoringWeekends: settingsApi.dailyReportIgnoreWeekends)
+                                } else if currentNavMenuItem?.label == Constants.standupViewLabel {
+                                    await taskApi.fetchStandupTasks(
+                                        isIgnoringWeekends: settingsApi.dailyReportIgnoreWeekends
+                                    )
                                 }
                             }
                         }
                     }
                     
-                    if (currentNavMenuItem?.label != "Completed") {
+                    if currentNavMenuItem?.label != "Completed" {
                         NewTaskFAB(currentNavMenuItem: currentNavMenuItem)
                     }
                 }
@@ -153,16 +166,19 @@ struct AppEntryView: View {
         }
         .ignoresSafeArea(.keyboard)
         .sheet(isPresented: $taskApi.showTaskModal, onDismiss: {
-            taskApi.taskToEdit = nil;
-            taskApi.showTaskModal = false;
+            taskApi.taskToEdit = nil
+            taskApi.showTaskModal = false
         }) {
             CreateTaskModal(task: taskApi.taskToEdit, currentNavMenuItem: currentNavMenuItem)
         }
-        .sheet(isPresented: $lists.showListModal, onDismiss: {
-            lists.showListModal = false;
-        }) {
-            CreateListModal(listToEdit: lists.listToEdit)
-        }
+        .sheet(
+            isPresented: $lists.showListModal,
+            onDismiss: {
+                lists.showListModal = false
+            },
+            content: {
+                CreateListModal(listToEdit: lists.listToEdit)
+            })
         .sheet(isPresented: $tagApi.showTagModal, onDismiss: {
             tagApi.showTagModal = false
         }) {
@@ -177,8 +193,11 @@ struct AppEntryView: View {
                     await lists.deleteList(listId: listIdToDelete!)
                 }
             }.onDisappear {
-                listIdToDelete = nil;
+                listIdToDelete = nil
             }
         }
+        .alert(globalMessages.alertMessage, isPresented: $globalMessages.showAlert, actions: {
+            Button("OK") { globalMessages.showAlert = false }
+        })
     }
 }
