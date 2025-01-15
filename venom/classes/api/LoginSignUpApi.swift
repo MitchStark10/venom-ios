@@ -11,56 +11,43 @@ class LoginSignUpApi: ApiClient, ObservableObject, @unchecked Sendable {
     @Published var isLoggedIn: Bool = initializeSignInStatus()
     @Published var errorMessage: String = ""
     
-    public func signIn(email: String, password: String) async throws -> Bool {
-        DispatchQueue.main.async {
+    private func signUpOrIn(email: String, password: String, url: URL) async throws -> Bool {
+         DispatchQueue.main.async {
             self.errorMessage = ""
         }
         let rawRequestBody = ["email": email, "password": password]
-        let data = try await sendApiCall(url: Constants.loginUrl!, requestMethod: "POST", requestBody: rawRequestBody)
-        let loginResponse = try JSONDecoder().decode(LoginResponse.self, from: data)
+        let data = try await sendApiCall(
+            url: url,
+            requestMethod: "POST",
+            requestBody: rawRequestBody,
+            toastOnError: false
+        )
+        let loginSignUpResponse = try JSONDecoder().decode(LoginResponse.self, from: data)
         
-        if (loginResponse.token != nil) {
-            if let data = loginResponse.token!.data(using: .utf8) {
+        if loginSignUpResponse.token != nil {
+            if let data = loginSignUpResponse.token!.data(using: .utf8) {
                 let status = KeychainHelper.shared.save(key: Constants.accessTokenKeychainKey, data: data)
                 if status == errSecSuccess {
                     return true
                 }
             }
             
-            return false;
-        } else if (loginResponse.error != nil) {
+            return false
+        } else if loginSignUpResponse.error != nil {
             DispatchQueue.main.async {
-                self.errorMessage = loginResponse.error!
+                self.errorMessage = loginSignUpResponse.error!
             }
         }
         
-        return false;
+        return false       
+    }
+    
+    public func signIn(email: String, password: String) async throws -> Bool {
+        return try await signUpOrIn(email: email, password: password, url: Constants.loginUrl!)
     }
     
     public func signUp(email: String, password: String) async throws -> Bool {
-        DispatchQueue.main.async {
-            self.errorMessage = ""
-        }
-        let rawRequestBody = ["email": email, "password": password]
-        let data = try await sendApiCall(url: Constants.signUpUrl!, requestMethod: "POST", requestBody: rawRequestBody)
-        let signUpResponse = try JSONDecoder().decode(LoginResponse.self, from: data)
-        
-        if (signUpResponse.token != nil) {
-            if let data = signUpResponse.token!.data(using: .utf8) {
-                let status = KeychainHelper.shared.save(key: Constants.accessTokenKeychainKey, data: data)
-                if status == errSecSuccess {
-                    return true
-                }
-            }
-            
-            return false;
-        } else if (signUpResponse.error != nil) {
-            DispatchQueue.main.async {
-                self.errorMessage = signUpResponse.error!
-            }
-        }
-        
-        return false;
+        return try await signUpOrIn(email: email, password: password, url: Constants.signUpUrl!)
     }
     
     @discardableResult
@@ -74,4 +61,3 @@ class LoginSignUpApi: ApiClient, ObservableObject, @unchecked Sendable {
     }
     
 }
-
