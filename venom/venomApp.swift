@@ -10,7 +10,7 @@ import SwiftUI
 @main
 struct VenomApp: App {
     @State var globalMessages: GlobalMessages
-    @State var lists: Lists
+    @State var listsApi: ListsApi
     @State var taskApi: TaskApi
     @State var tagApi: TagApi
     @State var loginSignUpApi: LoginSignUpApi
@@ -22,7 +22,7 @@ struct VenomApp: App {
     init() {
         self.initialGlobalMessages = GlobalMessages()
         _globalMessages = State(initialValue: initialGlobalMessages)
-        _lists = State(initialValue: Lists(lists: [], globalMessages: initialGlobalMessages))
+        _listsApi = State(initialValue: ListsApi(lists: [], globalMessages: initialGlobalMessages))
         self.taskApi = TaskApi(initialGlobalMessages)
         self.tagApi = TagApi(initialGlobalMessages)
         self.loginSignUpApi = LoginSignUpApi(initialGlobalMessages)
@@ -32,7 +32,7 @@ struct VenomApp: App {
     var body: some Scene {
         WindowGroup {
             AppEntryView()
-                .environmentObject(lists)
+                .environmentObject(listsApi)
                 .environmentObject(taskApi)
                 .environmentObject(tagApi)
                 .environmentObject(loginSignUpApi)

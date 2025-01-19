@@ -12,7 +12,7 @@ struct PickerOption {
 }
 
 struct Settings: View {
-    @EnvironmentObject var lists: Lists
+    @EnvironmentObject var listsApi: ListsApi
     @EnvironmentObject var loginSignUpApi: LoginSignUpApi
     @EnvironmentObject var settingsApi: SettingsApi
     
@@ -43,7 +43,7 @@ struct Settings: View {
                     Text(option.label).tag(option.value)
                 }
             }
-            MultiSelect(title: "Daily Report Lists", items: lists.lists.map { list in
+            MultiSelect(title: "Daily Report Lists", items: listsApi.lists.map { list in
                 return MultiSelectData(value: list.id, label: list.listName)
             }, selectedItems: $dailyReportListIds)
             
@@ -80,13 +80,13 @@ struct Settings: View {
                     }
                 }
                 .onChange(of: dailyReportListIds) {
-                    for list in lists.lists {
+                    for list in listsApi.lists {
                         let isListNewlyAddedToStandup = !list.isStandupList && dailyReportListIds.contains(list.id)
                         let isListRemovedFromStandup = list.isStandupList && !dailyReportListIds.contains(list.id)
                         if isListNewlyAddedToStandup || isListRemovedFromStandup {
                             list.isStandupList.toggle()
                             Task {
-                                await lists.updateList(list: list)
+                                await listsApi.updateList(list: list)
                             }
                         }
                     }
@@ -102,7 +102,7 @@ struct Settings: View {
             }
         }
         .onAppear {
-            dailyReportListIds = Set(lists.lists.filter { $0.isStandupList }.map { $0.id })
+            dailyReportListIds = Set(listsApi.lists.filter { $0.isStandupList }.map { $0.id })
             Task {
                 await settingsApi.fetchSettings()
                 isLoading = false

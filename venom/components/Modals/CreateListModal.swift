@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct CreateListModal: View {
-    @EnvironmentObject var lists: Lists;
+    @EnvironmentObject var listsApi: ListsApi;
     @State var listName: String;
     var listToEdit: VenomList?
     
@@ -33,7 +33,7 @@ struct CreateListModal: View {
                     
                     HStack {
                         Button(action: {
-                            lists.showListModal = false
+                            listsApi.showListModal = false
                         }) {
                             Text("Dismiss")
                         }.buttonStyle(BorderlessButtonStyle()).padding()
@@ -44,13 +44,13 @@ struct CreateListModal: View {
                             Task {
                                 if (listToEdit != nil) {
                                     listToEdit!.listName = listName;
-                                    await lists.updateList(list: listToEdit!);
+                                    await listsApi.updateList(list: listToEdit!);
                                 } else {
-                                    await lists.createList(listName: listName);
+                                    await listsApi.createList(listName: listName);
                                 }
                                 
-                                lists.listToEdit = nil;
-                                lists.showListModal = false;
+                                listsApi.listToEdit = nil;
+                                listsApi.showListModal = false;
                             }
                         }) {
                             Text("Save")

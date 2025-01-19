@@ -13,7 +13,7 @@ let rightAlignmentWidth: CGFloat = 40;
 struct TaskItem: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var taskApi: TaskApi;
-    @EnvironmentObject var lists: Lists;
+    @EnvironmentObject var listsApi: ListsApi;
     @EnvironmentObject var settingsApi: SettingsApi;
     
     
@@ -37,7 +37,7 @@ struct TaskItem: View {
         } else {
             task.dateCompleted = nil
         }
-        let updateTaskResposne = await taskApi.updateTask(task:task, lists:lists);
+        let updateTaskResposne = await taskApi.updateTask(task:task, listsApi: listsApi);
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
             Task {

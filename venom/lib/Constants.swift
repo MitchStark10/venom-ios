@@ -25,6 +25,7 @@ struct Constants {
     static let loginUrl = URL(string: baseApiUrl + "/users/login")
     static let signUpUrl = URL(string: baseApiUrl + "/users/createUser")
     static let listsUrl = URL(string: baseApiUrl + "/lists")
+    static let reorderListsUrl = URL(string: baseApiUrl + "/lists/reorder")
     static let tasksUrl = URL(string: baseApiUrl + "/tasks")
     static let tagsUrl = URL(string: baseApiUrl + "/tags")
     static let completedTasksUrl = URL(string: baseApiUrl + "/tasks/completed")

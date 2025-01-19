@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct CreateTaskModal: View {
-    @EnvironmentObject var lists: Lists
+    @EnvironmentObject var listsApi: ListsApi
     @EnvironmentObject var taskApi: TaskApi
     @EnvironmentObject var tagApi: TagApi
     @EnvironmentObject var settingsApi: SettingsApi
@@ -56,7 +56,7 @@ struct CreateTaskModal: View {
             Form {
                 Section(header: Text(headerText).font(.subheadline)) {
                     Picker("List", selection: $listId) {
-                        ForEach(lists.lists, id: \.self.id) { list in
+                        ForEach(listsApi.lists, id: \.self.id) { list in
                             Text(list.listName).tag(list.id as Int?)
                         }
                     }
@@ -118,9 +118,9 @@ struct CreateTaskModal: View {
                                     }
                                     task!.tagIds = Array(selectedTagIds)
                                     
-                                    await taskApi.updateTask(task: task!, lists: lists)
+                                    await taskApi.updateTask(task: task!, listsApi: listsApi)
                                 } else {
-                                    await taskApi.createTask(taskName: taskName, dueDate: dueDate, listId: listId!, lists: lists, tagIds: Array(selectedTagIds))
+                                    await taskApi.createTask(taskName: taskName, dueDate: dueDate, listId: listId!, listsApi: listsApi, tagIds: Array(selectedTagIds))
                                 }
                                 taskApi.showTaskModal = false
                                 taskApi.taskToEdit = nil
@@ -143,7 +143,7 @@ struct CreateTaskModal: View {
                 }
             }
         }.onAppear {
-            let defaultListId = currentNavMenuitem?.list?.id ?? lists.lists.first?.id ?? nil
+            let defaultListId = currentNavMenuitem?.list?.id ?? listsApi.lists.first?.id ?? nil
             if defaultListId != nil && listId == nil {
                 listId = defaultListId
             }

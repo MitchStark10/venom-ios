@@ -9,34 +9,33 @@ import Foundation
 import SwiftUI
 
 struct TaskList: View {
-    @EnvironmentObject var lists: Lists;
-    @EnvironmentObject var taskApi: TaskApi;
+    @EnvironmentObject var listsApi: ListsApi
+    @EnvironmentObject var taskApi: TaskApi
     
     var taskItems: [VenomTask]
     var navTitle: String
-    var groupBy: GroupByOptions = GroupByOptions.date;
-    var showListName = false;
-    var showDeleteTasksButton = false;
-    var enableReordering = false;
+    var groupBy: GroupByOptions = GroupByOptions.date
+    var showListName = false
+    var showDeleteTasksButton = false
+    var enableReordering = false
     
     private var shouldShowLoader: Bool {
-        if (
+        if
             (navTitle == Constants.todayViewLabel && !taskApi.hasFetchedTodayTasks) ||
-            (navTitle == Constants.upcomingViewLabel && !taskApi.hasFetchedUpcomingTasks) ||
-            (navTitle == Constants.completedViewLabel && !taskApi.hasFetchedCompletedTasks) ||
-			(navTitle == Constants.standupViewLabel && !taskApi.hasFetchedStandupTasks)
-        ) {
-            return true;
+                (navTitle == Constants.upcomingViewLabel && !taskApi.hasFetchedUpcomingTasks) ||
+                (navTitle == Constants.completedViewLabel && !taskApi.hasFetchedCompletedTasks) ||
+                (navTitle == Constants.standupViewLabel && !taskApi.hasFetchedStandupTasks) {
+            return true
         }
         
-        return false;
+        return false
     }
     
     var body: some View {
         VStack(alignment: .leading) {
-            List() {
-                if (taskItems.count == 0) {
-                    if (shouldShowLoader) {
+            List {
+                if taskItems.count == 0 {
+                    if shouldShowLoader {
                         ProgressView()
                     } else {
                         Text("No tasks found")
@@ -50,11 +49,15 @@ struct TaskList: View {
                         ForEach(taskItemsGroupedByDate[taskGroupKey] ?? []) { task in
                             TaskItem(task: task, showListName: showListName, navTitle: navTitle)
                         }.onMove(perform: enableReordering ? { source, newIndex in
-                            move(source: source, newIndex: newIndex, taskListSource: taskItemsGroupedByDate[taskGroupKey])
+                            move(
+                                source: source,
+                                newIndex: newIndex,
+                                taskListSource: taskItemsGroupedByDate[taskGroupKey]
+                            )
                         } : nil)
                     }
                 }
-                if (showDeleteTasksButton && taskItems.count > 0) {
+                if showDeleteTasksButton && taskItems.count > 0 {
                     Button("Delete Completed Tasks") {
                         Task {
                             await taskApi.deleteCompletedTasks()
@@ -67,8 +70,8 @@ struct TaskList: View {
     }
     
     private func move(source: IndexSet, newIndex: Int, taskListSource: [VenomTask]?) {
-        if (taskListSource == nil) {
-            return;
+        if taskListSource == nil {
+            return
         }
         
         var taskList = taskListSource!
@@ -79,7 +82,7 @@ struct TaskList: View {
             
             let task = taskList.remove(at: sourceIndex)
             taskList.insert(task, at: insertIndex)
-            await taskApi.reorder(taskList: taskList, lists: lists)
+            await taskApi.reorder(taskList: taskList, listsApi: listsApi)
         }
     }
 }

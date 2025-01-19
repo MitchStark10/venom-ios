@@ -10,6 +10,7 @@
 		8001C25C2C5DC09200565EEA /* Flag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8001C25B2C5DC09200565EEA /* Flag.swift */; };
 		8001C25E2C5DC87B00565EEA /* MultiSelect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8001C25D2C5DC87B00565EEA /* MultiSelect.swift */; };
 		8002A0472C59D74C006018B1 /* TagList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8002A0462C59D74C006018B1 /* TagList.swift */; };
+		800B49DF2D3D98C0007B63EA /* VenomList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800B49DE2D3D98BE007B63EA /* VenomList.swift */; };
 		805910DD2C2F41BF005780C1 /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805910DC2C2F41BF005780C1 /* UserSettings.swift */; };
 		805910E12C2F4459005780C1 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805910E02C2F4459005780C1 /* LoginResponse.swift */; };
 		805910E42C2F46C6005780C1 /* LoginSignUpApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805910E32C2F46C6005780C1 /* LoginSignUpApi.swift */; };
@@ -20,7 +21,7 @@
 		8077273F2D2B3F1F00D57DF9 /* isTodayMonday.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8077273E2D2B3F1B00D57DF9 /* isTodayMonday.swift */; };
 		80C368212C2F761C0023DC52 /* ApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C368202C2F761C0023DC52 /* ApiClient.swift */; };
 		80C368242C2F7B970023DC52 /* NewTaskFAB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C368232C2F7B970023DC52 /* NewTaskFAB.swift */; };
-		80C368282C2F86B80023DC52 /* Lists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C368272C2F86B80023DC52 /* Lists.swift */; };
+		80C368282C2F86B80023DC52 /* ListsApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C368272C2F86B80023DC52 /* ListsApi.swift */; };
 		80C3682A2C2F871B0023DC52 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C368292C2F871B0023DC52 /* Task.swift */; };
 		80C531352C4F47A6008B0FAA /* CheckboxToggleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C531342C4F47A6008B0FAA /* CheckboxToggleStyle.swift */; };
 		80C531372C4F4B64008B0FAA /* TaskItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C531362C4F4B64008B0FAA /* TaskItem.swift */; };
@@ -68,6 +69,7 @@
 		8001C25B2C5DC09200565EEA /* Flag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flag.swift; sourceTree = "<group>"; };
 		8001C25D2C5DC87B00565EEA /* MultiSelect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiSelect.swift; sourceTree = "<group>"; };
 		8002A0462C59D74C006018B1 /* TagList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagList.swift; sourceTree = "<group>"; };
+		800B49DE2D3D98BE007B63EA /* VenomList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenomList.swift; sourceTree = "<group>"; };
 		802860092C460C5E00533AFF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		805910DC2C2F41BF005780C1 /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
 		805910E02C2F4459005780C1 /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
@@ -79,7 +81,7 @@
 		8077273E2D2B3F1B00D57DF9 /* isTodayMonday.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = isTodayMonday.swift; sourceTree = "<group>"; };
 		80C368202C2F761C0023DC52 /* ApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiClient.swift; sourceTree = "<group>"; };
 		80C368232C2F7B970023DC52 /* NewTaskFAB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTaskFAB.swift; sourceTree = "<group>"; };
-		80C368272C2F86B80023DC52 /* Lists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lists.swift; sourceTree = "<group>"; };
+		80C368272C2F86B80023DC52 /* ListsApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListsApi.swift; sourceTree = "<group>"; };
 		80C368292C2F871B0023DC52 /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		80C531342C4F47A6008B0FAA /* CheckboxToggleStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxToggleStyle.swift; sourceTree = "<group>"; };
 		80C531362C4F4B64008B0FAA /* TaskItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskItem.swift; sourceTree = "<group>"; };
@@ -142,6 +144,7 @@
 		805910DB2C2F4152005780C1 /* classes */ = {
 			isa = PBXGroup;
 			children = (
+				800B49DE2D3D98BE007B63EA /* VenomList.swift */,
 				80EED5CE2D336A9200911BA8 /* VenomLogger.swift */,
 				80EED5CC2D3367FD00911BA8 /* GlobalMessages.swift */,
 				805910E22C2F46B3005780C1 /* api */,
@@ -160,7 +163,7 @@
 				80EACF592D18B03800806B04 /* SettingsApi.swift */,
 				805910E32C2F46C6005780C1 /* LoginSignUpApi.swift */,
 				80C368202C2F761C0023DC52 /* ApiClient.swift */,
-				80C368272C2F86B80023DC52 /* Lists.swift */,
+				80C368272C2F86B80023DC52 /* ListsApi.swift */,
 				80C368292C2F871B0023DC52 /* Task.swift */,
 				80CCF69A2C34C46600AB4483 /* TaskTag.swift */,
 				80CCF69C2C34C49A00AB4483 /* Tag.swift */,
@@ -419,7 +422,7 @@
 				8002A0472C59D74C006018B1 /* TagList.swift in Sources */,
 				80CCF6A12C34C60200AB4483 /* SubViewRouter.swift in Sources */,
 				80E4C6772BA732B700C17AC9 /* venomApp.swift in Sources */,
-				80C368282C2F86B80023DC52 /* Lists.swift in Sources */,
+				80C368282C2F86B80023DC52 /* ListsApi.swift in Sources */,
 				8001C25C2C5DC09200565EEA /* Flag.swift in Sources */,
 				80C706512C36F28C0092D6B4 /* formatDueDate.swift in Sources */,
 				80C706552C3751B80092D6B4 /* getDateKey.swift in Sources */,
@@ -438,6 +441,7 @@
 				80C3682A2C2F871B0023DC52 /* Task.swift in Sources */,
 				805910E12C2F4459005780C1 /* LoginResponse.swift in Sources */,
 				8071FA6E2C363D0300930AD4 /* DropdownMenu.swift in Sources */,
+				800B49DF2D3D98C0007B63EA /* VenomList.swift in Sources */,
 				8001C25E2C5DC87B00565EEA /* MultiSelect.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

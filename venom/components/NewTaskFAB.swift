@@ -9,11 +9,11 @@ import SwiftUI
 let autoCreateTaskLabels = [Constants.todayViewLabel, Constants.upcomingViewLabel, Constants.standupViewLabel, Constants.completedViewLabel]
 
 struct NewTaskFAB: View {
-    @EnvironmentObject var listApi: Lists;
-    @EnvironmentObject var taskApi: TaskApi;
-    @EnvironmentObject var tagApi: TagApi;
+    @EnvironmentObject var listApi: ListsApi
+    @EnvironmentObject var taskApi: TaskApi
+    @EnvironmentObject var tagApi: TagApi
     
-    @State private var showingActionSheet = false;
+    @State private var showingActionSheet = false
     
     let currentNavMenuItem: NavMenuItem?
     

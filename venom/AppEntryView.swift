@@ -9,7 +9,7 @@ import SwiftUI
 import UIKit
 
 struct AppEntryView: View {
-    @EnvironmentObject var lists: Lists
+    @EnvironmentObject var listsApi: ListsApi
     @EnvironmentObject var taskApi: TaskApi
     @EnvironmentObject var tagApi: TagApi
     @EnvironmentObject var loginSignUpApi: LoginSignUpApi
@@ -40,7 +40,7 @@ struct AppEntryView: View {
     
     private func getMenuItems() -> [NavMenuItem] {
         var menuItems: [NavMenuItem] = []
-        for list in lists.lists {
+        for list in listsApi.lists {
             menuItems.append(NavMenuItem(label: list.listName, list: list))
         }
         
@@ -78,8 +78,8 @@ struct AppEntryView: View {
                     .contextMenu(ContextMenu(menuItems: {
                         Button("Update List") {
                             Task {
-                                lists.showListModal = true;
-                                lists.listToEdit = menuItem.list;
+                                listsApi.showListModal = true;
+                                listsApi.listToEdit = menuItem.list;
                             }
                         }
                         Button("Delete List", role: .destructive) {
@@ -88,6 +88,15 @@ struct AppEntryView: View {
                         }
                     }))
             }
+            .onMove(perform: { source, newIndex in
+                guard let sourceIndex = source.first else { return }
+                let insertIndex = sourceIndex > newIndex ? newIndex : newIndex - 1
+                let list = listsApi.lists.remove(at: sourceIndex)
+                listsApi.lists.insert(list, at: insertIndex)
+                Task {
+                    await listsApi.reorderLists(lists: listsApi.lists)
+                }
+            })
         }
         
     }
@@ -102,7 +111,7 @@ struct AppEntryView: View {
                         List {
                             defaultMenuView
                             secondaryMenuView
-                            if lists.hasFetchedLists {
+                            if listsApi.hasFetchedLists {
                                 listsView
                             } else {
                                 ProgressView()
@@ -132,14 +141,14 @@ struct AppEntryView: View {
                         }
                     }.onAppear {
                         Task {
-                            await lists.fetchLists()
+                            await listsApi.fetchLists()
                             await tagApi.fetchTags()
                             await settingsApi.fetchSettings()
                         }
                     }.onChange(of: scenePhase) { oldPhase, newPhase in
                         if newPhase == .active {
                             Task {
-                                await lists.fetchLists()
+                                await listsApi.fetchLists()
                                 
                                 if currentNavMenuItem?.label == Constants.todayViewLabel {
                                     await taskApi.fetchTodayTasks()
@@ -172,12 +181,12 @@ struct AppEntryView: View {
             CreateTaskModal(task: taskApi.taskToEdit, currentNavMenuItem: currentNavMenuItem)
         }
         .sheet(
-            isPresented: $lists.showListModal,
+            isPresented: $listsApi.showListModal,
             onDismiss: {
-                lists.showListModal = false
+                listsApi.showListModal = false
             },
             content: {
-                CreateListModal(listToEdit: lists.listToEdit)
+                CreateListModal(listToEdit: listsApi.listToEdit)
             })
         .sheet(isPresented: $tagApi.showTagModal, onDismiss: {
             tagApi.showTagModal = false
@@ -190,7 +199,7 @@ struct AppEntryView: View {
         ) {
             Button("Delete list and all tasks", role: .destructive) {
                 Task {
-                    await lists.deleteList(listId: listIdToDelete!)
+                    await listsApi.deleteList(listId: listIdToDelete!)
                 }
             }.onDisappear {
                 listIdToDelete = nil

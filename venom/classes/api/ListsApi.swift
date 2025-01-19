@@ -7,27 +7,7 @@
 import Foundation
 import SwiftUI
 
-class VenomList: Decodable, Hashable, @unchecked Sendable {
-    let id, order: Int
-    var listName: String
-    var isStandupList: Bool
-    var tasks: [VenomTask]? = []
-    
-    static func == (lhs: VenomList, rhs: VenomList) -> Bool {
-        return lhs.identifier == rhs.identifier
-    }
-    
-    var identifier: String {
-        return String(self.id)
-    }
-    
-    public func hash(into hasher: inout Hasher) {
-        return hasher.combine(identifier)
-    }
-    
-}
-
-class Lists: ApiClient, ObservableObject, @unchecked Sendable {
+class ListsApi: ApiClient, ObservableObject, @unchecked Sendable {
     @Published var hasFetchedLists = false
     @Published var lists: [VenomList] = []
     
@@ -89,6 +69,18 @@ class Lists: ApiClient, ObservableObject, @unchecked Sendable {
             await fetchLists()
         } catch {
             venomLogger.error("Caught error when deleting a list \(error)")
+        }
+    }
+    
+    public func reorderLists(lists: [VenomList]) async {
+        do {
+            let requestBody: [String: Any] = [
+                "lists": lists.map { $0.toJsonObject() }
+            ]
+            
+            try await sendApiCall(url: Constants.reorderListsUrl!, requestMethod: "PUT", requestBody: requestBody)
+        } catch {
+            venomLogger.error("Caught error when reordering lists \(error)")
         }
     }
 }

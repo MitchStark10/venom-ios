@@ -14,13 +14,13 @@ class StandupResponse: Decodable, @unchecked Sendable {
 }
 
 class VenomTask: Decodable, Identifiable, @unchecked Sendable {
-    let id: Int;
-    var taskName: String;
-    var dueDate, dateCompleted: String?;
-    let listViewOrder, timeViewOrder: Int?;
-    var isCompleted: Bool;
-    let taskTag: [TaskTag]?;
-    let list: VenomList?;
+    let id: Int
+    var taskName: String
+    var dueDate, dateCompleted: String?
+    let listViewOrder, timeViewOrder: Int?
+    var isCompleted: Bool
+    let taskTag: [TaskTag]?
+    let list: VenomList?
     var tagIds: [Int]
     var listId: Int?
     var customGroup: String?
@@ -38,59 +38,63 @@ class VenomTask: Decodable, Identifiable, @unchecked Sendable {
 }
 
 class TaskApi: ApiClient, ObservableObject, @unchecked Sendable {
-    @Published var hasFetchedTodayTasks = false;
-    @Published var todayTasks: [VenomTask] = [];
+    @Published var hasFetchedTodayTasks = false
+    @Published var todayTasks: [VenomTask] = []
     
-    @Published var hasFetchedUpcomingTasks = false;
-    @Published var upcomingTasks: [VenomTask] = [];
+    @Published var hasFetchedUpcomingTasks = false
+    @Published var upcomingTasks: [VenomTask] = []
     
-    @Published var hasFetchedCompletedTasks = false;
-    @Published var completedTasks: [VenomTask] = [];
+    @Published var hasFetchedCompletedTasks = false
+    @Published var completedTasks: [VenomTask] = []
 	
-	@Published var hasFetchedStandupTasks = false;
-	@Published var standupYesterdayTasks: [VenomTask] = [];
-    @Published var standupTodayTasks: [VenomTask] = [];
-    @Published var standupBlockedTasks: [VenomTask] = [];
-    @Published var standupTasks: [VenomTask] = [];
+	@Published var hasFetchedStandupTasks = false
+	@Published var standupYesterdayTasks: [VenomTask] = []
+    @Published var standupTodayTasks: [VenomTask] = []
+    @Published var standupBlockedTasks: [VenomTask] = []
+    @Published var standupTasks: [VenomTask] = []
     
-    @Published var taskToEdit: VenomTask?;
-    @Published var showTaskModal: Bool = false;
+    @Published var taskToEdit: VenomTask?
+    @Published var showTaskModal: Bool = false
     
     @discardableResult
-    func createTask(taskName: String, dueDate: Date?, listId: Int, lists: Lists, tagIds: [Int]) async -> Bool {
+    func createTask(taskName: String, dueDate: Date?, listId: Int, listsApi: ListsApi, tagIds: [Int]) async -> Bool {
         do {
             let newTaskBody: [String: Any] = [
                 "taskName": taskName,
                 "dueDate": formatDate(dateToFormat: dueDate),
                 "listId": listId,
                 "tagIds": tagIds
-            ];
+            ]
             try await sendApiCall(url: Constants.tasksUrl!, requestMethod: "POST", requestBody: newTaskBody)
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                 Task {
-                    await lists.fetchLists()
+                    await listsApi.fetchLists()
                 }
             }
             
-            return true;
+            return true
         } catch {
             print("Caught error when creating a task \(error)")
-            return false;
+            return false
         }
     }
     
     @discardableResult
-    func updateTask(task: VenomTask, lists: Lists) async -> Bool {
+    func updateTask(task: VenomTask, listsApi: ListsApi) async -> Bool {
         do {
-            try await sendApiCall(url: Constants.getTaskUrlWithId(id: task.id), requestMethod: "PUT", requestBody: task.toJsonObject())
+            try await sendApiCall(
+                url: Constants.getTaskUrlWithId(id: task.id),
+                requestMethod: "PUT",
+                requestBody: task.toJsonObject()
+            )
             Task {
-                await lists.fetchLists()
+                await listsApi.fetchLists()
             }
-            return true;
+            return true
         } catch {
             print("Caught an error updating the task: \(error)")
-            return false;
+            return false
         }
     }
     
@@ -100,9 +104,9 @@ class TaskApi: ApiClient, ObservableObject, @unchecked Sendable {
             let fetchedTasks = try JSONDecoder().decode([VenomTask].self, from: data)
             
             DispatchQueue.main.async {
-                self.todayTasks = fetchedTasks;
+                self.todayTasks = fetchedTasks
                 self.objectWillChange.send()
-                self.hasFetchedTodayTasks = true;
+                self.hasFetchedTodayTasks = true
             }
         } catch {
             print("Caught an error retrieving today's tasks: \(error)")
@@ -115,9 +119,9 @@ class TaskApi: ApiClient, ObservableObject, @unchecked Sendable {
             let fetchedTasks = try JSONDecoder().decode([VenomTask].self, from: data)
             
             DispatchQueue.main.async {
-                self.upcomingTasks = fetchedTasks;
+                self.upcomingTasks = fetchedTasks
                 self.objectWillChange.send()
-                self.hasFetchedUpcomingTasks = true;
+                self.hasFetchedUpcomingTasks = true
             }
         } catch {
             print("Caught an error retrieving today's tasks: \(error)")
@@ -130,9 +134,9 @@ class TaskApi: ApiClient, ObservableObject, @unchecked Sendable {
             let fetchedTasks = try JSONDecoder().decode([VenomTask].self, from: data)
             
             DispatchQueue.main.async {
-                self.completedTasks = fetchedTasks;
+                self.completedTasks = fetchedTasks
                 self.objectWillChange.send()
-                self.hasFetchedCompletedTasks = true;
+                self.hasFetchedCompletedTasks = true
             }
         } catch {
             print("Caught an error retrieving completed tasks: \(error)")
@@ -155,34 +159,34 @@ class TaskApi: ApiClient, ObservableObject, @unchecked Sendable {
             
             DispatchQueue.main.async {
                 self.standupTodayTasks = fetchedTasks.today.map { task in
-                    task.customGroup = "Today";
-                    return task;
+                    task.customGroup = "Today"
+                    return task
                 }
                 self.standupYesterdayTasks = fetchedTasks.yesterday.map { task in
                     // If today is Monday and we're ignoring weekends, then the group label
                     // should instead be "Friday
                     if isTodayMonday() && isIgnoringWeekends {
-                        task.customGroup = "Friday";
+                        task.customGroup = "Friday"
                     } else {
-                        task.customGroup = "Yesterday";
+                        task.customGroup = "Yesterday"
                     }
-                    return task;
+                    return task
                 }
                 self.standupBlockedTasks = fetchedTasks.blocked.map { task in
-                    task.customGroup = "Blocked";
-                    return task;
+                    task.customGroup = "Blocked"
+                    return task
                 }
                 self.standupTasks =  self.standupYesterdayTasks + self.standupTodayTasks + self.standupBlockedTasks
                 
                 self.objectWillChange.send()
-                self.hasFetchedStandupTasks = true;
+                self.hasFetchedStandupTasks = true
             }
         } catch {
             print("Caught an error retrieving standup tasks: \(error)")
         }
 	}
     
-    func reorder(taskList: [VenomTask], lists: Lists) async {
+    func reorder(taskList: [VenomTask], listsApi: ListsApi) async {
         do {
             let tasksToUpdate = taskList.enumerated().map { (index, task) in
                 return [
@@ -200,7 +204,7 @@ class TaskApi: ApiClient, ObservableObject, @unchecked Sendable {
             try await sendApiCall(url: Constants.reorderTaskUrl!, requestMethod: "PUT", requestBody: requestBody)
             
             Task {
-                await lists.fetchLists()
+                await listsApi.fetchLists()
             }
         } catch {
             print("Caught an error while reordering task: \(error.localizedDescription)")
